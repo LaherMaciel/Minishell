@@ -93,9 +93,9 @@ void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 
 //ft_printf
-int		ft_printf(const char *a, ...);
+int		ft_printf(const char *format, ...);
 //ft_fdprintf
-int		ft_fdprintf(int fd, const char *a, ...);
+int		ft_fdprintf(int fd, const char *format, ...);
 //get_next_line
 char	*get_next_line(int fd);
 
