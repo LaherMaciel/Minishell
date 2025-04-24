@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:07:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/04/23 15:07:56 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/04/24 16:19:15 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 int	main(void)
 {
-	ft_printf("JORGE\n");
+	char	*line;
+
+	line = readline(">>");
+	ft_printf("line = %s\n", line);
 	return (0);
 }

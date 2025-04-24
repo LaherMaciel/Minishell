@@ -31,8 +31,8 @@ OBJECTS = $(addprefix $(OBJECTS_DIRECTORY), $(OBJECT_LIST))
 CC = cc
 CFLAGS = -g -Wall -Werror -Wextra #-fsanitize=address
 
-LIBS = -L$(LIBFT_DIRECTORY) -lft
-INCLUDES = -I./srcs -I./libft/
+LIBS = -L$(LIBFT_DIRECTORY) -lft -lreadline -ltermcap
+INCLUDES = -I./srcs -I./libft/ -I/usr/include/readline
 
 
 # COLORS
@@ -48,7 +48,7 @@ $(NAME): $(LIBFT) $(OBJECTS_DIRECTORY) $(OBJECTS)
 		echo "[" "$(GREEN)OK$(RESET)" "] | $(NAME) created!"; \
 	else \
 		echo "[" "$(RED)Error$(RESET)" "] | An error occurred while creating pipex."; \
-		make fclean; \
+		make clean > /dev/null 2>&1; \
 		echo "[" "$(RED)Error$(RESET)" "] | All objects Cleaned."; \
 	fi
 
