@@ -1,16 +1,6 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    makefile                                           :+:      :+:    :+:    #
-#                                                     +:+ +:+         +:+      #
-#    By: lwencesl <lwencesl@student.42.fr>          +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2023/07/28 19:50:00 by lwencesl          #+#    #+#              #
-#    Updated: 2023/10/02 16:25:04 by lwencesl         ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
 NAME = minishell
+
+PROMPT_C = prompt.c \
 
 LIBFT_DIRECTORY = libft/
 LIBFT_HEADER = $(LIBFT_DIRECTORY)libft.h
@@ -20,7 +10,11 @@ HEADER_LIST = minishell.h
 HEADER_DIRECTORY = srcs/
 HEADERS = $(addprefix $(HEADER_DIRECTORY), $(HEADER_LIST))
 
-SRCS_LIST = main.c
+PROMPT_LIST = $(PROMPT_C)
+PROMPT_DIRECTORY = prompt/
+PROMPT = $(addprefix $(PROMPT_DIRECTORY), $(PROMPT_LIST))
+
+SRCS_LIST = main.c $(PROMPT)
 SRCS_DIRECTORY = srcs/
 SRC = $(addprefix $(SRCS_DIRECTORY), $(SRCS_LIST))
 
@@ -55,6 +49,7 @@ $(NAME): $(LIBFT) $(OBJECTS_DIRECTORY) $(OBJECTS)
 $(OBJECTS_DIRECTORY):
 	@echo "[" "$(YELLOW)..$(RESET)" "] | Creating objects..."
 	@mkdir -p $(OBJECTS_DIRECTORY)
+	@mkdir -p $(OBJECTS_DIRECTORY)$(PROMPT_DIRECTORY)
 	@echo "[" "$(GREEN)OK$(RESET)" "] | Objects ready!"
 
 $(OBJECTS_DIRECTORY)%.o : $(SRCS_DIRECTORY)%.c

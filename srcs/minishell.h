@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:05:39 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/04/23 15:11:33 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/04/25 15:05:20 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,5 +22,7 @@
 # include <sys/stat.h>
 # include <sys/wait.h>
 # include <termios.h>
+
+char	*display_prompt(char *line);
 
 #endif
