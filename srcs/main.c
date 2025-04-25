@@ -6,11 +6,11 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:07:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/04/25 15:29:16 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/04/25 17:01:39 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../minishell.h"
 
 static void	receive_input(void)
 {
@@ -29,7 +29,6 @@ static void	receive_input(void)
 			free(line);
 			break ;
 		}
-		ft_printf("%s\n", line);
 		free(line);
 	}
 }

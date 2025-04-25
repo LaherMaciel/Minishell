@@ -1,20 +1,32 @@
 NAME = minishell
 
+GCOMMANDS_C = command_executions.c \
+
 PROMPT_C = prompt.c \
+
+BUILTINS_C =  built_ins.c \
 
 LIBFT_DIRECTORY = libft/
 LIBFT_HEADER = $(LIBFT_DIRECTORY)libft.h
 LIBFT = $(LIBFT_DIRECTORY)libft.a
 
 HEADER_LIST = minishell.h
-HEADER_DIRECTORY = srcs/
+HEADER_DIRECTORY = ./
 HEADERS = $(addprefix $(HEADER_DIRECTORY), $(HEADER_LIST))
+
+GCOMMANDS_LIST = $(GCOMMANDS_C)
+GCOMMANDS_DIRECTORY = geral_commands/
+GCOMMANDS = $(addprefix $(GCOMMANDS_DIRECTORY), $(GCOMMANDS_LIST))
+
+BUILTINS_LIST = $(BUILTINS_C)
+BUILTINS_DIRECTORY = built_ins/
+BUILTINS = $(addprefix $(BUILTINS_DIRECTORY), $(BUILTINS_LIST))
 
 PROMPT_LIST = $(PROMPT_C)
 PROMPT_DIRECTORY = prompt/
 PROMPT = $(addprefix $(PROMPT_DIRECTORY), $(PROMPT_LIST))
 
-SRCS_LIST = main.c built_ins.c command_executions.c $(PROMPT)
+SRCS_LIST = main.c $(PROMPT) $(BUILTINS) $(GCOMMANDS)
 SRCS_DIRECTORY = srcs/
 SRC = $(addprefix $(SRCS_DIRECTORY), $(SRCS_LIST))
 
@@ -50,6 +62,8 @@ $(OBJECTS_DIRECTORY):
 	@echo "[" "$(YELLOW)..$(RESET)" "] | Creating objects..."
 	@mkdir -p $(OBJECTS_DIRECTORY)
 	@mkdir -p $(OBJECTS_DIRECTORY)$(PROMPT_DIRECTORY)
+	@mkdir -p $(OBJECTS_DIRECTORY)$(BUILTINS_DIRECTORY)
+	@mkdir -p $(OBJECTS_DIRECTORY)$(GCOMMANDS_DIRECTORY)
 	@echo "[" "$(GREEN)OK$(RESET)" "] | Objects ready!"
 
 $(OBJECTS_DIRECTORY)%.o : $(SRCS_DIRECTORY)%.c

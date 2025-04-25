@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 /**
  * @brief used to check if the number of quotes is correct
@@ -93,15 +93,14 @@ char	*display_prompt(char *line)
 {
 	int	ret;
 
-	/* while (1)
-	{ */
+	while (1)
+	{
 		ret = get_input(&line, ">>> ");
-		/* if (ret != 0)
+		if (ret != 0)
 			break ;
 		if (line[0] == '\0')
 			continue ;
 		line = execute_commands(line);
-	}  */
-	(void) ret; //later remove this line
+	}
 	return (line);
 }
