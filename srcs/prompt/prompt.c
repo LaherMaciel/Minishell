@@ -100,7 +100,7 @@ char	*display_prompt(char *line)
 			break ;
 		if (line[0] == '\0')
 			continue ;
-		//execute the command here
+		line = execute_commands(line);
 	}  */
 	(void) ret; //later remove this line
 	return (line);

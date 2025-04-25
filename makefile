@@ -14,7 +14,7 @@ PROMPT_LIST = $(PROMPT_C)
 PROMPT_DIRECTORY = prompt/
 PROMPT = $(addprefix $(PROMPT_DIRECTORY), $(PROMPT_LIST))
 
-SRCS_LIST = main.c $(PROMPT)
+SRCS_LIST = main.c built_ins.c command_executions.c $(PROMPT)
 SRCS_DIRECTORY = srcs/
 SRC = $(addprefix $(SRCS_DIRECTORY), $(SRCS_LIST))
 
