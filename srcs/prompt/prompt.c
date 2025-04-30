@@ -26,7 +26,7 @@ static int	check_quotes(char *str)
 	i = -1;
 	open = 0;
 	while (str[++i])
-	{
+	{	
 		if (open == 0)
 		{
 			if (str[i] == '\'')
@@ -44,26 +44,34 @@ static int	check_quotes(char *str)
 char	*quotes_handler(char *line)
 {
 	char	*aux;
+	char	*tmp;
 
-	if (check_quotes(line) != 0)
+	while (check_quotes(line) != 0)
 	{
-		while (1)
+		if (check_quotes(line) == 1)
+			aux = readline("squote> ");
+		else
+			aux = readline("dquote> ");
+		if (!aux)
 		{
-			if (check_quotes(line) == 1)
-				aux = readline("squote> ");
-			if (check_quotes(line) == 2)
-				aux = readline("dquote> ");
-			line = ft_strjoin2(line, aux, 3);
-			if (check_quotes(line) == 0)
-				break ;
+			free(line);
+			return (NULL);
 		}
+		tmp = line;
+		line = ft_strjoin2(line, "\n", 0);
+		free(tmp);
+		tmp = line;
+		line = ft_strjoin2(line, aux, 0);
+		free(tmp);
+		free(aux);
+		if (!line)
+			return (NULL);
 	}
 	return (line);
 }
 
-static int	get_input( char **line, char *prompt)
+static int	get_input(char **line, char *prompt)
 {
-	free(*line);
 	*line = readline(prompt);
 	if (!*line)
 		return (1);
@@ -76,9 +84,15 @@ static int	get_input( char **line, char *prompt)
 	}
 	if (ft_strcmp(prompt, "dquote> ") != 0
 		&& ft_strcmp(prompt, "squote> ") != 0)
+	{
 		*line = quotes_handler(*line);
+		if (!*line)
+			return (1);
+	}
 	else
 		return (3);
+	while (1)
+		printf("jorge\n");
 	return (0);
 }
 
@@ -95,12 +109,24 @@ char	*display_prompt(char *line)
 
 	while (1)
 	{
-		ret = get_input(&line, ">>> ");
+		ret = get_input(&line, "minishell> ");
+		if (ret == 1)
+		{
+			write(1, "exit\n", 5);
+			return (NULL);
+		}
+		if (ret == 2)
+			return (NULL);
 		if (ret != 0)
-			break ;
-		if (line[0] == '\0')
 			continue ;
+		if (line[0] == '\0')
+		{
+			free(line);
+			continue ;
+		}
 		line = execute_commands(line);
+		if (!line)
+			return (NULL);
 	}
 	return (line);
 }

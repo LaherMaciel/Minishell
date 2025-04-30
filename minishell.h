@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:05:39 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/04/25 17:11:48 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/04/30 11:12:50 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,8 @@ int			builtin_cd(char *input);
 int			builtin_pwd(void);
 int			builtin_echo(char **input);
 int			execute_builtin(char **input);
+
+//signals
+void		signal_handler(void);
 
 #endif

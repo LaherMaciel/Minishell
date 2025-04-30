@@ -1,32 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/23 15:07:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/04/30 11:58:52 by karocha-         ###   ########.fr       */
+/*   Created: 2025/04/30 10:24:50 by karocha-          #+#    #+#             */
+/*   Updated: 2025/04/30 11:54:48 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-static void	receive_input(void)
+static void	sigint_handler(int sig)
 {
-	char	*line;
-
-	while (1)
-	{
-		line = display_prompt(NULL);
-		if (!line)
-			break ;
-	}
+	(void)sig;
+	write(1, "\n", 1);
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
 }
 
-int	main(void)
+void	signal_handler(void)
 {
-	signal_handler();
-	receive_input();
-	return (0);
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
 }
