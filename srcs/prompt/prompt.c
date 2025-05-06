@@ -26,7 +26,7 @@ static int	check_quotes(char *str)
 	i = -1;
 	open = 0;
 	while (str[++i])
-	{	
+	{
 		if (open == 0)
 		{
 			if (str[i] == '\'')
@@ -79,6 +79,7 @@ static int	get_input(char **line, char *prompt)
 		add_history(*line);
 	if (strcmp(*line, "exit") == 0)
 	{
+		free(*line);
 		ft_printf("Terminating Minishell\n");
 		return (2);
 	}
@@ -91,8 +92,6 @@ static int	get_input(char **line, char *prompt)
 	}
 	else
 		return (3);
-	while (1)
-		printf("jorge\n");
 	return (0);
 }
 
@@ -103,7 +102,7 @@ static int	get_input(char **line, char *prompt)
  * @param char **env
  * @return char *line
  */
-char	*display_prompt(char *line)
+char	*display_prompt(char *line, char **env)
 {
 	int	ret;
 
@@ -117,14 +116,14 @@ char	*display_prompt(char *line)
 		}
 		if (ret == 2)
 			return (NULL);
-		if (ret != 0)
+		if (ret == 3)
 			continue ;
 		if (line[0] == '\0')
 		{
 			free(line);
 			continue ;
 		}
-		line = execute_commands(line);
+		line = execute_commands(line, env);
 		if (!line)
 			return (NULL);
 	}

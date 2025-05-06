@@ -6,22 +6,19 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:32 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/04/25 17:14:33 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/05 20:48:47 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-/* 
+
 void	change_directory(const char *path)
 {
-	// Attempt to change the directory
-	if (chdir(path) != 0)
-	{
-		// If chdir() returns -1, an error occurred
+	if (chdir(path))
 		perror("cd");
-	}
 }
- */
+
+ /* 
 int	builtin_cd(char *input)
 {
 	char	*path;
@@ -68,7 +65,7 @@ int	builtin_cd(char *input)
 		setenv("PWD", cwd, 1);
 	return (0);
 }
-
+ */
 int	builtin_pwd(void)
 {
 	char	*path;

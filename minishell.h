@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:05:39 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/04/30 11:12:50 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/05/05 22:05:37 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,36 @@
 # include <termios.h>
 # include <stdbool.h>
 
+typedef struct	s_mshell
+{
+	char	**env;
+	char	*line;
+	char	*cmd;
+	char	**args;
+	int		pid;
+	int		status;
+}			t_mshell;
+
 //prompt
-char		*display_prompt(char *line);
+char		*display_prompt(char *line, char **env);
 
 //commands executions
-char		*execute_commands(char *line);
+char		*execute_commands(char *line, char **env);
 
 //built-ins
 int			builtin_cd(char *input);
 int			builtin_pwd(void);
 int			builtin_echo(char **input);
 int			execute_builtin(char **input);
+void		change_directory(const char *path);
 
 //signals
 void		signal_handler(void);
+
+//utils
+int			create_child_process(void);
+void		handle_error_and_exit(int error, char *message);
+char		*get_command_path(char *cmd, int flag);
+void		handle_error_and_exit(int error, char *message);
 
 #endif
