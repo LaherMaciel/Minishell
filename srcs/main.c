@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:07:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/05 22:09:50 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/05/06 21:22:55 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ t_mshell	*mshell(void)
 	return (&mshell);
 }
 
-void	init_shell()
+void	init_shell(void)
 {
 	mshell()->env = NULL;
 }

@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/05 21:58:31 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/06 21:25:11 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,18 @@ void	run_command(char *line, char **env, int infile, int outfile)
 
 	pid = create_child_process();
 	if (pid == 0)
+	{
+		if (infile != STDERR_FILENO && dup2(infile, STDIN_FILENO) < 0)
+		{
+			if (errno == 9 && infile == -1)
+				handle_error_and_exit(0, "dup2 failed for input_fd");
+			else
+				handle_error_and_exit(-1, "dup2 failed for input_fd");
+		}
+		if (outfile != STDOUT_FILENO && dup2(outfile, STDOUT_FILENO) < 0)
+			handle_error_and_exit(-1, "dup2 failed for output_fd");
 		execute_simple_command(line, env, infile, outfile);
+	}
 }
 
 char	*execute_commands(char *line, char **env)
