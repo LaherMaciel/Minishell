@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/06 21:45:36 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/07 20:37:47 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ char	*execute_commands(char *line)
 		else
 			ft_printf("env: %s: No such file or directory\n", input[1]);
 	}
+	else if (ft_strcmp(input[0], "export") == 0)
+		ft_export();
 	else
 		run_command(line, STDIN_FILENO, STDOUT_FILENO);
 	while (wait(NULL) > 0)

@@ -24,7 +24,7 @@
  * @return The length of the string (number of characters before the
  * null-terminator, '\0' is not included).
  */
-size_t	ft_strstrlen(char **a)
+size_t	ft_arraylen(char **a)
 {
 	size_t	i;
 

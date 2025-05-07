@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:05:39 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/06 21:37:28 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/07 21:13:03 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,23 @@
 # include <termios.h>
 # include <stdbool.h>
 
-typedef struct	s_mshell
+typedef struct s_export
 {
-	char	**env;
-	char	*line;
-	char	*cmd;
-	char	**args;
-	int		pid;
-	int		status;
-}			t_mshell;
+	char	**export;
+	int		*index;
+}			t_export;
+
+typedef struct s_mshell
+{
+	t_export	*expt;
+
+	char		**args;
+	char		**env;
+	char		*line;
+	char		*cmd;
+	int			pid;
+	int			status;
+}				t_mshell;
 
 //prompt
 char		*display_prompt(char *line);
@@ -46,6 +54,8 @@ int			builtin_pwd(void);
 int			builtin_echo(char **input);
 int			execute_builtin(char **input);
 void		change_directory(const char *path);
+void		init_environ(void);
+void		ft_export(void);
 
 //signals
 void		signal_handler(void);

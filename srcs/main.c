@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:07:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/06 21:37:44 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/07 21:10:50 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ t_mshell	*mshell(void)
 
 void	init_shell(void)
 {
+	//init_environ();
+	mshell()->expt->export = NULL;
 	mshell()->env = NULL;
 }
 
@@ -42,6 +44,7 @@ int	main(int argv, char **argc, char **env)
 	(void)argc;
 	init_shell();
 	mshell()->env = env;
+	mshell()->export = env;
 	//signal_handler();
 	receive_input();
 	return (0);
