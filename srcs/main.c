@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:07:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/06 21:22:55 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/06 21:37:44 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,13 @@ void	init_shell(void)
 	mshell()->env = NULL;
 }
 
-static void	receive_input(char **env)
+static void	receive_input(void)
 {
 	char	*line;
 
-	ft_printf("%t\n", mshell()->env);
 	while (1)
 	{
-		line = display_prompt(NULL, env);
+		line = display_prompt(NULL);
 		if (!line)
 			break ;
 	}
@@ -44,6 +43,6 @@ int	main(int argv, char **argc, char **env)
 	init_shell();
 	mshell()->env = env;
 	//signal_handler();
-	receive_input(env);
+	receive_input();
 	return (0);
 }

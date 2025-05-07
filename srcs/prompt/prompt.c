@@ -102,7 +102,7 @@ static int	get_input(char **line, char *prompt)
  * @param char **env
  * @return char *line
  */
-char	*display_prompt(char *line, char **env)
+char	*display_prompt(char *line)
 {
 	int	ret;
 
@@ -123,7 +123,7 @@ char	*display_prompt(char *line, char **env)
 			free(line);
 			continue ;
 		}
-		line = execute_commands(line, env);
+		line = execute_commands(line);
 		if (!line)
 			return (NULL);
 	}

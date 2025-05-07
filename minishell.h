@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:05:39 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/05 22:05:37 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/06 21:37:28 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,10 @@ typedef struct	s_mshell
 }			t_mshell;
 
 //prompt
-char		*display_prompt(char *line, char **env);
+char		*display_prompt(char *line);
 
 //commands executions
-char		*execute_commands(char *line, char **env);
+char		*execute_commands(char *line);
 
 //built-ins
 int			builtin_cd(char *input);
@@ -55,5 +55,8 @@ int			create_child_process(void);
 void		handle_error_and_exit(int error, char *message);
 char		*get_command_path(char *cmd, int flag);
 void		handle_error_and_exit(int error, char *message);
+
+//main
+t_mshell	*mshell(void);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/06 21:25:11 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/06 21:45:36 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
  * @param infile - The input file descriptor.
  * @param outfile - The output file descriptor.
  */
-void	execute_simple_command(char *cmds, char **env, int infile, int outfile)
+void	execute_simple_command(char *cmds, int infile, int outfile)
 {
 	char	**args;
 	char	*cmd_path;
@@ -42,11 +42,11 @@ void	execute_simple_command(char *cmds, char **env, int infile, int outfile)
 		close(infile);
 	if (outfile != STDOUT_FILENO)
 		close(outfile);
-	execve(cmd_path, args, env);
+	execve(cmd_path, args, mshell()->env);
 	handle_error_and_exit(-1, "Execution failed");
 }
 
-void	run_command(char *line, char **env, int infile, int outfile)
+void	run_command(char *line, int infile, int outfile)
 {
 	int	pid;
 
@@ -62,11 +62,11 @@ void	run_command(char *line, char **env, int infile, int outfile)
 		}
 		if (outfile != STDOUT_FILENO && dup2(outfile, STDOUT_FILENO) < 0)
 			handle_error_and_exit(-1, "dup2 failed for output_fd");
-		execute_simple_command(line, env, infile, outfile);
+		execute_simple_command(line, infile, outfile);
 	}
 }
 
-char	*execute_commands(char *line, char **env)
+char	*execute_commands(char *line)
 {
 	char	**input;
 
@@ -78,9 +78,14 @@ char	*execute_commands(char *line, char **env)
 	else if (ft_strcmp(input[0], "echo") == 0)
 		builtin_echo(input);
 	else if (ft_strcmp(input[0], "env") == 0)
-		ft_printf("%t\n", env);
+	{
+		if (input[1] == NULL)
+			ft_printf("%t\n", mshell()->env);
+		else
+			ft_printf("env: %s: No such file or directory\n", input[1]);
+	}
 	else
-		run_command(line, env, STDIN_FILENO, STDOUT_FILENO);
+		run_command(line, STDIN_FILENO, STDOUT_FILENO);
 	while (wait(NULL) > 0)
 		;
 	ft_free_strstr(input);
