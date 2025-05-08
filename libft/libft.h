@@ -98,7 +98,7 @@ char	*get_next_line(int fd);
 
 //extras
 int		ft_strcmp(const char *str1, const char *str2);
-size_t	ft_strstrlen(char **a);
+size_t	ft_arraylen(char **a);
 void	ft_free_strstr(char **strstr);
 char	**ft_split2(char const *str, char c);
 char	*ft_substr2(char const *s, unsigned int start, size_t len);

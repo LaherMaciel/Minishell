@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:05:39 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/07 21:13:03 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/08 21:58:07 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 
 typedef struct s_export
 {
-	char	**export;
-	int		*index;
+	char	**value;
+	char	**var_name;
 }			t_export;
 
 typedef struct s_mshell
@@ -55,7 +55,9 @@ int			builtin_echo(char **input);
 int			execute_builtin(char **input);
 void		change_directory(const char *path);
 void		init_environ(void);
+t_export	*init_export(char **env);
 void		ft_export(void);
+t_export	*export_sorter(void);
 
 //signals
 void		signal_handler(void);

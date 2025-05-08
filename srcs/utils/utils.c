@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 20:51:30 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/07 21:12:48 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/08 16:36:02 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,27 +130,4 @@ void	handle_error_and_exit(int error, char *message)
 	if (error == 0 || error == 1) // Set exit status to 0 for success or informational messages.
 		out = 0;
 	exit(out);
-}
-
-void	export_sorter(void)
-{
-	int	i;
-	int	diff;
-
-	i = 0;
-	while (mshell()->expt->export[i])
-	{
-		if (mshell()->expt->export[i + 1] != NULL)
-		{
-			diff = ft_strcmp(mshell()->expt->export[i],
-					mshell()->expt->export[i + 1]);
-			if (diff < 0)
-			{
-				mshell()->expt->index[i] = i;
-				i = 0;
-			}
-		}
-		i++;
-	}
-	return (NULL);
 }
