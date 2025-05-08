@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 20:17:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/08 21:58:32 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/08 22:09:57 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,14 +38,8 @@ t_export	*init_export(char **env)
 		splitted = ft_split(env[i], '=');
 		if (splitted == NULL)
 			return (NULL);
-		if (!splitted[0])
-			expt->var_name[i] = NULL;
-		else
-			expt->var_name[i] = ft_strdup(splitted[0]);
-		if (!splitted[1])
-			expt->value[i] = NULL;
-		else
-			expt->value[i] = ft_strdup(splitted[1]);
+		expt->var_name[i] = ft_strdup(splitted[0]);
+		expt->value[i] = ft_strdup(splitted[1]);
 		ft_free_array(splitted);
 		i++;
 	}
@@ -96,6 +90,12 @@ t_export	*export_sorter(void)
 						= ft_strdup(expt->var_name[i]);
 					free(expt->var_name[i]);
 					expt->var_name[i] = ft_strdup(temp);
+					free(temp);
+					temp = expt->value[i + 1];
+					expt->value[i + 1]
+						= ft_strdup(expt->value[i]);
+					free(expt->value[i]);
+					expt->value[i] = ft_strdup(temp);
 					free(temp);
 				}
 				else
