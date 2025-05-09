@@ -103,6 +103,8 @@ void	ft_free_strstr(char **strstr);
 char	**ft_split2(char const *str, char c);
 char	*ft_substr2(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin2(char *s1, char *s2, int flag);
-char	*ft_free_array(char **strstr);
+void	*ft_free_array(char **strstr, size_t len);
+char	**ft_append_to_array(char **array, size_t arraylen,
+			char *str, int flag);
 
 #endif

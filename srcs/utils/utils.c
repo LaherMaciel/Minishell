@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 20:51:30 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/08 16:36:02 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/09 13:36:03 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static char	*search_command_in_path(char *cmd, char *path_env)
 		free(full_path); // Free the full path if the command is not executable.
 		full_path = NULL;
 	}
-	ft_free_array(paths); // Free the array of directories.
+	ft_free_array(paths, 0); // Free the array of directories.
 	return (full_path); // Return the full path to the command (or NULL if not found).
 }
 
@@ -130,4 +130,23 @@ void	handle_error_and_exit(int error, char *message)
 	if (error == 0 || error == 1) // Set exit status to 0 for success or informational messages.
 		out = 0;
 	exit(out);
+}
+
+void	ft_swap(char **a, char **b, int flag)
+{
+	char	*temp;
+
+	temp = *a;
+	if (flag == 1)
+	{
+		*a = ft_strdup(*b);
+		free(*b);
+		*b = ft_strdup(temp);
+		free(temp);
+	}
+	else
+	{
+		*a = *b;
+		*b = temp;
+	}
 }

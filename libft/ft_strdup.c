@@ -30,7 +30,7 @@ char	*ft_strdup(const char *src)
 
 	if (!src)
 		return (NULL);
-	copy = malloc((ft_strlen(src) + 1) * sizeof(char));
+	copy = ft_calloc((ft_strlen(src) + 1), sizeof(char));
 	if (!copy)
 		return (NULL);
 	i = 0;
@@ -39,6 +39,5 @@ char	*ft_strdup(const char *src)
 		copy[i] = src[i];
 		i++;
 	}
-	copy[i] = '\0';
 	return (copy);
 }

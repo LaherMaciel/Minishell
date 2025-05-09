@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:07:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/08 22:12:53 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/09 13:39:04 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_mshell	*mshell(void)
 void	init_shell(char **env)
 {
 	mshell()->env = env;
-	mshell()->expt = malloc(sizeof(t_export));
+	mshell()->expt = ft_calloc(sizeof(t_export), 1);
 	if (!mshell()->expt)
 		exit(EXIT_FAILURE);
 	mshell()->expt = init_export(env);
@@ -48,7 +48,6 @@ int	main(int argv, char **argc, char **env)
 	init_shell(env);
 	//signal_handler();
 	receive_input();
-	ft_free_array(mshell()->expt->var_name);
-	ft_free_array(mshell()->expt->value);
+	ft_free_export(NULL);
 	return (0);
 }

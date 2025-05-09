@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/07 20:37:47 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/09 13:35:40 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	execute_simple_command(char *cmds, int infile, int outfile)
 	cmd_path = get_command_path(args[0], 0);
 	if (!cmd_path)
 	{
-		ft_free_array(args);
+		ft_free_array(args, 0);
 		handle_error_and_exit(0, "");
 	}
 	if (infile != STDERR_FILENO)
@@ -85,7 +85,15 @@ char	*execute_commands(char *line)
 			ft_printf("env: %s: No such file or directory\n", input[1]);
 	}
 	else if (ft_strcmp(input[0], "export") == 0)
-		ft_export();
+	{
+		if (input[1] == NULL)
+			ft_export();
+		else
+		{
+			mshell()->expt = add_to_export(input[1]);
+			mshell()->expt = export_sorter();
+		}
+	}
 	else
 		run_command(line, STDIN_FILENO, STDOUT_FILENO);
 	while (wait(NULL) > 0)

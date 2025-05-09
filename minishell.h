@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:05:39 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/08 21:58:07 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/09 13:21:50 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void		init_environ(void);
 t_export	*init_export(char **env);
 void		ft_export(void);
 t_export	*export_sorter(void);
+t_export	*add_to_export(char *str);
+void		*ft_free_export(t_export *expt);
 
 //signals
 void		signal_handler(void);
@@ -67,6 +69,7 @@ int			create_child_process(void);
 void		handle_error_and_exit(int error, char *message);
 char		*get_command_path(char *cmd, int flag);
 void		handle_error_and_exit(int error, char *message);
+void		ft_swap(char **a, char **b, int flag);
 
 //main
 t_mshell	*mshell(void);

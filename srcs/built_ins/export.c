@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 20:17:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/08 22:09:57 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/09 13:30:48 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,24 @@ void	init_environ(void)
 }
  */
 
+void	ft_export(void)
+{
+	int	i;
+
+	i = 0;
+	while (mshell()->expt->var_name[i])
+	{
+		if (mshell()->expt->value[i] != NULL)
+			ft_printf("%s=\"%s\"\n",
+				mshell()->expt->var_name[i],
+				mshell()->expt->value[i]);
+		else
+			ft_printf("%s=\n",
+				mshell()->expt->var_name[i]);
+		i++;
+	}
+}
+
 t_export	*init_export(char **env)
 {
 	t_export	*expt;
@@ -29,45 +47,28 @@ t_export	*init_export(char **env)
 	if (!expt)
 		return (NULL);
 	expt->var_name = ft_calloc(sizeof(char *), (ft_arraylen(env) + 1));
+	if (!expt->var_name)
+		return (NULL);
 	expt->value = ft_calloc(sizeof(char *), (ft_arraylen(env) + 1));
-	if (!expt->value || !expt->var_name)
+	if (!expt->value)
 		return (NULL);
 	i = 0;
 	while (env[i])
 	{
 		splitted = ft_split(env[i], '=');
 		if (splitted == NULL)
-			return (NULL);
+			return (ft_free_export(expt));
 		expt->var_name[i] = ft_strdup(splitted[0]);
 		expt->value[i] = ft_strdup(splitted[1]);
-		ft_free_array(splitted);
+		ft_free_array(splitted, 0);
 		i++;
 	}
 	return (expt);
 }
 
-void	ft_export(void)
-{
-	int	i;
-
-	i = 0;
-	while (mshell()->expt->var_name[i])
-	{
-		if (mshell()->expt->value[i] != NULL)
-			ft_printf("declare -x %s=\"%s\"\n",
-				mshell()->expt->var_name[i],
-				mshell()->expt->value[i]);
-		else
-			ft_printf("declare -x %s=\n",
-				mshell()->expt->var_name[i]);
-		i++;
-	}
-}
-
 t_export	*export_sorter(void)
 {
 	t_export	*expt;
-	char		*temp;
 	int			diff;
 	int			i;
 	int			j;
@@ -77,29 +78,16 @@ t_export	*export_sorter(void)
 	expt = mshell()->expt;
 	while (j >= 0)
 	{
-		while (i < j)
+		while (i <= j && expt->var_name[i + 1])
 		{
-			if (expt->var_name[i + 1] != NULL)
+			diff = ft_strcmp(expt->var_name[i],
+					expt->var_name[i + 1]);
+			if (diff > 0)
 			{
-				diff = ft_strcmp(expt->var_name[i],
-						expt->var_name[i + 1]);
-				if (diff > 0)
-				{
-					temp = expt->var_name[i + 1];
-					expt->var_name[i + 1]
-						= ft_strdup(expt->var_name[i]);
-					free(expt->var_name[i]);
-					expt->var_name[i] = ft_strdup(temp);
-					free(temp);
-					temp = expt->value[i + 1];
-					expt->value[i + 1]
-						= ft_strdup(expt->value[i]);
-					free(expt->value[i]);
-					expt->value[i] = ft_strdup(temp);
-					free(temp);
-				}
-				else
-					i++;
+				ft_swap(&expt->var_name[i],
+					&expt->var_name[i + 1], 1);
+				ft_swap(&expt->value[i],
+					&expt->value[i + 1], 1);
 			}
 			else
 				i++;
@@ -108,4 +96,64 @@ t_export	*export_sorter(void)
 		i = 0;
 	}
 	return (expt);
+}
+
+t_export	*add_to_export(char *str)
+{
+	t_export	*expt;
+	char		**splitted;
+	int			i;
+
+	expt = mshell()->expt;
+	if (!expt || !str)
+		return (NULL);
+	splitted = ft_split(str, '=');
+	if (!splitted || !splitted[0])
+		return (ft_free_array(splitted, 0));
+	i = 0;
+	while (expt->var_name && expt->var_name[i])
+	{
+		if (ft_strcmp(expt->var_name[i], splitted[0]) == 0)
+		{
+			free(expt->value[i]);
+			expt->value[i] = ft_strdup(splitted[1]);
+			ft_free_array(splitted, 0);
+			return (expt);
+		}
+		i++;
+	}
+	expt->var_name = ft_append_to_array(expt->var_name,
+			ft_arraylen(expt->var_name), splitted[0], 1);
+	if (!expt->var_name)
+		ft_free_export(expt);
+	else
+		expt->value = ft_append_to_array(expt->value,
+				ft_arraylen(expt->var_name) - 1, splitted[1], 1);
+	if (!expt->value)
+		ft_free_export(expt);
+	free(splitted);
+	return (expt);
+}
+
+void	*ft_free_export(t_export *expt)
+{
+	if (expt)
+	{
+		if (expt->value)
+			ft_free_array(expt->value, ft_arraylen(expt->var_name));
+		if (expt->var_name)
+			ft_free_array(expt->var_name, 0);
+		free(expt);
+	}
+	else if (mshell()->expt)
+	{
+		if (mshell()->expt->value)
+			ft_free_array(mshell()->expt->value,
+				ft_arraylen(mshell()->expt->var_name));
+		if (mshell()->expt->var_name)
+			ft_free_array(mshell()->expt->var_name, 0);
+		free(mshell()->expt);
+		mshell()->expt = NULL;
+	}
+	return (NULL);
 }
