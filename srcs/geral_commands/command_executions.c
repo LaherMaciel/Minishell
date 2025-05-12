@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/09 13:35:40 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/12 21:38:16 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,10 @@ char	*execute_commands(char *line)
 			mshell()->expt = add_to_export(input[1]);
 			mshell()->expt = export_sorter();
 		}
+	}
+	else if (ft_strcmp(input[0], "unset") == 0)
+	{
+		ft_unset(input, 1);
 	}
 	else
 		run_command(line, STDIN_FILENO, STDOUT_FILENO);

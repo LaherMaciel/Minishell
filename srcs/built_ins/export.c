@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 20:17:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/09 13:30:48 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/12 20:58:24 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,12 +27,11 @@ void	ft_export(void)
 	while (mshell()->expt->var_name[i])
 	{
 		if (mshell()->expt->value[i] != NULL)
-			ft_printf("%s=\"%s\"\n",
+			ft_printf("declare -x %s=\"%s\"\n",
 				mshell()->expt->var_name[i],
 				mshell()->expt->value[i]);
 		else
-			ft_printf("%s=\n",
-				mshell()->expt->var_name[i]);
+			ft_printf("declare -x %s=\"\"\n", mshell()->expt->var_name[i]);
 		i++;
 	}
 }
