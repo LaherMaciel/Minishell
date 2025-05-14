@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/12 21:38:16 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/14 18:58:27 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	execute_simple_command(char *cmds, int infile, int outfile)
 {
 	char	**args;
 	char	*cmd_path;
+	char	**env;
 
 	args = ft_split(cmds, ' ');
 	if (!args)
@@ -42,7 +43,10 @@ void	execute_simple_command(char *cmds, int infile, int outfile)
 		close(infile);
 	if (outfile != STDOUT_FILENO)
 		close(outfile);
-	execve(cmd_path, args, mshell()->env);
+	if (mshell()->aux_env)
+		ft_free_array(mshell()->aux_env, 0);
+	env = default_env();
+	execve(cmd_path, args, env);
 	handle_error_and_exit(-1, "Execution failed");
 }
 
@@ -90,16 +94,15 @@ char	*execute_commands(char *line)
 			ft_export();
 		else
 		{
+			mshell()->env = add_to_export(input[1]);
 			mshell()->expt = add_to_export(input[1]);
 			mshell()->expt = export_sorter();
 		}
 	}
 	else if (ft_strcmp(input[0], "unset") == 0)
-	{
-		ft_unset(input, 1);
-	}
+		ft_unset(input[1]);
 	else
-		run_command(line, STDIN_FILENO, STDOUT_FILENO);
+		run_command(line, mshell()->infile, mshell()->outfile);
 	while (wait(NULL) > 0)
 		;
 	ft_free_strstr(input);

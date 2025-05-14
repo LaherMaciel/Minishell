@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 15:47:56 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/04/25 15:53:15 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/14 18:33:13 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,22 +27,24 @@ char	*ft_strjoin2(char *s1, char *s2, int flag)
 	size_t	i;
 	size_t	j;
 
-	sjoin = malloc((ft_strlen(s1) + ft_strlen(s2)) * sizeof(char) + 1);
+	sjoin = ft_calloc((ft_strlen(s1) + ft_strlen(s2)), sizeof(char) + 1);
 	if (!sjoin)
 		return (NULL);
 	i = -1;
-	while (s1[++i] != '\0')
-		sjoin[i] = s1[i];
-	if (flag == 1 || flag == 3)
-		free(s1);
-	j = -1;
-	while (s2[++j] != '\0')
+	if (s1)
 	{
-		sjoin[i] = s2[j];
-		i++;
+		while (s1[++i] != '\0')
+			sjoin[i] = s1[i];
+		if (flag == 1 || flag == 3)
+			free(s1);
 	}
-	if (flag == 2 || flag == 3)
-		free(s2);
-	sjoin[i] = '\0';
+	j = -1;
+	if (s2)
+	{
+		while (s2[++j] != '\0')
+			sjoin[i++] = s2[j];
+		if (flag == 2 || flag == 3)
+			free(s2);
+	}
 	return (sjoin);
 }

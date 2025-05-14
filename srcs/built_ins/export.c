@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 20:17:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/12 20:58:24 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/12 22:220:13:5 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ void	ft_export(void)
 	while (mshell()->expt->var_name[i])
 	{
 		if (mshell()->expt->value[i] != NULL)
-			ft_printf("declare -x %s=\"%s\"\n",
+			ft_printf("%s=\"%s\"\n",
 				mshell()->expt->var_name[i],
 				mshell()->expt->value[i]);
 		else
-			ft_printf("declare -x %s=\"\"\n", mshell()->expt->var_name[i]);
+			ft_printf("%s=\"\"\n", mshell()->expt->var_name[i]);
 		i++;
 	}
 }
@@ -68,26 +68,20 @@ t_export	*init_export(char **env)
 t_export	*export_sorter(void)
 {
 	t_export	*expt;
-	int			diff;
-	int			i;
-	int			j;
+	size_t		i;
+	size_t		j;
 
 	i = 0;
-	j = ft_arraylen(mshell()->env);
+	j = ft_arraylen(mshell()->env->var_name);
 	expt = mshell()->expt;
-	while (j >= 0)
+	while (j > 0)
 	{
 		while (i <= j && expt->var_name[i + 1])
 		{
-			diff = ft_strcmp(expt->var_name[i],
-					expt->var_name[i + 1]);
-			if (diff > 0)
-			{
+			if (ft_strcmp(expt->var_name[i],
+					expt->var_name[i + 1]) > 0)
 				ft_swap(&expt->var_name[i],
 					&expt->var_name[i + 1], 1);
-				ft_swap(&expt->value[i],
-					&expt->value[i + 1], 1);
-			}
 			else
 				i++;
 		}

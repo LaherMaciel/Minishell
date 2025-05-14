@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:05:39 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/12 21:36:25 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/12 220:37 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,16 @@ typedef struct s_export
 typedef struct s_mshell
 {
 	t_export	*expt;
+	t_export	*env;
 
 	char		**args;
-	char		**env;
+	char		**aux_env;
 	char		*line;
 	char		*cmd;
 	int			pid;
 	int			status;
+	int			infile;
+	int			outfile;
 }				t_mshell;
 
 //prompt
@@ -60,7 +63,9 @@ void		ft_export(void);
 t_export	*export_sorter(void);
 t_export	*add_to_export(char *str);
 void		*ft_free_export(t_export *expt);
-void		ft_unset(char **input, int index);
+void		ft_unset(char *input);
+char		**default_env(void);
+t_export	*init_env(char **env);
 
 //signals
 void		signal_handler(void);

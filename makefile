@@ -4,7 +4,7 @@ GCOMMANDS_C = command_executions.c \
 
 PROMPT_C = prompt.c \
 
-BUILTINS_C =  built_ins.c export.c unset.c\
+BUILTINS_C =  built_ins.c export.c unset.c env.c\
 
 UTILS_C = utils.c \
 
