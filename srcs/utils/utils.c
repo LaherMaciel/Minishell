@@ -6,12 +6,11 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 20:51:30 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/12 21:18:51 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/14 21:08:36 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
 
 /**
  * @brief Create a child process using fork().
@@ -46,31 +45,31 @@ int	create_child_process(void)
  */
 static char	*search_command_in_path(char *cmd, char *path_env)
 {
-	size_t	i;          // Iterator for the directories in PATH.
-	char	**paths;    // Array to store the directories in PATH.
-	char	*full_path; // Full path to the command.
+	size_t	i;
+	char	**paths;
+	char	*full_path;
 
 	if (access(cmd, X_OK) == 0)
 		return (ft_strdup(cmd));
-	paths = ft_split(path_env, ':'); // Split the PATH environment variable into individual directories.
+	paths = ft_split(path_env, ':');
 	if (!paths)
 		return (NULL);
 	i = -1;
-	while (paths[++i]) // Iterate through each directory in PATH.
+	while (paths[++i])
 	{
-		full_path = ft_strjoin(paths[i], "/"); // Construct the full path by joining the directory and the command.
+		full_path = ft_strjoin(paths[i], "/");
 		if (!full_path)
 			break ;
 		full_path = ft_strjoin2(full_path, cmd, 1);
 		if (!full_path)
 			break ;
-		if (access(full_path, X_OK) == 0) // Check if the command is executable.
+		if (access(full_path, X_OK) == 0)
 			break ;
-		free(full_path); // Free the full path if the command is not executable.
+		free(full_path);
 		full_path = NULL;
 	}
-	ft_free_array(paths, 0); // Free the array of directories.
-	return (full_path); // Return the full path to the command (or NULL if not found).
+	ft_free_array(paths, 0);
+	return (full_path);
 }
 
 /**
@@ -89,16 +88,16 @@ static char	*search_command_in_path(char *cmd, char *path_env)
  */
 char	*get_command_path(char *cmd, int flag)
 {
-	char	*path_env;   // The PATH environment variable.
-	char	*full_path;  // The full path to the command.
+	char	*path_env;
+	char	*full_path;
 
-	path_env = getenv("PATH"); // Retrieve the PATH environment variable.
+	path_env = getenv("PATH");
 	if (!path_env)
 		return (NULL);
-	full_path = search_command_in_path(cmd, path_env); // Search for the command in the directories listed in PATH.
-	if (!full_path && flag == 0) // Print an error message if the command is not found and the flag is set.
+	full_path = search_command_in_path(cmd, path_env);
+	if (!full_path && flag == 0)
 		ft_fdprintf(2, "Minishell: command not found: %s\n", cmd);
-	return (full_path); // Return the full path to the command (or NULL if not found).
+	return (full_path);
 }
 
 /**
@@ -114,7 +113,7 @@ void	handle_error_and_exit(int error, char *message)
 {
 	int	out;
 
-	out = 1; // Default exit status.
+	out = 1;
 	if (error == -1)
 		ft_fdprintf(STDERR_FILENO, "%s: %s\n", message, strerror(errno));
 	if (error == -2)
@@ -127,7 +126,7 @@ void	handle_error_and_exit(int error, char *message)
 			message);
 	if (error == 1)
 		ft_fdprintf(STDERR_FILENO, "%s\n", message);
-	if (error == 0 || error == 1) // Set exit status to 0 for success or informational messages.
+	if (error == 0 || error == 1)
 		out = 0;
 	exit(out);
 }

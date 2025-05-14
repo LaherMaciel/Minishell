@@ -66,6 +66,8 @@ void		*ft_free_export(t_export *expt);
 void		ft_unset(char *input);
 char		**default_env(void);
 t_export	*init_env(char **env);
+void		ft_env(void);
+t_export	*add_to_env(char *str);
 
 //signals
 void		signal_handler(void);

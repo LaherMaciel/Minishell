@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:07:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/14 18:57:44 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/14 20:57:12 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	init_shell(char **env)
 	if (!mshell()->env)
 		exit(EXIT_FAILURE);
 	mshell()->env = init_env(env);
-	if (!(mshell()->env))
+	if (mshell()->env == NULL)
 		handle_error_and_exit(-2, "Failed to create env struct");
 	mshell()->expt = ft_calloc(sizeof(t_export), 1);
 	if (!mshell()->expt)
@@ -54,7 +54,6 @@ int	main(int argv, char **argc, char **env)
 	(void)argv;
 	(void)argc;
 	init_shell(env);
-	//signal_handler();
 	receive_input();
 	ft_free_export(NULL);
 	ft_free_export(mshell()->env);

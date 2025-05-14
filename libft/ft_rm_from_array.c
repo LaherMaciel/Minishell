@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 21:17:42 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/12 22:03:10 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/14 20:24:03 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ char	**ft_rm_from_array(char **array, size_t arraylen, size_t index)
 		return (NULL);
 	if (arraylen == 0)
 		arraylen = ft_arraylen(array);
-	new_array = ft_calloc(arraylen, sizeof(char *));
+	new_array = ft_calloc(arraylen + 1, sizeof(char *));
 	if (!new_array)
 		return (NULL);
 	i = 0;

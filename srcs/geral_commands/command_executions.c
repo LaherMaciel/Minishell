@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/14 18:58:27 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/14 20:42:25 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ void	execute_simple_command(char *cmds, int infile, int outfile)
 {
 	char	**args;
 	char	*cmd_path;
-	char	**env;
 
 	args = ft_split(cmds, ' ');
 	if (!args)
@@ -45,8 +44,7 @@ void	execute_simple_command(char *cmds, int infile, int outfile)
 		close(outfile);
 	if (mshell()->aux_env)
 		ft_free_array(mshell()->aux_env, 0);
-	env = default_env();
-	execve(cmd_path, args, env);
+	execve(cmd_path, args, default_env());
 	handle_error_and_exit(-1, "Execution failed");
 }
 
@@ -84,7 +82,7 @@ char	*execute_commands(char *line)
 	else if (ft_strcmp(input[0], "env") == 0)
 	{
 		if (input[1] == NULL)
-			ft_printf("%t\n", mshell()->env);
+			ft_env();
 		else
 			ft_printf("env: %s: No such file or directory\n", input[1]);
 	}
@@ -94,7 +92,7 @@ char	*execute_commands(char *line)
 			ft_export();
 		else
 		{
-			mshell()->env = add_to_export(input[1]);
+			mshell()->env = add_to_env(input[1]);
 			mshell()->expt = add_to_export(input[1]);
 			mshell()->expt = export_sorter();
 		}

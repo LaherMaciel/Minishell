@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:53:37 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/14 19:16:53 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/14 21:10:26 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ static void	handle_input_redirection(char *input)
 {
 	if (!input)
 	{
-		ft_fdprintf(STDERR_FILENO, "Minishell: syntax error near unexpected token `newline'\n");
+		ft_fdprintf(STDERR_FILENO, "Minishell: ",
+			"syntax error near unexpected token `newline'\n");
 		return ;
 	}
 	mshell()->infile = open(input, O_RDONLY);
@@ -58,8 +59,8 @@ static void	handle_input_redirection(char *input)
 static void	handle_output_redirection(char *input)
 {
 	if (!input)
-		return (ft_fdprintf(STDERR_FILENO, 
-			"Minishell: syntax error near unexpected token `newline'\n"));
+		return (ft_fdprintf(STDERR_FILENO,
+				"Minishell: syntax error near unexpected token `newline'\n"));
 	mshell()->outfile = open(input, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (mshell()->outfile < 0)
 	{
@@ -84,11 +85,12 @@ static void	handle_output_redirection(char *input)
 static void	handle_append_redirection(char *input)
 {
 	if (!input)
-		return (ft_fdprintf(STDERR_FILENO, 
-			"Minishell: syntax error near unexpected token `newline'\n"));
+		return (ft_fdprintf(STDERR_FILENO,
+				"Minishell: syntax error near unexpected token `newline'\n"));
 	mshell()->outfile = open(input, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (mshell()->outfile < 0)
-		return (ft_fdprintf(STDERR_FILENO, "Minishell: %s: %s\n", strerror(errno), input));
+		return (ft_fdprintf(STDERR_FILENO, "Minishell: %s: ",
+				"%s\n", strerror(errno), input));
 }
 
 /**

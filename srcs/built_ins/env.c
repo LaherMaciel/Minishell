@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 22:25:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/14 18:38:35 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/14 20:33:21 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ char	**default_env(void)
 	return (env);
 }
 
-t_export	*init_env(char **env)
+t_export	*init_env(char **org_env)
 {
 	t_export	*expt;
 	char		**splitted;
@@ -36,16 +36,16 @@ t_export	*init_env(char **env)
 	expt = mshell()->env;
 	if (!expt)
 		return (NULL);
-	expt->var_name = ft_calloc(sizeof(char *), (ft_arraylen(env) + 1));
+	expt->var_name = ft_calloc(sizeof(char *), (ft_arraylen(org_env) + 1));
 	if (!expt->var_name)
 		return (NULL);
-	expt->value = ft_calloc(sizeof(char *), (ft_arraylen(env) + 1));
+	expt->value = ft_calloc(sizeof(char *), (ft_arraylen(org_env) + 1));
 	if (!expt->value)
 		return (NULL);
 	i = 0;
-	while (env[i])
+	while (org_env[i])
 	{
-		splitted = ft_split(env[i], '=');
+		splitted = ft_split(org_env[i], '=');
 		if (splitted == NULL)
 			return (ft_free_export(expt));
 		expt->var_name[i] = ft_strdup(splitted[0]);
@@ -54,4 +54,58 @@ t_export	*init_env(char **env)
 		i++;
 	}
 	return (expt);
+}
+
+t_export	*add_to_env(char *str)
+{
+	t_export	*env;
+	char		**splitted;
+	int			i;
+
+	env = mshell()->env;
+	if (!env || !str)
+		return (NULL);
+	splitted = ft_split(str, '=');
+	if (!splitted || !splitted[0])
+		return (ft_free_array(splitted, 0));
+	i = 0;
+	while (env->var_name && env->var_name[i])
+	{
+		if (ft_strcmp(env->var_name[i], splitted[0]) == 0)
+		{
+			free(env->value[i]);
+			env->value[i] = ft_strdup(splitted[1]);
+			ft_free_array(splitted, 0);
+			return (env);
+		}
+		i++;
+	}
+	env->var_name = ft_append_to_array(env->var_name,
+			ft_arraylen(env->var_name), splitted[0], 1);
+	if (!env->var_name)
+		ft_free_export(env);
+	else
+		env->value = ft_append_to_array(env->value,
+				ft_arraylen(env->var_name) - 1, splitted[1], 1);
+	if (!env->value)
+		ft_free_export(env);
+	free(splitted);
+	return (env);
+}
+
+void	ft_env(void)
+{
+	int	i;
+
+	i = 0;
+	while (mshell()->env->var_name[i])
+	{
+		if (mshell()->env->value[i] != NULL)
+			ft_printf("%s=\"%s\"\n",
+				mshell()->env->var_name[i],
+				mshell()->env->value[i]);
+		else
+			ft_printf("%s=\"\"\n", mshell()->env->var_name[i]);
+		i++;
+	}
 }

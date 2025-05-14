@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:32 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/05 20:48:47 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/14 21:11:07 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	change_directory(const char *path)
 		perror("cd");
 }
 
- /* 
+/* 
 int	builtin_cd(char *input)
 {
 	char	*path;
@@ -88,14 +88,11 @@ int	builtin_echo(char **input)
 
 	n_flag = false;
 	i = 1;
-	// Check for -n flag
 	if (input[1] != NULL && ft_strcmp(input[1], "-n") == 0)
 	{
 		n_flag = true;
 		i++;
 	}
-
-	// Print all arguments separated by spaces
 	while (input[i] != NULL)
 	{
 		ft_printf("%s", input[i]);
@@ -103,8 +100,6 @@ int	builtin_echo(char **input)
 			ft_printf(" ");
 		i++;
 	}
-
-	// Print newline unless -n flag was set
 	if (!n_flag)
 		ft_printf("\n");
 	return (0);
