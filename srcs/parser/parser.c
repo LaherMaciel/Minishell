@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:10:31 by karocha-          #+#    #+#             */
-/*   Updated: 2025/05/16 19:02:21 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/16 19:38:11 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,6 @@ char	**ft_split_minishell(char *input)
 	return (result);
 }
 
-//ls>>test.txt|cat test.txt|grep "mini lib"
 char	**parser(char *input)
 {
 	char	**aux;
@@ -162,6 +161,3 @@ char	**parser(char *input)
 	ft_printf("ft_split_minishell\n%t\n\n", aux);
 	return (aux);
 }
-
-//ls>test.txt | cat test.txt | grep "mini lib"
-//"ls | -a > something << dasd 'dasdasd' fhjsdlf"

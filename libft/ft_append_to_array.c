@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 11:14:46 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/16 15:38:02 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/16 19:29:21 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	**init_addend(char **array, size_t arraylen,
 		}
 		return (new_array);
 	}
-	return (ft_calloc(arraylen + 2, sizeof(char *)));
+	return (ft_calloc(2 + arraylen, sizeof(char *)));
 }
 
 char	**add_str(char **new_array, char *str, int flag, int i)
