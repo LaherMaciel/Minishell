@@ -69,6 +69,7 @@ int	main(int argc, char **argv)
 	(void) argc;
 	ft_printf("input = %s\n", argv[1]);
 	result = ft_split_minishell(argv[1]);
+	/* ft_printf("\n\ninput = %s\n", argv[1]); */
 	if (!result)
 		ft_printf("NULL\n");
 	else

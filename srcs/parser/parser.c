@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:10:31 by karocha-          #+#    #+#             */
-/*   Updated: 2025/05/16 18:28:01 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/16 19:02:21 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,82 +44,83 @@ static char	*is_special_sequence(char *str)
 	return (NULL);
 }
 
-static char	**handle_special_chars(char *input,
+static char	**handle_special_chars(char **input,
 	char **result, int *k, int quote)
 {
 	char	*sequence;
 
-	ft_printf("input = '%c'\nk = %i\n", input[0], *k);
-	sequence = is_special_sequence(input);
+	/* ft_printf("input = '%c'\nk = %i\n", *input[0], *k); */
+	sequence = is_special_sequence(*input);
 	if (sequence)
 	{
 		if (ft_strcmp(sequence, " ") == 0 && quote == 0)
 		{
-			ft_printf ("if (ft_strcmp(sequence(%s), " ")(%i) == 0 "
-				"&& quote(%i) == 0)\n", sequence, ft_strcmp(sequence, " "), quote);
+			/* ft_printf ("if (ft_strcmp(sequence(%s), " ")(%i) == 0 "
+				"&& quote(%i) == 0)\n", sequence, ft_strcmp(sequence, " "), quote); */
 			if (result[*k])
 			{
 				result = ft_append_to_array(result, 0, NULL, 1);
-				ft_printf("	Result[%i] = %s\n", *k, result[*k]);
+				/* ft_printf("	Result[%i] = %s\n", *k, result[*k]); */
 				*k += 1;
-				ft_printf("	New NULL array position\n");
+				/* ft_printf("	New NULL array position\n");
 				ft_printf("	Now k = %i\n", *k);
-				ft_printf("	Result[%i] = %s\n", *k, result[*k]);
+				ft_printf("	Result[%i] = %s\n", *k, result[*k]); */
 			}
 			else
 			{
-				ft_printf("	Notting done\n");
-				ft_printf("	k = %i\n", *k);
+				/* ft_printf("	Notting done\n");
+				ft_printf("	k = %i\n", *k); */
 			}
 		}
 		else if (ft_strlen(sequence) == 2)
 		{
-			ft_printf("if (ft_strlen(sequence(%s))(%i) == 2)\n",
-				sequence, ft_strlen(sequence));
+			/* ft_printf("if (ft_strlen(sequence(%s))(%i) == 2)\n",
+				sequence, ft_strlen(sequence)); */
 			result = ft_append_to_array(result, 0, sequence, 1);
-			ft_printf("	Added '%s'\n", sequence);
+			/* ft_printf("	Added '%s'\n", sequence); */
 			result = ft_append_to_array(result, 0, NULL, 1);
-			ft_printf("	Result[%i] = %s\n", *k, result[*k]);
+			/* ft_printf("	Result[%i] = %s\n", *k, result[*k]); */
 			*k += 1;
-			ft_printf("	New NULL array position\n");
+			/* ft_printf("	New NULL array position\n");
 			ft_printf("	Now k = %i\n", *k);
-			ft_printf("	Result[%i] = %s\n", *k, result[*k]);
+			ft_printf("	Result[%i] = %s\n", *k, result[*k]); */
+			//*input++;
 		}
 		else if (ft_strlen(sequence) == 1 && ft_strcmp(sequence, " ") != 0)
 		{
-			ft_printf("if ft_strlen(sequence(%s))(%i) == 1 "
+			/* ft_printf("if ft_strlen(sequence(%s))(%i) == 1 "
 				"&& ft_strcmp(sequence(%s), " ")(%i) != 0\n", sequence,
-				ft_strlen(sequence), sequence, ft_strcmp(sequence, " "));
+				ft_strlen(sequence), sequence, ft_strcmp(sequence, " ")); */
 			result = ft_append_to_array(result, 0, sequence, 1);
-			ft_printf("	Added '%s'\n", sequence);
+			/* ft_printf("	Added '%s'\n", sequence); */
 			result = ft_append_to_array(result, 0, NULL, 1);
-			ft_printf("	Result[%i] = %s\n", *k, result[*k]);
+			/* ft_printf("	Result[%i] = %s\n", *k, result[*k]); */
 			*k += 1;
-			ft_printf("	New NULL array position\n");
+			/* ft_printf("	New NULL array position\n");
 			ft_printf("	Now k = %i\n", *k);
-			ft_printf("	Result[%i] = %s\n", *k, result[*k]);
+			ft_printf("	Result[%i] = %s\n", *k, result[*k]); */
 		}
 		else
 		{
-			ft_printf("else sequence = '%s'\n", sequence);
-			result[*k] = ft_strjoin3(result[*k], input[0], 1);
-			ft_printf("	Added '%s' to the end of result[%i]\n", sequence, *k);
-			ft_printf("	Now Resuly[%i] = %s\n", *k, result[*k]);
+			/* ft_printf("else sequence = '%s'\n", sequence); */
+			result[*k] = ft_strjoin3(result[*k], *input[0], 1);
+			/* ft_printf("	Added '%s' to the end of result[%i]\n", sequence, *k);
+			ft_printf("	Now Resuly[%i] = %s\n", *k, result[*k]); */
 		}
 	}
 	else
 	{
-		result[*k] = ft_strjoin3(result[*k], input[0], 1);
-		ft_printf("	Added '%c' to the end of result[%i]\n", input[0], *k);
-		ft_printf("	Now Resuly[%i] = %s\n", *k, result[*k]);
+		result[*k] = ft_strjoin3(result[*k], *input[0], 1);
+		/* ft_printf("	Added '%c' to the end of result[%i]\n", *input[0], *k);
+		ft_printf("	Now Resuly[%i] = %s\n", *k, result[*k]); */
 	}
-	ft_printf("\n");
+	/* ft_printf("\n"); */
 	return (result);
 }
 
 char	**ft_split_minishell(char *input)
 {
-	int		i;
+	size_t	i;
 	int		k;
 	int		quote;
 	char	**result;
@@ -131,19 +132,21 @@ char	**ft_split_minishell(char *input)
 	result = ft_calloc(3, sizeof(char *));
 	if (!input || !result)
 		return (NULL);
-	while (input[i])
+	while (input[0])
 	{
 		about_quotes(input, &quote, i);
-		if ((quote == 0 || quote == 2) && input[i] == '$'
+		if ((quote == 0 || quote == 2) && input[0] == '$'
 			&& get_value(input + i + 1))
 		{
-			value = get_value(input + i + 1);
-			i = ft_strlen(value) + 1 + i;
+			value = get_value(input + 1);
+			i = 0;
+			while (i < ft_strlen(value) + 1)
+				input++;
 			result[k] = ft_strjoin2(result[k], value, 1);
 		}
 		else
-			result = handle_special_chars(input + i, result, &k, quote);
-		i++;
+			result = handle_special_chars(&input, result, &k, quote);
+		input++;
 	}
 	return (result);
 }
