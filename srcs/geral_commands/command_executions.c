@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/14 20:42:25 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/16 11:31:09 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	*execute_commands(char *line)
 {
 	char	**input;
 
-	input = ft_split(line, ' ');
+	input = parser(line);
 	if (ft_strncmp(input[0], "cd", 0) == 0)
 		change_directory(input[1]);
 	else if (ft_strncmp(input[0], "pwd", 0) == 0)

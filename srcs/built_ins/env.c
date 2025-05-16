@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 22:25:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/14 20:33:21 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/16 15:10:54 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,4 +108,23 @@ void	ft_env(void)
 			ft_printf("%s=\"\"\n", mshell()->env->var_name[i]);
 		i++;
 	}
+}
+
+char	*get_value(char *var_name)
+{
+	t_export	*env;
+	int			i;
+
+	env = mshell()->env;
+	if (!env)
+		return (NULL);
+	i = 0;
+	while (env->var_name && env->var_name[i])
+	{
+		if (ft_strncmp(env->var_name[i], var_name,
+				ft_strlen(env->var_name[i])) == 0)
+			return (env->value[i]);
+		i++;
+	}
+	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:07:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/14 20:57:12 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/16 15:33:331 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_mshell	*mshell(void)
 
 	return (&mshell);
 }
-
+/*
 void	init_shell(char **env)
 {
 	mshell()->infile = STDIN_FILENO;
@@ -60,3 +60,20 @@ int	main(int argv, char **argc, char **env)
 	ft_free_array(mshell()->aux_env, 0);
 	return (0);
 }
+ */
+
+int	main(int argc, char **argv)
+{
+	char	**result;
+
+	(void) argc;
+	ft_printf("input = %s\n", argv[1]);
+	result = ft_split_minishell(argv[1]);
+	if (!result)
+		ft_printf("NULL\n");
+	else
+		ft_printf("Output:\n%t\n", result);
+	ft_free_array(result, 0);
+	return (0);
+}
+//clear && make && valgrind ./minishell "ls | -a > something << dasd 'd as d asd' fhjsdlf"

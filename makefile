@@ -8,6 +8,8 @@ BUILTINS_C =  built_ins.c export.c unset.c env.c\
 
 UTILS_C = utils.c \
 
+PARSER_C = parser.c split_out_quotes.c ft_split3.c ft_substr2.c ft_split_minishell.c ft_strjoin3.c\
+
 LIBFT_DIRECTORY = libft/
 LIBFT_HEADER = $(LIBFT_DIRECTORY)libft.h
 LIBFT = $(LIBFT_DIRECTORY)libft.a
@@ -32,7 +34,11 @@ PROMPT_LIST = $(PROMPT_C)
 PROMPT_DIRECTORY = prompt/
 PROMPT = $(addprefix $(PROMPT_DIRECTORY), $(PROMPT_LIST))
 
-SRCS_LIST = main.c signals.c $(PROMPT) $(BUILTINS) $(GCOMMANDS) $(UTILS)
+PARSER_LIST = $(PARSER_C)
+PARSER_DIRECTORY = parser/
+PARSER = $(addprefix $(PARSER_DIRECTORY), $(PARSER_LIST))
+
+SRCS_LIST = main.c signals.c $(PROMPT) $(BUILTINS) $(GCOMMANDS) $(UTILS) $(PARSER)
 SRCS_DIRECTORY = srcs/
 SRC = $(addprefix $(SRCS_DIRECTORY), $(SRCS_LIST))
 
@@ -71,6 +77,7 @@ $(OBJECTS_DIRECTORY):
 	@mkdir -p $(OBJECTS_DIRECTORY)$(BUILTINS_DIRECTORY)
 	@mkdir -p $(OBJECTS_DIRECTORY)$(GCOMMANDS_DIRECTORY)
 	@mkdir -p $(OBJECTS_DIRECTORY)$(UTILS_DIRECTORY)
+	@mkdir -p $(OBJECTS_DIRECTORY)$(PARSER_DIRECTORY)
 	@echo "[" "$(GREEN)OK$(RESET)" "] | Objects ready!"
 
 $(OBJECTS_DIRECTORY)%.o : $(SRCS_DIRECTORY)%.c

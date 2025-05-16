@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 11:14:46 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/14 21:05:58 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/16 15:38:02 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,8 @@ char	**ft_append_to_array(char **array, size_t arraylen,
 	char	**new_array;
 	size_t	i;
 
+	if (arraylen <= 0)
+		arraylen = ft_arraylen(array);
 	new_array = init_addend(array, arraylen, str, flag);
 	if (!new_array)
 		return (NULL);

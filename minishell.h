@@ -68,6 +68,7 @@ char		**default_env(void);
 t_export	*init_env(char **env);
 void		ft_env(void);
 t_export	*add_to_env(char *str);
+char		*get_value(char *var_name);
 
 //signals
 void		signal_handler(void);
@@ -77,6 +78,14 @@ int			create_child_process(void);
 void		handle_error_and_exit(int error, char *message);
 char		*get_command_path(char *cmd, int flag);
 void		handle_error_and_exit(int error, char *message);
+
+//parser
+char	**parser(char *input);
+char	**split_out_quotes(char const *s, char c);
+char	**ft_split3(char const *str, char *s, int i);
+char	*ft_substr2(char const *s, unsigned int start, size_t len);
+char	**ft_split_minishell(char *input);
+char	*ft_strjoin3(char *s1, char s2, int flag);
 
 //main
 t_mshell	*mshell(void);

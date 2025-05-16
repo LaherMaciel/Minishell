@@ -37,6 +37,8 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 	if (little[0] == '\0')
 		return ((char *)big);
 	a = 0;
+	if (len == 0)
+		len = ft_strlen(big);
 	while (big[a])
 	{
 		b = 0;
