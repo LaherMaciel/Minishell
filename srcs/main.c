@@ -81,3 +81,4 @@ int	main(int argc, char **argv)
 //ls>test.txt | cat test.txt | grep "mini lib"
 //"ls | -a > something << dasd 'da sd a sd' fhjsdlf"
 //clear && make && valgrind ./minishell "ls | -a > something << dasd 'd as d asd' fhjsdlf"
+//ls>>test.txt|cat test.txt|grep "mini lib" ls | -a > something << dasd 'd as d asd' fhjsdlf

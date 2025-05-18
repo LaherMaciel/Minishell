@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:10:31 by karocha-          #+#    #+#             */
-/*   Updated: 2025/05/16 19:38:11 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/18 11:22:16 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,98 +26,6 @@ void	about_quotes(char *input, int *quote, int i)
 		*quote = 0;
 }
 
-static char	*is_special_sequence(char *str)
-{
-	if (str[0] == ' ')
-		return (" ");
-	if (str[0] == '>' && str[1] == '>')
-		return (">>");
-	if (str[0] == '<' && str[1] == '<')
-		return ("<<");
-	if (str[0] == '|' && str[1] == '|')
-		return ("||");
-	if (str[0] == '&' && str[1] == '&')
-		return ("&&");
-	if (str[0] == '|' || str[0] == '>'
-		|| str[0] == '<' || str[0] == '&')
-		return (ft_strjoin3(NULL, str[0], 0));
-	return (NULL);
-}
-
-static char	**handle_special_chars(char **input,
-	char **result, int *k, int quote)
-{
-	char	*sequence;
-
-	/* ft_printf("input = '%c'\nk = %i\n", *input[0], *k); */
-	sequence = is_special_sequence(*input);
-	if (sequence)
-	{
-		if (ft_strcmp(sequence, " ") == 0 && quote == 0)
-		{
-			/* ft_printf ("if (ft_strcmp(sequence(%s), " ")(%i) == 0 "
-				"&& quote(%i) == 0)\n", sequence, ft_strcmp(sequence, " "), quote); */
-			if (result[*k])
-			{
-				result = ft_append_to_array(result, 0, NULL, 1);
-				/* ft_printf("	Result[%i] = %s\n", *k, result[*k]); */
-				*k += 1;
-				/* ft_printf("	New NULL array position\n");
-				ft_printf("	Now k = %i\n", *k);
-				ft_printf("	Result[%i] = %s\n", *k, result[*k]); */
-			}
-			else
-			{
-				/* ft_printf("	Notting done\n");
-				ft_printf("	k = %i\n", *k); */
-			}
-		}
-		else if (ft_strlen(sequence) == 2)
-		{
-			/* ft_printf("if (ft_strlen(sequence(%s))(%i) == 2)\n",
-				sequence, ft_strlen(sequence)); */
-			result = ft_append_to_array(result, 0, sequence, 1);
-			/* ft_printf("	Added '%s'\n", sequence); */
-			result = ft_append_to_array(result, 0, NULL, 1);
-			/* ft_printf("	Result[%i] = %s\n", *k, result[*k]); */
-			*k += 1;
-			/* ft_printf("	New NULL array position\n");
-			ft_printf("	Now k = %i\n", *k);
-			ft_printf("	Result[%i] = %s\n", *k, result[*k]); */
-			//*input++;
-		}
-		else if (ft_strlen(sequence) == 1 && ft_strcmp(sequence, " ") != 0)
-		{
-			/* ft_printf("if ft_strlen(sequence(%s))(%i) == 1 "
-				"&& ft_strcmp(sequence(%s), " ")(%i) != 0\n", sequence,
-				ft_strlen(sequence), sequence, ft_strcmp(sequence, " ")); */
-			result = ft_append_to_array(result, 0, sequence, 1);
-			/* ft_printf("	Added '%s'\n", sequence); */
-			result = ft_append_to_array(result, 0, NULL, 1);
-			/* ft_printf("	Result[%i] = %s\n", *k, result[*k]); */
-			*k += 1;
-			/* ft_printf("	New NULL array position\n");
-			ft_printf("	Now k = %i\n", *k);
-			ft_printf("	Result[%i] = %s\n", *k, result[*k]); */
-		}
-		else
-		{
-			/* ft_printf("else sequence = '%s'\n", sequence); */
-			result[*k] = ft_strjoin3(result[*k], *input[0], 1);
-			/* ft_printf("	Added '%s' to the end of result[%i]\n", sequence, *k);
-			ft_printf("	Now Resuly[%i] = %s\n", *k, result[*k]); */
-		}
-	}
-	else
-	{
-		result[*k] = ft_strjoin3(result[*k], *input[0], 1);
-		/* ft_printf("	Added '%c' to the end of result[%i]\n", *input[0], *k);
-		ft_printf("	Now Resuly[%i] = %s\n", *k, result[*k]); */
-	}
-	/* ft_printf("\n"); */
-	return (result);
-}
-
 char	**ft_split_minishell(char *input)
 {
 	size_t	i;
@@ -125,29 +33,88 @@ char	**ft_split_minishell(char *input)
 	int		quote;
 	char	**result;
 	char	*value;
+	char	*current;
+	char	*temp;
 
 	i = 0;
-	quote = 0;
 	k = 0;
-	result = ft_calloc(3, sizeof(char *));
+	quote = 0;
+	result = ft_calloc(100, sizeof(char *)); // Increased initial size
+	temp = ft_calloc(2, sizeof(char *));
+	current = NULL;
 	if (!input || !result)
 		return (NULL);
-	while (input[0])
+	while (input[i])
 	{
 		about_quotes(input, &quote, i);
-		if ((quote == 0 || quote == 2) && input[0] == '$'
-			&& get_value(input + i + 1))
+		// Handle special sequences
+		if (quote == 0)
 		{
-			value = get_value(input + 1);
-			i = 0;
-			while (i < ft_strlen(value) + 1)
-				input++;
-			result[k] = ft_strjoin2(result[k], value, 1);
+			// Check for 2-character sequences first
+			if (input[i] == '>' && input[i + 1] == '>')
+			{
+				if (current)
+				{
+					result[k++] = current;
+					current = NULL;
+				}
+				result[k++] = ft_strdup(">>");
+				i += 2;
+				continue ;
+			}
+			else if (input[i] == '<' && input[i + 1] == '<')
+			{
+				if (current)
+				{
+					result[k++] = current;
+					current = NULL;
+				}
+				result[k++] = ft_strdup("<<");
+				i += 2;
+				continue ;
+			}
+			// Check for single-character specials
+			else if (input[i] == '|' || input[i] == '>'
+				|| input[i] == '<' || input[i] == '&')
+			{
+				if (current)
+				{
+					result[k++] = current;
+					current = NULL;
+				}
+				temp[0] = input[i];
+				result[k++] = ft_strdup(temp);
+				i++;
+				continue ;
+			}
+			// Handle spaces as separators (only outside quotes)
+			else if (input[i] == ' ')
+			{
+				if (current)
+				{
+					result[k++] = current;
+					current = NULL;
+				}
+				i++;
+				continue ;
+			}
 		}
-		else
-			result = handle_special_chars(&input, result, &k, quote);
-		input++;
+		// Handle variables (if needed)
+		if ((quote == 0 || quote == 2) && input[i] == '$' && get_value(input + i + 1))
+		{
+			value = get_value(input + i + 1);
+			current = ft_strjoin2(current, value, 1);
+			i += ft_strlen(value) + 1;
+			continue ;
+		}
+		// Normal character - add to current string
+		current = ft_strjoin3(current, input[i], 1);
+		i++;
 	}
+	free(temp);
+	// Add the last token if it exists
+	if (current)
+		result[k++] = current;
 	return (result);
 }
 
@@ -156,8 +123,13 @@ char	**parser(char *input)
 	char	**aux;
 
 	if (!input)
-		return NULL;
+		return (NULL);
 	aux = ft_split_minishell(input);
-	ft_printf("ft_split_minishell\n%t\n\n", aux);
+	ft_printf("ft_split_minishell\n\n\n%t\n\n", aux);
 	return (aux);
 }
+//ls>>test.txt|cat test.txt|grep "mini lib"
+//ls>test.txt | cat test.txt | grep "mini lib"
+//"ls | -a > something << dasd 'da sd a sd' fhjsdlf"
+//clear && make && valgrind ./minishell "ls | -a > something << dasd 'd as d asd' fhjsdlf"
+//ls>>test.txt|cat test.txt|grep "mini lib" ls | -a > something << dasd 'd as d asd' fhjsdlf
