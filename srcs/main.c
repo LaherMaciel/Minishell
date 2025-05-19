@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:07:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/19 16:28:48 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/19 17:41:28 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,25 +60,3 @@ int	main(int argv, char **argc, char **env)
 	ft_free_array(mshell()->aux_env, 0);
 	return (0);
 }
-
-/* 
-int	main(int argc, char **argv)
-{
-	char	**result;
-
-	(void) argc;
-	ft_printf("input = %s\n", argv[1]);
-	result = ft_split_minishell(argv[1]);
-	//ft_printf("\n\ninput = %s\n", argv[1]);
-	if (!result)
-		ft_printf("NULL\n");
-	else
-		ft_printf("Output:\n%t\n", result);
-	ft_free_array(result, ft_arraylen(result));
-	return (0);
-} */
-//ls>>test.txt|cat test.txt|grep "mini lib"
-//ls>test.txt | cat test.txt | grep "mini lib"
-//"ls | -a > something << dasd 'da sd a sd' fhjsdlf"
-//clear && make && valgrind ./minishell "ls | -a > something << dasd 'd as d asd' fhjsdlf"
-//ls>>test.txt|cat test.txt|grep "mini lib" ls | -a > something << dasd 'd as d asd' fhjsdlf

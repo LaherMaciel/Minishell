@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 20:17:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/19 16:29:52 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/19 17:17:45 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,6 @@ t_export	*add_to_export(char *str)
 {
 	t_export	*expt;
 	char		**splitted;
-	int			i;
 
 	expt = mshell()->expt;
 	if (!expt || !str)
@@ -103,18 +102,8 @@ t_export	*add_to_export(char *str)
 	splitted = ft_split(str, '=');
 	if (!splitted || !splitted[0])
 		return (ft_free_array(splitted, 0));
-	i = 0;
-	while (expt->var_name && expt->var_name[i])
-	{
-		if (ft_strcmp(expt->var_name[i], splitted[0]) == 0)
-		{
-			free(expt->value[i]);
-			expt->value[i] = ft_strdup(splitted[1]);
-			ft_free_array(splitted, 0);
-			return (expt);
-		}
-		i++;
-	}
+	if (update_var(expt, splitted))
+		return (expt);
 	expt->var_name = ft_append_to_array(expt->var_name,
 			ft_arraylen(expt->var_name), splitted[0], 1);
 	if (!expt->var_name)

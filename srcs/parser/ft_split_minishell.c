@@ -6,22 +6,11 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 12:53:09 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/19 16:53:56 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/19 17:38:04 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-static char	**add_current(char **res, char **cur, int *k)
-{
-	if (*cur)
-	{
-		res[*k] = *cur;
-		(*k)++;
-		*cur = NULL;
-	}
-	return (res);
-}
 
 static char	**add_token(char **res, char **cur, int *k, char *str)
 {

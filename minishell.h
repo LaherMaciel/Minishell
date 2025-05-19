@@ -79,6 +79,7 @@ int			create_child_process(void);
 void		handle_error_and_exit(int error, char *message);
 char		*get_command_path(char *cmd, int flag);
 void		handle_error_and_exit(int error, char *message);
+t_export	*update_var(t_export *env, char **splitted);
 
 //parser
 char		**parser(char *input);
@@ -88,6 +89,7 @@ char		*ft_substr2(char const *s, unsigned int start, size_t len);
 char		**ft_split_minishell(char *input);
 char		*ft_strjoin3(char *s1, char s2, int flag);
 void		about_quotes(char *input, int *quote, size_t i);
+char	**add_current(char **res, char **cur, int *k);
 
 //main
 t_mshell	*mshell(void);

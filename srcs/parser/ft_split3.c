@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split3.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:32:57 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/19 16:59:17 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/19 17:23:00 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
