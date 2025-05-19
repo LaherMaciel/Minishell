@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:32:57 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/16 13:38:00 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/19 16:59:17 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ static int	word_count(const char *str, char *s)
 	words = 0;
 	separator = 0;
 	i = -1;
-
 	if (ft_strnstr(str + i, s, ft_strlen(s)) == NULL && separator == 0)
 	{
 		separator = 1;

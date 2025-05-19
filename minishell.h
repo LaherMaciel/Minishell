@@ -69,6 +69,7 @@ t_export	*init_env(char **env);
 void		ft_env(void);
 t_export	*add_to_env(char *str);
 char		*get_value(char *var_name);
+char		*get_varname(char *value);
 
 //signals
 void		signal_handler(void);
@@ -80,12 +81,13 @@ char		*get_command_path(char *cmd, int flag);
 void		handle_error_and_exit(int error, char *message);
 
 //parser
-char	**parser(char *input);
-char	**split_out_quotes(char const *s, char c);
-char	**ft_split3(char const *str, char *s, int i);
-char	*ft_substr2(char const *s, unsigned int start, size_t len);
-char	**ft_split_minishell(char *input);
-char	*ft_strjoin3(char *s1, char s2, int flag);
+char		**parser(char *input);
+char		**split_out_quotes(char const *s, char c);
+char		**ft_split3(char const *str, char *s, int i);
+char		*ft_substr2(char const *s, unsigned int start, size_t len);
+char		**ft_split_minishell(char *input);
+char		*ft_strjoin3(char *s1, char s2, int flag);
+void		about_quotes(char *input, int *quote, size_t i);
 
 //main
 t_mshell	*mshell(void);

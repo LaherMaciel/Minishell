@@ -6,11 +6,24 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 15:47:56 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/14 18:33:13 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/19 16:48:05 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+
+char	*copy_s1(char *s1, char *sjoin, size_t *i)
+{
+	if (s1)
+	{
+		while (s1[*i] != '\0')
+		{
+			sjoin[*i] = s1[*i];
+			*i += 1;
+		}
+	}
+	return (sjoin);
+}
 
 /**
  * @brief can be used to join and free the string
@@ -30,11 +43,10 @@ char	*ft_strjoin2(char *s1, char *s2, int flag)
 	sjoin = ft_calloc((ft_strlen(s1) + ft_strlen(s2)), sizeof(char) + 1);
 	if (!sjoin)
 		return (NULL);
-	i = -1;
+	i = 0;
 	if (s1)
 	{
-		while (s1[++i] != '\0')
-			sjoin[i] = s1[i];
+		sjoin = copy_s1(s1, sjoin, &i);
 		if (flag == 1 || flag == 3)
 			free(s1);
 	}
