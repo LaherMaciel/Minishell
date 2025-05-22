@@ -35,7 +35,8 @@ typedef struct s_mshell
 	t_export	*expt;
 	t_export	*env;
 
-	char		**args;
+	char		**input;
+	int			*input_value;
 	char		**aux_env;
 	char		*line;
 	char		*cmd;
@@ -50,6 +51,7 @@ char		*display_prompt(char *line);
 
 //commands executions
 char		*execute_commands(char *line);
+void		redirection_operators_handler(int index);
 
 //BUILT-INS
 int			builtin_cd(char *input);
@@ -59,17 +61,18 @@ int			execute_builtin(char **input);
 void		change_directory(const char *path);
 void		init_environ(void);
 t_export	*init_export(char **env);
-void		ft_export(void);
+void		ft_export(char **input);
 t_export	*export_sorter(void);
 t_export	*add_to_export(char *str);
 void		*ft_free_export(t_export *expt);
-void		ft_unset(char *input);
+void		ft_unset(char **input, int index);
 char		**default_env(void);
 t_export	*init_env(char **env);
-void		ft_env(void);
+void		ft_env(char **input);
 t_export	*add_to_env(char *str);
 char		*get_value(char *var_name);
 char		*get_varname(char *value);
+void		builtins(char **input);
 
 //signals
 void		signal_handler(void);
@@ -80,18 +83,28 @@ void		handle_error_and_exit(int error, char *message);
 char		*get_command_path(char *cmd, int flag);
 void		handle_error_and_exit(int error, char *message);
 t_export	*update_var(t_export *env, char **splitted);
+int			high_priority(void);
+void		rm_index(int index);
+void		rm_indexs(int index1, int index2);
+char		**dupped_arr(int index);
 
 //parser
-char		**parser(char *input);
+void		parser(char *input);
 char		**split_out_quotes(char const *s, char c);
 char		**ft_split3(char const *str, char *s, int i);
 char		*ft_substr2(char const *s, unsigned int start, size_t len);
 char		**ft_split_minishell(char *input);
 char		*ft_strjoin3(char *s1, char s2, int flag);
 void		about_quotes(char *input, int *quote, size_t i);
-char	**add_current(char **res, char **cur, int *k);
+char		**add_current(char **res, char **cur, int *k);
+int			its_what(char *str);
+void		set_inputvalue(void);
+int			is_special(char *str);
+int			is_builtin(char *str);
+int			is_redirect(char *str);
 
 //main
 t_mshell	*mshell(void);
+void		free_mshell(void);
 
 #endif

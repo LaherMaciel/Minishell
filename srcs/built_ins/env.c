@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 22:25:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/19 17:41:27 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/22 21:333:483 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,20 +38,27 @@ t_export	*add_to_env(char *str)
 	return (env);
 }
 
-void	ft_env(void)
+void	ft_env(char **input)
 {
 	int	i;
 
 	i = 0;
-	while (mshell()->env->var_name[i])
+	if (!input || input[1] == NULL)
 	{
-		if (mshell()->env->value[i] != NULL)
-			ft_printf("%s=\"%s\"\n",
-				mshell()->env->var_name[i],
-				mshell()->env->value[i]);
-		else
-			ft_printf("%s=\"\"\n", mshell()->env->var_name[i]);
-		i++;
+		while (mshell()->env->var_name[i])
+		{
+			if (mshell()->env->value[i] != NULL)
+				ft_printf("%s=\"%s\"\n",
+					mshell()->env->var_name[i],
+					mshell()->env->value[i]);
+			else
+				ft_printf("%s=\"\"\n", mshell()->env->var_name[i]);
+			i++;
+		}
+	}
+	else
+	{
+		ft_printf("NEED TO ADD TEMPORARY SYSYTEM VARIABLES\n");
 	}
 }
 

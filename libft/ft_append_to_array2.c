@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_append_to_array.c                               :+:      :+:    :+:   */
+/*   ft_append_to_array2.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 11:14:46 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/22 21:29:554 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/05/22 21:30:24 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	**init_addend(char **array, size_t arraylen,
+static char	**init_addend(char **array, size_t arraylen,
 	char *str, int flag)
 {
 	char	**new_array;
@@ -37,7 +37,7 @@ char	**init_addend(char **array, size_t arraylen,
 	return (ft_calloc(2 + arraylen, sizeof(char *)));
 }
 
-char	**add_str(char **new_array, char *str, int flag, int i)
+static char	**add_str(char **new_array, char *str, int flag, int i)
 {
 	if (str)
 	{
@@ -55,7 +55,7 @@ char	**add_str(char **new_array, char *str, int flag, int i)
 			}
 		}
 		else
-			new_array[i] = str;
+			new_array[i] = ft_strdup(str);
 	}
 	return (new_array);
 }
@@ -69,7 +69,7 @@ char	**add_str(char **new_array, char *str, int flag, int i)
  * frees s1, if flag = 2 frees s2 and if flag = 3 it frees s1 and s2
  * @return the_new_string
  */
-char	**ft_append_to_array(char **array, size_t arraylen,
+char	**ft_append_to_array2(char **array, size_t arraylen,
 	char *str, int flag)
 {
 	char	**new_array;
@@ -82,9 +82,9 @@ char	**ft_append_to_array(char **array, size_t arraylen,
 		return (NULL);
 	i = -1;
 	while (++i < arraylen)
-		new_array[i] = array[i];
+		new_array[i] = ft_strdup(array[i]);
 	new_array = add_str(new_array, str, flag, i);
 	if (flag == 1 || flag == 3)
-		free(array);
+		ft_free_array(array, 0);
 	return (new_array);
 }

@@ -1,14 +1,14 @@
 NAME = minishell
 
-GCOMMANDS_C = command_executions.c \
+GCOMMANDS_C = command_executions.c redirections.c\
 
 PROMPT_C = prompt.c \
 
 BUILTINS_C =  built_ins.c export.c unset.c env.c\
 
-UTILS_C = utils.c utils2.c\
+UTILS_C = utils.c utils2.c utils3.c\
 
-PARSER_C = parser.c split_out_quotes.c ft_split3.c ft_substr2.c ft_split_minishell.c ft_strjoin3.c\
+PARSER_C = parser.c split_out_quotes.c ft_split3.c ft_substr2.c ft_split_minishell.c ft_strjoin3.c its_what.c\
 
 LIBFT_DIRECTORY = libft/
 LIBFT_HEADER = $(LIBFT_DIRECTORY)libft.h

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 20:17:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/19 17:17:45 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/22 21:34:50by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,32 @@ void	init_environ(void)
 }
  */
 
-void	ft_export(void)
+void	ft_export(char **input)
 {
 	int	i;
 
 	i = 0;
-	while (mshell()->expt->var_name[i])
+	if (!input || input[1] == NULL)
 	{
-		if (mshell()->expt->value[i] != NULL)
-			ft_printf("%s=\"%s\"\n",
-				mshell()->expt->var_name[i],
-				mshell()->expt->value[i]);
-		else
-			ft_printf("%s=\"\"\n", mshell()->expt->var_name[i]);
-		i++;
+		while (mshell()->expt->var_name[i])
+		{
+			if (mshell()->expt->value[i] != NULL)
+				ft_printf("%s=\"%s\"\n",
+					mshell()->expt->var_name[i],
+					mshell()->expt->value[i]);
+			else
+				ft_printf("%s=\"\"\n", mshell()->expt->var_name[i]);
+			i++;
+		}
+	}
+	else
+	{
+		while (input[++i])
+		{
+			mshell()->env = add_to_env(input[i]);
+			mshell()->expt = add_to_export(input[i]);
+		}
+		mshell()->expt = export_sorter();
 	}
 }
 

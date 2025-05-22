@@ -6,11 +6,18 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:07:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/19 17:41:28 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/22 19:45:05 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+
+void	free_mshell(void)
+{
+	ft_free_export(NULL);
+	ft_free_export(mshell()->env);
+	ft_free_array(mshell()->aux_env, 0);
+}
 
 t_mshell	*mshell(void)
 {
@@ -55,8 +62,6 @@ int	main(int argv, char **argc, char **env)
 	(void)argc;
 	init_shell(env);
 	receive_input();
-	ft_free_export(NULL);
-	ft_free_export(mshell()->env);
-	ft_free_array(mshell()->aux_env, 0);
+	free_mshell();
 	return (0);
 }

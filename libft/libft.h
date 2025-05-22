@@ -109,5 +109,7 @@ char	**ft_append_to_array(char **array, size_t arraylen,
 void	ft_swap(char **a, char **b, int flag);
 char	**ft_rm_from_array(char **array, size_t arraylen, size_t index);
 char	*ft_strcpy(char *dest, char *src);
+char	**ft_append_to_array2(char **array, size_t arraylen,
+	char *str, int flag);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_executions.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/16 19:41:28 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/22 20:11:11:0 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,10 @@
  * @param infile - The input file descriptor.
  * @param outfile - The output file descriptor.
  */
-void	execute_simple_command(char *cmds, int infile, int outfile)
+void	execute_simple_command(char **args, int infile, int outfile)
 {
-	char	**args;
 	char	*cmd_path;
 
-	args = ft_split(cmds, ' ');
 	if (!args)
 		handle_error_and_exit(-1, "Failed to parse command");
 	cmd_path = get_command_path(args[0], 0);
@@ -48,7 +46,7 @@ void	execute_simple_command(char *cmds, int infile, int outfile)
 	handle_error_and_exit(-1, "Execution failed");
 }
 
-void	run_command(char *line, int infile, int outfile)
+void	run_command(char **args, int infile, int outfile)
 {
 	int	pid;
 
@@ -64,46 +62,45 @@ void	run_command(char *line, int infile, int outfile)
 		}
 		if (outfile != STDOUT_FILENO && dup2(outfile, STDOUT_FILENO) < 0)
 			handle_error_and_exit(-1, "dup2 failed for output_fd");
-		execute_simple_command(line, infile, outfile);
+		execute_simple_command(args, infile, outfile);
 	}
 }
 
 char	*execute_commands(char *line)
 {
-	char	**input;
+	int		index;
+	int		count;
+	char	**aux;
 
-	input = parser(line);
-	if (ft_strncmp(input[0], "cd", 0) == 0)
-		change_directory(input[1]);
-	else if (ft_strncmp(input[0], "pwd", 0) == 0)
-		builtin_pwd();
-	else if (ft_strcmp(input[0], "echo") == 0)
-		builtin_echo(input);
-	else if (ft_strcmp(input[0], "env") == 0)
+	parser(line);
+	count = 0;
+	while (mshell()->input[0] && ++count < 10)
 	{
-		if (input[1] == NULL)
-			ft_env();
-		else
-			ft_printf("env: %s: No such file or directory\n", input[1]);
-	}
-	else if (ft_strcmp(input[0], "export") == 0)
-	{
-		if (input[1] == NULL)
-			ft_export();
+		index = high_priority();
+		if (is_redirect(mshell()->input[index]))
+			redirection_operators_handler(index);
+		else if (is_special(mshell()->input[index]))
+		{
+			ft_printf("NOT DONE YET");
+			rm_index(index);
+		}
 		else
 		{
-			mshell()->env = add_to_env(input[1]);
-			mshell()->expt = add_to_export(input[1]);
-			mshell()->expt = export_sorter();
+			aux = dupped_arr(index);
+			if (is_builtin(aux[0]))
+				builtins(aux);
+			else
+				run_command(aux,
+					mshell()->infile, mshell()->outfile);
+			ft_free_array(aux, 0);
 		}
 	}
-	else if (ft_strcmp(input[0], "unset") == 0)
-		ft_unset(input[1]);
-	else
-		run_command(line, mshell()->infile, mshell()->outfile);
+	mshell()->infile = STDIN_FILENO;
+	mshell()->outfile = STDOUT_FILENO;
 	while (wait(NULL) > 0)
 		;
-	ft_free_array(input, 0);
+	ft_free_array(mshell()->input, 0);
+	free(mshell()->input_value);
 	free(line);
 	return (line);
 }
