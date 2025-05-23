@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:10:31 by karocha-          #+#    #+#             */
-/*   Updated: 2025/05/22 17:42:06 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/23 09:33:37 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void	set_inputvalue(void)
 	i = -1;
 	if (mshell()->input_value)
 		free(mshell()->input_value);
-	mshell()->input_value = ft_calloc(ft_arraylen(mshell()->input) + 1, sizeof(int));
+	mshell()->input_value = ft_calloc(ft_arraylen(mshell()->input) + 1,
+		sizeof(int));
 	while (mshell()->input[++i])
 		mshell()->input_value[i] = its_what(mshell()->input[i]);
 }

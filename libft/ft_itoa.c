@@ -70,10 +70,9 @@ char	*ft_itoa(int n)
 	char		*str;
 
 	size = count_digits(n);
-	str = (char *) malloc((size + 1) * sizeof(char));
+	str = (char *) ft_calloc((size + 1), sizeof(char));
 	if (!str)
 		return (NULL);
 	str = writing(n, str, size - 1);
-	str[size] = '\0';
 	return (str);
 }

@@ -35,6 +35,7 @@ typedef struct s_mshell
 	t_export	*expt;
 	t_export	*env;
 
+	int			exit_status;
 	char		**input;
 	int			*input_value;
 	char		**aux_env;

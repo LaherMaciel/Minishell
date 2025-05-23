@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   its_what.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:32:11 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/22 16:12:219 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/05/23 09:22:34 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int	is_redirect(char *str)
 
 int	is_builtin(char *str)
 {
-	if (ft_strcmp(str, "cd") == 0 || ft_strcmp(str, "pwd") == 0 
-		|| ft_strcmp(str, "echo") == 0 ||  ft_strcmp(str, "env") == 0
-		|| ft_strcmp(str, "export") == 0 ||  ft_strcmp(str, "unset") == 0
+	if (ft_strcmp(str, "cd") == 0 || ft_strcmp(str, "pwd") == 0
+		|| ft_strcmp(str, "echo") == 0 || ft_strcmp(str, "env") == 0
+		|| ft_strcmp(str, "export") == 0 || ft_strcmp(str, "unset") == 0
 		|| ft_strcmp(str, "exit") == 0)
 		return (1);
 	return (0);

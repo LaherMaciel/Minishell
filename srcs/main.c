@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:07:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/22 19:45:05 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/23 10:35:18 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	init_shell(char **env)
 {
 	mshell()->infile = STDIN_FILENO;
 	mshell()->outfile = STDOUT_FILENO;
+	mshell()->exit_status = 0;
 	mshell()->env = ft_calloc(sizeof(t_export), 1);
 	if (!mshell()->env)
 		exit(EXIT_FAILURE);
