@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 20:59:19 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/22 17:42:46 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/23 11:43:24 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,5 @@ void	ft_unset(char **input, int index)
 		cleaning(input, index, -1);
 		index++;
 	}
+	mshell()->exit_status = 0;
 }

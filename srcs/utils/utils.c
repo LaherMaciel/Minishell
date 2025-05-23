@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 20:51:30 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/22 17:45:55 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/23 12:33:48 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static char	*search_command_in_path(char *cmd, char *path_env)
  *
  * @return char* - The full path to the command if found, otherwise NULL.
  */
-char	*get_command_path(char *cmd, int flag)
+char	*get_command_path(char *cmd)
 {
 	char	*path_env;
 	char	*full_path;
@@ -95,8 +95,8 @@ char	*get_command_path(char *cmd, int flag)
 	if (!path_env)
 		return (NULL);
 	full_path = search_command_in_path(cmd, path_env);
-	if (!full_path && flag == 0)
-		ft_fdprintf(2, "Minishell: command not found: %s\n", cmd);
+	if (!full_path)
+		mshell()->exit_status = 127;
 	return (full_path);
 }
 
@@ -111,22 +111,28 @@ char	*get_command_path(char *cmd, int flag)
  */
 void	handle_error_and_exit(int error, char *message)
 {
-	int	out;
-
-	out = 1;
 	if (error == -1)
 		ft_fdprintf(STDERR_FILENO, "%s: %s\n", message, strerror(errno));
-	if (error == -2)
-		ft_fdprintf(STDERR_FILENO, "%s\n", message);
-	if (error == -3)
+	else if (error == -3)
 		ft_fdprintf(STDERR_FILENO, "minishell: %s: %s\n",
 			strerror(errno), message);
-	if (error == -4)
-		ft_fdprintf(STDERR_FILENO, "minishell: command not found: %s\n",
-			message);
-	if (error == 1)
-		ft_fdprintf(STDERR_FILENO, "%s\n", message);
-	if (error == 0 || error == 1)
-		out = 0;
-	exit(out);
+	else
+	{
+		if (error == 0 || error == 1)
+		{
+			if (error == 1)
+				ft_fdprintf(STDERR_FILENO, "%s\n", message);
+			mshell()->exit_status = error;
+		}
+		else if (error == -2)
+			ft_fdprintf(STDERR_FILENO, "%s\n", message);
+		else if (error == -4)
+		{
+			ft_fdprintf(STDERR_FILENO, "minishell: %s: command not found\n",
+				message);
+			exit(127);
+		}
+		exit (mshell()->exit_status);
+	}
+	exit(errno);
 }

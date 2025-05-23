@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:32:11 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/23 09:22:34 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/23 10:57:04 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	is_builtin(char *str)
 
 int	is_special(char *str)
 {
-	if (ft_strcmp(str, "|") == 0 || ft_strcmp(str, "$?") == 0)
+	if (ft_strcmp(str, "|") == 0)
 		return (1);
 	return (0);
 }

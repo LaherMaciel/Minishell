@@ -1,6 +1,6 @@
 NAME = minishell
 
-GCOMMANDS_C = command_executions.c redirections.c\
+GCOMMANDS_C = command_executions.c redirections.c special_chars.c\
 
 PROMPT_C = prompt.c \
 

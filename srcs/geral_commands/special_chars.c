@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 09:26:31 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/23 10:39:57 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/23 13:09:00 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,18 +14,24 @@
 
 void	piper(void)
 {
-	
+	ft_printf("PIPE\n");
 }
 
-void	exit_status(void)
+void	exit_status(char *line)
 {
-	ft_printf();
-}
+	/* int	i;
 
-void	is_special(char **input)
-{
-	if (ft_strcmp(input, "|") == 0)
-		piper();
+	i = 0;
+	perror(mshell()->exit_status);
+	strerror(mshell()->exit_status); */
+	if (line)
+		ft_printf("%i%s: command not found\n", mshell()->exit_status, line + 2);
 	else
-		exit_status();
+		ft_printf("%i: command not found\n", mshell()->exit_status);
+}
+
+void	handle_special(char **input, int index)
+{
+	if (ft_strcmp(input[index], "|") == 0)
+		piper();
 }

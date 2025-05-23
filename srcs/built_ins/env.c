@@ -60,6 +60,7 @@ void	ft_env(char **input)
 	{
 		ft_printf("NEED TO ADD TEMPORARY SYSYTEM VARIABLES\n");
 	}
+	mshell()->exit_status = 0;
 }
 
 char	*get_value(char *var_name)

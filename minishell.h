@@ -35,6 +35,8 @@ typedef struct s_mshell
 	t_export	*expt;
 	t_export	*env;
 
+	int			*child_pids;
+	int			num_children;
 	int			exit_status;
 	char		**input;
 	int			*input_value;
@@ -52,7 +54,9 @@ char		*display_prompt(char *line);
 
 //commands executions
 char		*execute_commands(char *line);
-void		redirection_operators_handler(int index);
+int			redirection_operators_handler(int index);
+void		handle_special(char **input, int index);
+void		exit_status(char *line);
 
 //BUILT-INS
 int			builtin_cd(char *input);
@@ -81,13 +85,15 @@ void		signal_handler(void);
 //utils
 int			create_child_process(void);
 void		handle_error_and_exit(int error, char *message);
-char		*get_command_path(char *cmd, int flag);
+char		*get_command_path(char *cmd);
 void		handle_error_and_exit(int error, char *message);
 t_export	*update_var(t_export *env, char **splitted);
 int			high_priority(void);
 void		rm_index(int index);
 void		rm_indexs(int index1, int index2);
 char		**dupped_arr(int index);
+void		reset_fds(void);
+void		free_resources(char *line);
 
 //parser
 void		parser(char *input);

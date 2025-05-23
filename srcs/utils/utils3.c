@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:02:32 by karocha-          #+#    #+#             */
-/*   Updated: 2025/05/22 21:28:47 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/23 12:42:21 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,4 +91,23 @@ char	**dupped_arr(int index)
 		i++;
 	}
 	return (aux);
+}
+
+void	reset_fds(void)
+{
+	if (mshell()->infile != STDIN_FILENO)
+		close(mshell()->infile);
+	if (mshell()->outfile != STDOUT_FILENO)
+		close(mshell()->outfile);
+	mshell()->infile = STDIN_FILENO;
+	mshell()->outfile = STDOUT_FILENO;
+}
+
+void	free_resources(char *line)
+{
+	ft_free_array(mshell()->input, 0);
+	free(mshell()->input_value);
+	free(line);
+	mshell()->child_pids = NULL;
+	mshell()->num_children = 0;
 }

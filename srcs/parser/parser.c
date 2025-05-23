@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:10:31 by karocha-          #+#    #+#             */
-/*   Updated: 2025/05/23 09:33:37 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/23 12:51:53 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	parser(char *input)
 		return ;
 	mshell()->input_value = NULL;
 	set_inputvalue();
+	mshell()->exit_status = 0;
 }
 
 //ls>>test.txt|cat test.txt|grep "mini lib"

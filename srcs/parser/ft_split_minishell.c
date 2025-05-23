@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 12:53:09 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/23 10:40:33 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/23 11:16:08 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,11 @@ static void	process_token(char **cur, char *input, size_t *i, int quote)
 	char	*val;
 	char	*name;
 
+	if ((quote == 0 || quote == 2) && input[*i + 1] == '?')
+	{
+		*cur = ft_strjoin2(*cur, ft_itoa(mshell()->exit_status), 3);
+		*i += ft_strlen(*cur) + 1;
+	}
 	val = get_value(input + *i + 1);
 	if ((quote == 0 || quote == 2) && input[*i] == '$'
 		&& val)

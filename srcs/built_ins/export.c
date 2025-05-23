@@ -46,6 +46,7 @@ void	ft_export(char **input)
 		}
 		mshell()->expt = export_sorter();
 	}
+	mshell()->exit_status = 0;
 }
 
 t_export	*init_export(char **env)

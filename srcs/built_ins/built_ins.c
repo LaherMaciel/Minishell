@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:32 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/22 20:52:27 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/23 11:47:19 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 void	change_directory(const char *path)
 {
 	if (chdir(path))
-		perror("cd");
+		perror("minishell: cd");
+	mshell()->exit_status = 1;
 }
 
 int	builtin_pwd(void)
@@ -23,6 +24,7 @@ int	builtin_pwd(void)
 	char	*path;
 
 	path = getcwd(NULL, 0);
+	mshell()->exit_status = errno;
 	if (path == NULL)
 	{
 		perror("minishell: pwd");
@@ -54,6 +56,7 @@ int	builtin_echo(char **input)
 	}
 	if (!n_flag)
 		ft_printf("\n");
+	mshell()->exit_status = 0;
 	return (0);
 }
 

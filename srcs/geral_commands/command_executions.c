@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_executions.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/22 20:11:11:0 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/05/23 13:08:13 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,14 @@ void	execute_simple_command(char **args, int infile, int outfile)
 {
 	char	*cmd_path;
 
-	if (!args)
-		handle_error_and_exit(-1, "Failed to parse command");
-	cmd_path = get_command_path(args[0], 0);
-	if (!cmd_path)
+	if (!args || !args[0])
 	{
-		ft_free_array(args, 0);
-		handle_error_and_exit(0, "");
+		mshell()->exit_status = 127;
+		exit(127);
 	}
+	cmd_path = get_command_path(args[0]);
+	if (!cmd_path)
+		handle_error_and_exit(-4, args[0]);
 	if (infile != STDERR_FILENO)
 		close(infile);
 	if (outfile != STDOUT_FILENO)
@@ -48,7 +48,7 @@ void	execute_simple_command(char **args, int infile, int outfile)
 
 void	run_command(char **args, int infile, int outfile)
 {
-	int	pid;
+	pid_t	pid;
 
 	pid = create_child_process();
 	if (pid == 0)
@@ -64,24 +64,45 @@ void	run_command(char **args, int infile, int outfile)
 			handle_error_and_exit(-1, "dup2 failed for output_fd");
 		execute_simple_command(args, infile, outfile);
 	}
+	else if (pid > 0)
+	{
+		mshell()->child_pids = ft_realloc(mshell()->child_pids,
+			(mshell()->num_children + 1) * sizeof(int));
+		mshell()->child_pids[mshell()->num_children++] = pid;
+	}
+	else
+	{
+		mshell()->exit_status = 1;
+		perror("minishell: fork");
+	}
 }
 
 char	*execute_commands(char *line)
 {
 	int		index;
-	int		count;
+	int		i;
 	char	**aux;
+	int		status;
 
+	if (ft_strncmp(line, "$?", 2) == 0)
+	{
+		exit_status(line);
+		free(line);
+		return (line);
+	}
 	parser(line);
-	count = 0;
-	while (mshell()->input[0] && ++count < 10)
+	while (mshell()->input[0])
 	{
 		index = high_priority();
 		if (is_redirect(mshell()->input[index]))
-			redirection_operators_handler(index);
+		{
+			if (redirection_operators_handler(index))
+				break ;
+		}
 		else if (is_special(mshell()->input[index]))
 		{
-			ft_printf("NOT DONE YET");
+			aux = dupped_arr(index);
+			handle_special(aux, index);
 			rm_index(index);
 		}
 		else
@@ -95,12 +116,18 @@ char	*execute_commands(char *line)
 			ft_free_array(aux, 0);
 		}
 	}
-	mshell()->infile = STDIN_FILENO;
-	mshell()->outfile = STDOUT_FILENO;
-	while (wait(NULL) > 0)
-		;
-	ft_free_array(mshell()->input, 0);
-	free(mshell()->input_value);
-	free(line);
+	reset_fds();
+	i = 0;
+	while (i < mshell()->num_children)
+	{
+		waitpid(mshell()->child_pids[i], &status, 0);
+		if (WIFEXITED(status))
+			mshell()->exit_status = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			mshell()->exit_status = 128 + WTERMSIG(status);
+		i++;
+	}
+	free(mshell()->child_pids);
+	free_resources(line);
 	return (line);
 }
