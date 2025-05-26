@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:02:32 by karocha-          #+#    #+#             */
-/*   Updated: 2025/05/23 12:42:21 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/26 14:28:33 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,16 @@ char	**dupped_arr(int index)
 	int		j;
 
 	aux = NULL;
+	if (!mshell()->input || index < 0 || index >= (int) ft_arraylen(mshell()->input))
+		return (NULL);
 	index--;
 	while (mshell()->input[++index])
 		if (its_what(mshell()->input[index]) == 1
 			|| its_what(mshell()->input[index]) == 2)
 			aux = ft_append_to_array2(aux, 0, mshell()->input[index], 1);
 	i = 0;
+	if (!aux)
+		return (NULL);
 	while (aux[i])
 	{
 		j = -1;
@@ -90,6 +94,7 @@ char	**dupped_arr(int index)
 		}
 		i++;
 	}
+	set_inputvalue();
 	return (aux);
 }
 
@@ -108,6 +113,5 @@ void	free_resources(char *line)
 	ft_free_array(mshell()->input, 0);
 	free(mshell()->input_value);
 	free(line);
-	mshell()->child_pids = NULL;
-	mshell()->num_children = 0;
+	free_child_pids();
 }

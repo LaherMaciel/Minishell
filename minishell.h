@@ -30,12 +30,18 @@ typedef struct s_export
 	char	**var_name;
 }			t_export;
 
+typedef struct s_child_pid
+{
+	pid_t				pid;
+	struct s_child_pid	*next;
+}					t_child_pid;
+
 typedef struct s_mshell
 {
 	t_export	*expt;
 	t_export	*env;
 
-	int			*child_pids;
+	t_child_pid	*child_pids;
 	int			num_children;
 	int			exit_status;
 	char		**input;
@@ -55,8 +61,12 @@ char		*display_prompt(char *line);
 //commands executions
 char		*execute_commands(char *line);
 int			redirection_operators_handler(int index);
-void		handle_special(char **input, int index);
+int			handle_special(int index);
 void		exit_status(char *line);
+void		run_command(char **args, int infile, int outfile);
+void		execute_simple_command(char **args, int infile, int outfile);
+void		add_child_pid(pid_t pid);
+void		free_child_pids(void);
 
 //BUILT-INS
 int			builtin_cd(char *input);
@@ -94,6 +104,7 @@ void		rm_indexs(int index1, int index2);
 char		**dupped_arr(int index);
 void		reset_fds(void);
 void		free_resources(char *line);
+char		**pipe_dupped_arr(int index);
 
 //parser
 void		parser(char *input);

@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/23 13:08:13 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/26 14:31:07 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,7 @@ void	run_command(char **args, int infile, int outfile)
 		execute_simple_command(args, infile, outfile);
 	}
 	else if (pid > 0)
-	{
-		mshell()->child_pids = ft_realloc(mshell()->child_pids,
-			(mshell()->num_children + 1) * sizeof(int));
-		mshell()->child_pids[mshell()->num_children++] = pid;
-	}
+		add_child_pid(pid);
 	else
 	{
 		mshell()->exit_status = 1;
@@ -79,10 +75,10 @@ void	run_command(char **args, int infile, int outfile)
 
 char	*execute_commands(char *line)
 {
-	int		index;
-	int		i;
-	char	**aux;
-	int		status;
+	t_child_pid	*current;
+	char		**aux;
+	int			status;
+	int			index;
 
 	if (ft_strncmp(line, "$?", 2) == 0)
 	{
@@ -101,33 +97,34 @@ char	*execute_commands(char *line)
 		}
 		else if (is_special(mshell()->input[index]))
 		{
-			aux = dupped_arr(index);
-			handle_special(aux, index);
-			rm_index(index);
+			if (handle_special(index))
+				break ;
 		}
 		else
 		{
 			aux = dupped_arr(index);
-			if (is_builtin(aux[0]))
-				builtins(aux);
-			else
-				run_command(aux,
-					mshell()->infile, mshell()->outfile);
-			ft_free_array(aux, 0);
+			if (aux)
+			{
+				if (is_builtin(aux[0]))
+					builtins(aux);
+				else
+					run_command(aux,
+						mshell()->infile, mshell()->outfile);
+				ft_free_array(aux, 0);
+			}
 		}
 	}
 	reset_fds();
-	i = 0;
-	while (i < mshell()->num_children)
+	current = mshell()->child_pids;
+	while (current)
 	{
-		waitpid(mshell()->child_pids[i], &status, 0);
+		waitpid(current->pid, &status, 0);
 		if (WIFEXITED(status))
 			mshell()->exit_status = WEXITSTATUS(status);
 		else if (WIFSIGNALED(status))
 			mshell()->exit_status = 128 + WTERMSIG(status);
-		i++;
+		current = current->next;
 	}
-	free(mshell()->child_pids);
 	free_resources(line);
 	return (line);
 }
