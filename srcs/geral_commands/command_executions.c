@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_executions.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/26 14:31:07 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/26 18:49:09 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ void	execute_simple_command(char **args, int infile, int outfile)
 		close(outfile);
 	if (mshell()->aux_env)
 		ft_free_array(mshell()->aux_env, 0);
+	signal(SIGINT, SIG_DFL);
 	execve(cmd_path, args, default_env());
 	handle_error_and_exit(-1, "Execution failed");
 }

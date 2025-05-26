@@ -58,7 +58,7 @@ void	ft_env(char **input)
 	}
 	else
 	{
-		ft_printf("NEED TO ADD TEMPORARY SYSYTEM VARIABLES\n");
+		ft_printf("\ninput: %t\n", input);
 	}
 	mshell()->exit_status = 0;
 }

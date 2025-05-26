@@ -90,7 +90,7 @@ char		*get_varname(char *value);
 void		builtins(char **input);
 
 //signals
-void		signal_handler(void);
+void		sigint_handler(int sig);
 
 //utils
 int			create_child_process(void);

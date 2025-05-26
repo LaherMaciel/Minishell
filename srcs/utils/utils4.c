@@ -1,22 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   signals.c                                          :+:      :+:    :+:   */
+/*   utils4.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/04/30 10:24:50 by karocha-          #+#    #+#             */
-/*   Updated: 2025/05/26 17:54:45 by karocha-         ###   ########.fr       */
+/*   Created: 2025/05/26 19:28:44 by karocha-          #+#    #+#             */
+/*   Updated: 2025/05/26 20:40:07 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
- 
-void	sigint_handler(int sig)
+#include "../../minishell.h"
+
+/* static void	env_err(char input)
 {
-	(void)sig;
-	write(1, "\n", 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	
+	exit (0);
 }
+
+void	parse_env(char *input)
+{
+	int	i;
+
+	i = -1;
+	if (!isalpha(input[0]))
+		return (env_err(input[0]));
+} */
