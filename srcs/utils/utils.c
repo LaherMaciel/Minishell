@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 20:51:30 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/23 12:33:48 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/30 15:59:51 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ static char	*search_command_in_path(char *cmd, char *path_env)
 	char	**paths;
 	char	*full_path;
 
-	if (access(cmd, X_OK) == 0)
-		return (ft_strdup(cmd));
+	if (access(cmd + 1, X_OK) == 0)
+		return (ft_strdup(cmd + 1));
 	paths = ft_split(path_env, ':');
 	if (!paths)
 		return (NULL);
@@ -91,7 +91,7 @@ char	*get_command_path(char *cmd)
 	char	*path_env;
 	char	*full_path;
 
-	path_env = getenv("PATH");
+	path_env = get_value("PATH");
 	if (!path_env)
 		return (NULL);
 	full_path = search_command_in_path(cmd, path_env);

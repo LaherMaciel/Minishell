@@ -3,20 +3,36 @@
 /*                                                        :::      ::::::::   */
 /*   built_ins.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:32 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/23 11:47:19 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/30 16:28:37 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	change_directory(const char *path)
+void	change_directory(char *path)
 {
+	char	*new_pwd;
+	char	*old_pwd;
+
+	new_pwd = NULL;
+	old_pwd = NULL;
 	if (chdir(path))
-		perror("minishell: cd");
-	mshell()->exit_status = 1;
+	{
+		perror("minishell: cd");	
+		mshell()->exit_status = 1;
+	}
+	else
+	{
+		old_pwd = ft_strjoin("OLDPWD=", get_value("PWD"));
+		add_to_env(old_pwd);
+		add_to_export(old_pwd);
+		new_pwd = ft_strjoin("PWD=", getcwd(NULL, 0));
+		add_to_env(new_pwd);
+		add_to_export(new_pwd);
+	}
 }
 
 int	builtin_pwd(void)
@@ -30,7 +46,7 @@ int	builtin_pwd(void)
 		perror("minishell: pwd");
 		return (1);
 	}
-	ft_printf("%s\n", path);
+	ft_fdprintf(mshell()->outfile, "%s\n", path);
 	free(path);
 	return (0);
 }
@@ -49,13 +65,13 @@ int	builtin_echo(char **input)
 	}
 	while (input[i] != NULL)
 	{
-		ft_printf("%s", input[i]);
+		ft_fdprintf(mshell()->outfile, "%s", input[i]);
 		if (input[i + 1] != NULL)
-			ft_printf(" ");
+			ft_fdprintf(mshell()->outfile, " ");
 		i++;
 	}
 	if (!n_flag)
-		ft_printf("\n");
+		ft_fdprintf(mshell()->outfile, "\n");
 	mshell()->exit_status = 0;
 	return (0);
 }

@@ -80,7 +80,7 @@ static int	get_input(char **line, char *prompt)
 	if (strcmp(*line, "exit") == 0)
 	{
 		free(*line);
-		ft_printf("Terminating Minishell\n");
+		ft_fdprintf(mshell()->outfile, "Terminating Minishell\n");
 		return (2);
 	}
 	if (ft_strcmp(prompt, "dquote> ") != 0

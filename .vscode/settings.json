@@ -59,6 +59,11 @@
   "files.associations": {
     "minishell.h": "c",
     "array": "c",
-    "functional": "c"
+    "functional": "c",
+    "system_error": "c",
+    "tuple": "c",
+    "type_traits": "c",
+    "utility": "c",
+    "cerrno": "c"
   }
 }

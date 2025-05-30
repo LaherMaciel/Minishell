@@ -29,11 +29,12 @@ void	ft_export(char **input)
 		while (mshell()->expt->var_name[i])
 		{
 			if (mshell()->expt->value[i] != NULL)
-				ft_printf("%s=\"%s\"\n",
+				ft_fdprintf(mshell()->outfile, "declare -x %s=\"%s\"\n",
 					mshell()->expt->var_name[i],
 					mshell()->expt->value[i]);
 			else
-				ft_printf("%s=\"\"\n", mshell()->expt->var_name[i]);
+				ft_fdprintf(mshell()->outfile, "declare -x %s=\"\"\n",
+					mshell()->expt->var_name[i]);
 			i++;
 		}
 	}

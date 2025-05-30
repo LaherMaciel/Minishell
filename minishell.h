@@ -73,7 +73,7 @@ int			builtin_cd(char *input);
 int			builtin_pwd(void);
 int			builtin_echo(char **input);
 int			execute_builtin(char **input);
-void		change_directory(const char *path);
+void		change_directory(char *path);
 void		init_environ(void);
 t_export	*init_export(char **env);
 void		ft_export(char **input);
@@ -105,6 +105,7 @@ char		**dupped_arr(int index);
 void		reset_fds(void);
 void		free_resources(char *line);
 char		**pipe_dupped_arr(int index);
+void		path_update(char *path, char *specifier);
 
 //parser
 void		parser(char *input);

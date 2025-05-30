@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   special_chars.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 09:26:31 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/26 14:33:33 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/30 14:41:26 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ void	piper(char **aux)
 void	exit_status(char *line)
 {
 	if (line)
-		ft_printf("%i%s: command not found\n", mshell()->exit_status, line + 2);
+		ft_fdprintf(mshell()->outfile, "%i%s: command not found\n", mshell()->exit_status, line + 2);
 	else
-		ft_printf("%i: command not found\n", mshell()->exit_status);
+		ft_fdprintf(mshell()->outfile, "%i: command not found\n", mshell()->exit_status);
 }
 
 int	handle_special(int index)
@@ -95,7 +95,7 @@ char	**pipe_dupped_arr(int index)
 	aux = NULL;
 	if (index <= 0)
 	{
-		ft_printf("Minishell: syntax error near unexpected token `|'\n");
+		ft_fdprintf(mshell()->outfile, "Minishell: syntax error near unexpected token `|'\n");
 		return (NULL);
 	}
 	if (!mshell()->input || index >= (int) ft_arraylen(mshell()->input))

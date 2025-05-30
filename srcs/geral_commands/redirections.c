@@ -15,7 +15,7 @@
 static int	handle_heredoc(char *input)
 {
 	(void) input;
-	ft_printf("handle_heredoc\n");
+	ft_fdprintf(mshell()->outfile, "handle_heredoc\n");
 	return (0);
 }
 
