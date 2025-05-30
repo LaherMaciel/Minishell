@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 20:51:30 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/30 17:03:49 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/30 18:08:06 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ static char	*search_command_in_path(char *cmd, char *path_env)
 	char	**paths;
 	char	*full_path;
 
-	if (access(cmd + 1, X_OK) == 0)
-		return (ft_strdup(cmd + 1));
 	paths = ft_split(path_env, ':');
 	if (!paths)
 		return (NULL);
@@ -90,20 +88,17 @@ char	*get_command_path(char *cmd)
 {
 	char	*path_env;
 	char	*full_path;
-	char	*error_msg;
+	//char	*error_msg;
 
+	if (access(cmd, X_OK) == 0)
+		return (ft_strdup(cmd));
 	path_env = get_value("PATH");
 	if (!path_env)
 		return (NULL);
 	full_path = search_command_in_path(cmd, path_env);
 	if (!full_path)
-	{
-		error_msg = ft_strjoin("minishell: ", cmd);
-		error_msg = ft_strjoin2(error_msg, ": command not found\n", 1);
-		write(STDERR_FILENO, error_msg, ft_strlen(error_msg));
 		mshell()->exit_status = 127;
-		free(error_msg);
-	}
+	free(path_env);
 	return (full_path);
 }
 
@@ -152,13 +147,11 @@ void	handle_error_and_exit(int error, char *message)
 			full_msg = ft_strjoin(message, "\n");
 			write(STDERR_FILENO, message, ft_strlen(message));
 		}
-		else if (error == -4)
+		else if (error == 127)
 		{
 			full_msg = ft_strjoin("minishell: ", message);
 			full_msg = ft_strjoin2(full_msg, ": command not found\n", 1);
 			write(STDERR_FILENO, full_msg, ft_strlen(full_msg));
-			free(full_msg);
-			exit(127);
 		}
 	}
 	if (full_msg)

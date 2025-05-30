@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:32 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/30 16:49:16 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/30 18:09:38 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	change_directory(char *path)
 		mshell()->exit_status = 1;
 		return ;
 	}
-	old_pwd = ft_strjoin("OLDPWD=", get_value("PWD"));
+	old_pwd = ft_strjoin2("OLDPWD=", get_value("PWD"), 2);
 	add_to_env(old_pwd);
 	add_to_export(old_pwd);
 	free(old_pwd);

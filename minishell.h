@@ -103,7 +103,7 @@ void		rm_index(int index);
 void		rm_indexs(int index1, int index2);
 char		**dupped_arr(int index);
 void		reset_fds(void);
-void		free_resources(char *line);
+void		free_resources(void);
 char		**pipe_dupped_arr(int index);
 
 //parser

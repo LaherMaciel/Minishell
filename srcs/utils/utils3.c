@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:02:32 by karocha-          #+#    #+#             */
-/*   Updated: 2025/05/26 14:28:33 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/30 17:57:20 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,10 +108,9 @@ void	reset_fds(void)
 	mshell()->outfile = STDOUT_FILENO;
 }
 
-void	free_resources(char *line)
+void	free_resources(void)
 {
 	ft_free_array(mshell()->input, 0);
 	free(mshell()->input_value);
-	free(line);
 	free_child_pids();
 }

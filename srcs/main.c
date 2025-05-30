@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:07:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/26 18:20:06 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/05/30 18:04:22 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ t_mshell	*mshell(void)
 
 void	init_shell(char **env)
 {
+	mshell()->input = NULL;
+	mshell()->input_value = 0;
 	mshell()->infile = STDIN_FILENO;
 	mshell()->outfile = STDOUT_FILENO;
 	mshell()->exit_status = 0;

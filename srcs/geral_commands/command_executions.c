@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/30 16:59:03 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/05/30 18:07:54 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,8 @@ void	execute_simple_command(char **args, int infile, int outfile)
 	}
 	cmd_path = get_command_path(args[0]);
 	if (!cmd_path)
-	{
-		ft_free_array(args, 0);
-		ft_printf("ERROR OUT\n\n");
-		handle_error_and_exit(-5, NULL);
-	}
-	if (infile != STDERR_FILENO)
+		handle_error_and_exit(127, args[0]);
+	if (infile != STDIN_FILENO)
 		close(infile);
 	if (outfile != STDOUT_FILENO)
 		close(outfile);
@@ -132,6 +128,6 @@ char	*execute_commands(char *line)
 			mshell()->exit_status = 128 + WTERMSIG(status);
 		current = current->next;
 	}
-	free_resources(line);
+	free_resources();
 	return (line);
 }
