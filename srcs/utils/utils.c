@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 20:51:30 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/30 15:59:51 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/05/30 17:03:49 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,20 @@ char	*get_command_path(char *cmd)
 {
 	char	*path_env;
 	char	*full_path;
+	char	*error_msg;
 
 	path_env = get_value("PATH");
 	if (!path_env)
 		return (NULL);
 	full_path = search_command_in_path(cmd, path_env);
 	if (!full_path)
+	{
+		error_msg = ft_strjoin("minishell: ", cmd);
+		error_msg = ft_strjoin2(error_msg, ": command not found\n", 1);
+		write(STDERR_FILENO, error_msg, ft_strlen(error_msg));
 		mshell()->exit_status = 127;
+		free(error_msg);
+	}
 	return (full_path);
 }
 
@@ -111,28 +118,62 @@ char	*get_command_path(char *cmd)
  */
 void	handle_error_and_exit(int error, char *message)
 {
+	char	*full_msg;
+
+	full_msg = NULL;
 	if (error == -1)
-		ft_fdprintf(STDERR_FILENO, "%s: %s\n", message, strerror(errno));
+	{
+		full_msg = ft_strjoin(message, ": ");
+		full_msg = ft_strjoin2(full_msg, strerror(errno), 1);
+		full_msg = ft_strjoin2(full_msg, "\n", 1);
+		write(STDERR_FILENO, full_msg, ft_strlen(full_msg));
+	}
 	else if (error == -3)
-		ft_fdprintf(STDERR_FILENO, "minishell: %s: %s\n",
-			strerror(errno), message);
+	{
+		full_msg = ft_strjoin("minishell: ", strerror(errno));
+		full_msg = ft_strjoin2(full_msg, ": ", 1);
+		full_msg = ft_strjoin2(full_msg, message, 1);
+		full_msg = ft_strjoin2(full_msg, "\n", 1);
+		write(STDERR_FILENO, full_msg, ft_strlen(full_msg));
+	}
 	else
 	{
 		if (error == 0 || error == 1)
 		{
 			if (error == 1)
-				ft_fdprintf(STDERR_FILENO, "%s\n", message);
+			{
+				full_msg = ft_strjoin(message, "\n");
+				write(STDERR_FILENO, message, ft_strlen(message));
+			}
 			mshell()->exit_status = error;
 		}
 		else if (error == -2)
-			ft_fdprintf(STDERR_FILENO, "%s\n", message);
+		{
+			full_msg = ft_strjoin(message, "\n");
+			write(STDERR_FILENO, message, ft_strlen(message));
+		}
 		else if (error == -4)
 		{
-			ft_fdprintf(STDERR_FILENO, "minishell: %s: command not found\n",
-				message);
+			full_msg = ft_strjoin("minishell: ", message);
+			full_msg = ft_strjoin2(full_msg, ": command not found\n", 1);
+			write(STDERR_FILENO, full_msg, ft_strlen(full_msg));
+			free(full_msg);
 			exit(127);
 		}
-		exit (mshell()->exit_status);
 	}
-	exit(errno);
+	if (full_msg)
+		free(full_msg);
+	exit (mshell()->exit_status);
 }
+
+void	write_error_atomic(const char *msg)
+{
+	char	*full_msg;
+
+	full_msg = ft_strjoin("minishell: ", msg);
+	if (!full_msg)
+		return ;
+	write(STDERR_FILENO, full_msg, ft_strlen(full_msg));
+	free(full_msg);
+}
+

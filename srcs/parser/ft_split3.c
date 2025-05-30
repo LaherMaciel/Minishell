@@ -6,7 +6,7 @@
 /*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/04 18:32:57 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/30 14:41:55 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/05/19 17:23:00 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ size_t	init_split(char ***split, const char *str, char *s, int *i)
 		*i += ft_strlen(s);
 		if (*i <= (int)ft_strlen(str))
 			*split[word++] = word_dup(s, 0, ft_strlen(s));
-		ft_fdprintf(mshell()->outfile, "split[%i]\n", word);
+		ft_printf("split[%i]\n", word);
 	}
 	return (word);
 }

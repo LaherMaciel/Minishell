@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_executions.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/26 18:49:09 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/05/30 16:59:03 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,11 @@ void	execute_simple_command(char **args, int infile, int outfile)
 	}
 	cmd_path = get_command_path(args[0]);
 	if (!cmd_path)
-		handle_error_and_exit(-4, args[0]);
+	{
+		ft_free_array(args, 0);
+		ft_printf("ERROR OUT\n\n");
+		handle_error_and_exit(-5, NULL);
+	}
 	if (infile != STDERR_FILENO)
 		close(infile);
 	if (outfile != STDOUT_FILENO)
@@ -66,7 +70,9 @@ void	run_command(char **args, int infile, int outfile)
 		execute_simple_command(args, infile, outfile);
 	}
 	else if (pid > 0)
+	{
 		add_child_pid(pid);
+	}
 	else
 	{
 		mshell()->exit_status = 1;

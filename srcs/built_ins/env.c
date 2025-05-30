@@ -6,7 +6,7 @@
 /*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 22:25:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/30 15:20:58 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/05/22 21:333:483 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ void	ft_env(char **input)
 					mshell()->env->var_name[i],
 					mshell()->env->value[i]);
 			else
-				ft_fdprintf(mshell()->outfile, "%s=\"\"\n",
-					mshell()->env->var_name[i]);
+				ft_fdprintf(mshell()->outfile, "%s=\"\"\n", mshell()->env->var_name[i]);
 			i++;
 		}
 	}

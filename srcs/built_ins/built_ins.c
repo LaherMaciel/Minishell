@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_ins.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:32 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/30 16:28:37 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/05/30 16:49:16 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,18 @@ void	change_directory(char *path)
 	old_pwd = NULL;
 	if (chdir(path))
 	{
-		perror("minishell: cd");	
+		perror("minishell: cd");
 		mshell()->exit_status = 1;
+		return ;
 	}
-	else
-	{
-		old_pwd = ft_strjoin("OLDPWD=", get_value("PWD"));
-		add_to_env(old_pwd);
-		add_to_export(old_pwd);
-		new_pwd = ft_strjoin("PWD=", getcwd(NULL, 0));
-		add_to_env(new_pwd);
-		add_to_export(new_pwd);
-	}
+	old_pwd = ft_strjoin("OLDPWD=", get_value("PWD"));
+	add_to_env(old_pwd);
+	add_to_export(old_pwd);
+	free(old_pwd);
+	new_pwd = ft_strjoin2("PWD=", getcwd(NULL, 0), 2);
+	add_to_env(new_pwd);
+	add_to_export(new_pwd);
+	free(new_pwd);
 }
 
 int	builtin_pwd(void)

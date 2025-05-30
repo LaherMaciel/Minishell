@@ -105,7 +105,6 @@ char		**dupped_arr(int index);
 void		reset_fds(void);
 void		free_resources(char *line);
 char		**pipe_dupped_arr(int index);
-void		path_update(char *path, char *specifier);
 
 //parser
 void		parser(char *input);

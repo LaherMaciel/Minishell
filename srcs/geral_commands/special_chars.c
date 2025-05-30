@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   special_chars.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 09:26:31 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/30 14:41:26 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/05/30 16:37:43 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+//1 | 2 | 3 | 4 | 5 | 6
 //a | b | c | d | e | f
 //sleep 3 | sleep 3 | sleep 3 | sleep 3
 //sleep1 1 | sleep2 2 | sleep3 3 | sleep4 4
@@ -19,7 +20,9 @@ void	piper(char **aux)
 {
 	pid_t	pid;
 	int		pipefd[2];
+	int		i;
 
+	i = 0;
 	if (pipe(pipefd) < 0)
 	{
 		perror("Minishell: pipe");
@@ -57,6 +60,8 @@ void	piper(char **aux)
 		if (mshell()->infile != STDIN_FILENO)
 			close(mshell()->infile);
 		mshell()->infile = pipefd[0];
+		while (++i < 15000000)
+			;
 	}
 }
 
