@@ -29,7 +29,7 @@ char	*ft_strdup(const char *src)
 	size_t	i;
 
 	if (!src)
-		return (NULL);
+		return (ft_calloc((2), sizeof(char)));
 	copy = ft_calloc((ft_strlen(src) + 1), sizeof(char));
 	if (!copy)
 		return (NULL);

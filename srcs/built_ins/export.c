@@ -86,20 +86,23 @@ t_export	*export_sorter(void)
 	size_t		j;
 
 	i = 0;
-	j = ft_arraylen(mshell()->env->var_name);
+	j = ft_arraylen(mshell()->env->var_name) + 1;
 	expt = mshell()->expt;
-	while (j > 0)
+	while (--j > 0)
 	{
 		while (i <= j && expt->var_name[i + 1])
 		{
 			if (ft_strcmp(expt->var_name[i],
 					expt->var_name[i + 1]) > 0)
+			{
 				ft_swap(&expt->var_name[i],
 					&expt->var_name[i + 1], 1);
+				ft_swap(&expt->value[i],
+					&expt->value[i + 1], 1);
+			}
 			else
 				i++;
 		}
-		j--;
 		i = 0;
 	}
 	return (expt);

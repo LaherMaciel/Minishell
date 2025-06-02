@@ -87,6 +87,7 @@ void		ft_env(char **input);
 t_export	*add_to_env(char *str);
 char		*get_value(char *var_name);
 char		*get_varname(char *value);
+char		*get_varname2(char *var_name);
 void		builtins(char **input);
 
 //signals

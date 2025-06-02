@@ -52,7 +52,8 @@ void	ft_env(char **input)
 					mshell()->env->var_name[i],
 					mshell()->env->value[i]);
 			else
-				ft_fdprintf(mshell()->outfile, "%s=\"\"\n", mshell()->env->var_name[i]);
+				ft_fdprintf(mshell()->outfile, "%s=\"\"\n",
+					mshell()->env->var_name[i]);
 			i++;
 		}
 	}
@@ -82,6 +83,26 @@ char	*get_value(char *var_name)
 	return (NULL);
 }
 
+char	*get_varname2(char *var_name)
+{
+	t_export	*env;
+	int			i;
+
+	env = mshell()->env;
+	if (!env)
+		return (NULL);
+	i = 0;
+	while (env->var_name && env->var_name[i])
+	{
+		//ft_printf("if (env->var_name[%i]'%s' == '%s')\n", i, env->var_name[i], var_name);
+		if (ft_strncmp(env->var_name[i], var_name,
+				ft_strlen(env->var_name[i])) == 0)
+			return (env->var_name[i]);
+		i++;
+	}
+	return (NULL);
+}
+
 char	*get_varname(char *value)
 {
 	t_export	*env;
@@ -91,11 +112,17 @@ char	*get_varname(char *value)
 	if (!env)
 		return (NULL);
 	i = 0;
-	while (env->value && env->value[i])
+	ft_printf("value = '%s'\n", value);
+	while (env->var_name && env->var_name[i])
 	{
+		/* ft_printf("if (env->value[%i]'%s' == '%s')\n", i, env->value[i], value); */
 		if (ft_strncmp(env->value[i], value,
 				ft_strlen(env->value[i])) == 0)
+		{
+			ft_printf("Found env->value[%i]'%s' == '%s'\n"
+				"var_name: '%s'\n", i, env->value[i], value, env->var_name[i]);
 			return (ft_strdup(env->var_name[i]));
+		}
 		i++;
 	}
 	return (NULL);

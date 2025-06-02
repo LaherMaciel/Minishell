@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 12:53:09 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/23 11:16:08 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/02 14:23:02 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ static char	**handle_operator(char **res, char **cur, int *k,
 static void	process_token(char **cur, char *input, size_t *i, int quote)
 {
 	char	*val;
-	char	*name;
 
 	if ((quote == 0 || quote == 2) && input[*i + 1] == '?')
 	{
@@ -62,9 +61,7 @@ static void	process_token(char **cur, char *input, size_t *i, int quote)
 		&& val)
 	{
 		*cur = ft_strjoin2(*cur, val, 1);
-		name = get_varname(val);
-		*i += ft_strlen(name) + 1;
-		free(name);
+		*i += ft_strlen(get_varname2(input + *i + 1)) + 1;
 	}
 	else
 	{
@@ -116,3 +113,4 @@ char	**ft_split_minishell(char *input)
 	result = split_loop(result, input, &k);
 	return (result);
 }
+//echo "$USER=1234567890"
