@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 20:51:30 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/30 18:08:06 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/02 17:46:12 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ int	create_child_process(void)
 
 	pid = fork();
 	if (pid < 0)
+	{
+		mshell()->exit_status = 1;
 		handle_error_and_exit(-1, "Fork failed");
+	}
 	return (pid);
 }
 

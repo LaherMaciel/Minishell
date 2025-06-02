@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/02 16:13:38 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/02 17:45:55 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,7 @@ void	run_command(char **args, int infile, int outfile)
 		execute_simple_command(args, infile, outfile);
 	}
 	else if (pid > 0)
-	{
 		add_child_pid(pid);
-	}
-	else
-	{
-		mshell()->exit_status = 1;
-		perror("minishell: fork");
-	}
 }
 
 char	*execute_commands(char *line)
@@ -96,15 +89,11 @@ char	*execute_commands(char *line)
 	{
 		index = high_priority();
 		if (is_redirect(mshell()->input[index]))
-		{
 			if (redirection_operators_handler(index))
 				break ;
-		}
 		else if (is_special(mshell()->input[index]))
-		{
 			if (handle_special(index))
 				break ;
-		}
 		else
 		{
 			aux = dupped_arr(index);

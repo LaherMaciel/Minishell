@@ -14,8 +14,25 @@
 
 static int	handle_heredoc(char *input)
 {
-	(void) input;
+	/* char	*line;
+	char	**new_input;
+
+	line = NULL; */
+	(void)input;
 	ft_fdprintf(mshell()->outfile, "handle_heredoc\n");
+	/* while (ft_strcmp(line, input) != 0)
+	{
+		line = readline("heredoc> ");
+		if (!line)
+		{
+			ft_fdprintf(STDERR_FILENO, "Minishell: ",
+				"syntax error near unexpected token `newline'\n");
+			mshell()->exit_status = 2;
+			return (mshell()->exit_status);
+		}
+		new_input = ft_append_to_array2(new_input, ft_arraylen(new_input), line, 1);
+		free(line);
+	} */
 	return (0);
 }
 
