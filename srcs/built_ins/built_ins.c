@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:32 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/30 18:09:38 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/02 16:16:25 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,12 +58,13 @@ int	builtin_echo(char **input)
 
 	n_flag = false;
 	i = 1;
+	ft_printf("input\n%t\n", input);
 	if (input[1] != NULL && ft_strcmp(input[1], "-n") == 0)
 	{
 		n_flag = true;
 		i++;
 	}
-	while (input[i] != NULL)
+	while (input[i])
 	{
 		ft_fdprintf(mshell()->outfile, "%s", input[i]);
 		if (input[i + 1] != NULL)

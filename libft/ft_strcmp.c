@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 15:24:25 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/02 14:32:55 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/02 15:07:42 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	ft_strcmp(const char *str1, const char *str2)
 	size_t	a;
 
 	a = 0;
+	//ft_printf("comparing %s and %s\n", str1, str2);
 	if (!str1 && !str2)
 		return (0);
 	if (!str1)

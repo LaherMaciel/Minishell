@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils4.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 19:28:44 by karocha-          #+#    #+#             */
-/*   Updated: 2025/05/26 20:40:07 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/02 16:09:29 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,3 +26,13 @@ void	parse_env(char *input)
 	if (!isalpha(input[0]))
 		return (env_err(input[0]));
 } */
+
+int	word_size(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && (ft_isalpha(str[i]) || ft_isdigit(str[i])))
+		i++;
+	return (i);
+}

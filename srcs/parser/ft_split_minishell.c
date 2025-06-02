@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 12:53:09 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/02 14:23:02 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/02 16:11:26 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,15 @@ static void	process_token(char **cur, char *input, size_t *i, int quote)
 		*cur = ft_strjoin2(*cur, ft_itoa(mshell()->exit_status), 3);
 		*i += ft_strlen(*cur) + 1;
 	}
-	val = get_value(input + *i + 1);
-	if ((quote == 0 || quote == 2) && input[*i] == '$'
-		&& val)
+	if ((quote == 0 || quote == 2) && input[*i] == '$')
 	{
-		*cur = ft_strjoin2(*cur, val, 1);
-		*i += ft_strlen(get_varname2(input + *i + 1)) + 1;
+		if (get_value2(input + *i + 1))
+		{
+			val = get_value(input + *i + 1);
+			*cur = ft_strjoin2(*cur, val, 1);
+			free(val);
+		}
+		*i += word_size(input + *i + 1) + 1;
 	}
 	else
 	{
@@ -69,7 +72,6 @@ static void	process_token(char **cur, char *input, size_t *i, int quote)
 			*cur = ft_strjoin3(*cur, input[*i], 1);
 		(*i)++;
 	}
-	free(val);
 }
 
 static char	**split_loop(char **res, char *input, int *k)
@@ -78,6 +80,7 @@ static char	**split_loop(char **res, char *input, int *k)
 	int		quote;
 	char	*cur;
 
+	//ft_printf("depois cur: %s\n", *cur);
 	i = 0;
 	quote = 0;
 	cur = NULL;

@@ -76,11 +76,30 @@ char	*get_value(char *var_name)
 	while (env->var_name && env->var_name[i])
 	{
 		if (ft_strncmp(env->var_name[i], var_name,
-				ft_strlen(env->var_name[i])) == 0)
+				word_size(var_name)) == 0)
 			return (ft_strdup(env->value[i]));
 		i++;
 	}
 	return (NULL);
+}
+
+int	get_value2(char *var_name)
+{
+	t_export	*env;
+	int			i;
+
+	env = mshell()->env;
+	if (!env)
+		return (0);
+	i = 0;
+	while (env->var_name && env->var_name[i])
+	{
+		if (ft_strncmp(env->var_name[i], var_name,
+				ft_strlen(env->var_name[i])) == 0)
+			return (1);
+		i++;
+	}
+	return (0);
 }
 
 char	*get_varname2(char *var_name)

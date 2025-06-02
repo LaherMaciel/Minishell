@@ -65,6 +65,8 @@
     "type_traits": "c",
     "utility": "c",
     "cerrno": "c",
-    "typeinfo": "c"
+    "typeinfo": "c",
+    "string": "c",
+    "string_view": "c"
   }
 }

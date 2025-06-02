@@ -86,6 +86,7 @@ t_export	*init_env(char **env);
 void		ft_env(char **input);
 t_export	*add_to_env(char *str);
 char		*get_value(char *var_name);
+int			get_value2(char *var_name);
 char		*get_varname(char *value);
 char		*get_varname2(char *var_name);
 void		builtins(char **input);
@@ -106,6 +107,7 @@ char		**dupped_arr(int index);
 void		reset_fds(void);
 void		free_resources(void);
 char		**pipe_dupped_arr(int index);
+int			word_size(char *str);
 
 //parser
 void		parser(char *input);

@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 15:47:56 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/19 16:48:05 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/02 15:26:10 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ char	*ft_strjoin2(char *s1, char *s2, int flag)
 	size_t	i;
 	size_t	j;
 
+	if (!s1 && !s2)
+		return (ft_strdup(""));
 	sjoin = ft_calloc((ft_strlen(s1) + ft_strlen(s2)), sizeof(char) + 1);
 	if (!sjoin)
 		return (NULL);
