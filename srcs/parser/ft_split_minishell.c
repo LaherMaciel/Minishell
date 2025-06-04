@@ -3,115 +3,116 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_minishell.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 12:53:09 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/04 19:22:13 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/04 21:12:532 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static char	**add_token(char **res, char **cur, int *k, char *str)
+static char	**add_token(char **res, char **cur, t_parsing *counts, char *str)
 {
-	res = add_current(res, cur, k);
-	res[*k] = ft_strdup(str);
-	if (!res[*k])
+	res = add_current(res, cur, &counts->k);
+	res[counts->k] = ft_strdup(str);
+	if (!res[counts->k])
 		return (NULL);
-	(*k)++;
+	(counts->k)++;
 	return (res);
 }
 
-static char	**handle_operator(char **res, char **cur, int *k,
-	char *input, size_t *i)
+static char	**handle_operator(char **res, char **cur, t_parsing *counts,
+	char *input)
 {
-	if (input[*i] == '>' && input[*i + 1] == '>')
+	if (input[counts->i] == '>' && input[counts->i + 1] == '>')
 	{
-		res = add_token(res, cur, k, ">>");
-		*i += 2;
+		res = add_token(res, cur, counts, ">>");
+		counts->i += 2;
 	}
-	else if (input[*i] == '<' && input[*i + 1] == '<')
+	else if (input[counts->i] == '<' && input[counts->i + 1] == '<')
 	{
-		res = add_token(res, cur, k, "<<");
-		*i += 2;
+		res = add_token(res, cur, counts, "<<");
+		counts->i += 2;
 	}
 	else
 	{
-		res = add_current(res, cur, k);
-		res[*k] = ft_calloc(2, sizeof(char));
-		if (!res[*k])
+		res = add_current(res, cur, &counts->k);
+		res[counts->k] = ft_calloc(2, sizeof(char));
+		if (!res[counts->k])
 			return (NULL);
-		res[*k][0] = input[(*i)++];
-		(*k)++;
+		res[counts->k][0] = input[(counts->i)++];
+		(counts->k)++;
 	}
 	return (res);
 }
 
-static void	process_token(char **cur, char *input, size_t *i, int quote)
+static t_parsing	*process_token(char **cur, char *input, t_parsing *counts)
 {
 	char	*val;
 
-	if ((quote == 0 || quote == 2) && input[*i + 1] == '?')
+	if ((counts->quote == 0 || counts->quote == 2)
+		&& input[counts->i + 1] == '?')
 	{
 		*cur = ft_strjoin2(*cur, ft_itoa(mshell()->exit_status), 3);
-		*i += ft_strlen(*cur) + 1;
+		counts->i += ft_strlen(*cur) + 1;
 	}
-	if ((quote == 0 || quote == 2) && input[*i] == '$')
+	if ((counts->quote == 0 || counts->quote == 2) && input[counts->i] == '$')
 	{
-		if (get_value2(input + *i + 1))
+		if (get_value2(input + counts->i + 1))
 		{
-			val = get_value(input + *i + 1);
+			val = get_value(input + counts->i + 1);
 			*cur = ft_strjoin2(*cur, val, 1);
 			free(val);
 		}
-		*i += word_size(input + *i + 1) + 1;
+		counts->i += word_size(input + counts->i + 1) + 1;
 	}
 	else
 	{
-		if (input[*i] != '\'' && input[*i] != '\"')
-			*cur = ft_strjoin3(*cur, input[*i], 1);
-		(*i)++;
+		if (input[counts->i] != '\'' && input[counts->i] != '\"')
+			*cur = ft_strjoin3(*cur, input[counts->i], 1);
+		(counts->i)++;
 	}
+	return (counts);
 }
 
-static char	**split_loop(char **res, char *input, int *k)
+static char	**split_loop(char **res, char *input, t_parsing *counts)
 {
-	size_t	i;
-	int		quote;
 	char	*cur;
 
-	i = 0;
-	quote = 0;
 	cur = NULL;
-	while (input[i])
+	while (input[counts->i])
 	{
-		about_quotes(input, &quote, i);
-		if (quote == 0 && (ft_strchr("|><&", input[i])))
-			res = handle_operator(res, &cur, k, input, &i);
-		else if (quote == 0 && input[i] == ' ')
+		about_quotes(input, counts);
+		if (counts->quote == 0
+			&& (ft_strchr("|><&", input[counts->i])))
+			res = handle_operator(res, &cur, counts, input);
+		else if (counts->quote == 0 && input[counts->i] == ' ')
 		{
-			res = add_current(res, &cur, k);
-			i++;
+			res = add_current(res, &cur, &counts->k);
+			counts->i++;
 		}
 		else
-			process_token(&cur, input, &i, quote);
+			counts = process_token(&cur, input, counts);
 	}
 	if (cur)
-		res[(*k)++] = cur;
+		res[(counts->k)++] = cur;
 	return (res);
 }
 
 char	**ft_split_minishell(char *input)
 {
-	char	**result;
-	int		k;
+	t_parsing	counts;
+	char		**result;
 
 	if (!input)
 		return (NULL);
 	result = ft_calloc(100, sizeof(char *));
 	if (!result)
 		return (NULL);
-	k = 0;
-	result = split_loop(result, input, &k);
+	counts.k = 0;
+	counts.i = 0;
+	counts.quote = 0;
+	result = split_loop(result, input, &counts);
 	return (result);
 }

@@ -56,6 +56,13 @@ typedef struct s_mshell
 	int			heredoc;
 }				t_mshell;
 
+typedef struct s_parsing
+{
+	int		k;
+	size_t	i;
+	int		quote;
+}			t_parsing;
+
 //prompt
 char		*display_prompt(char *line);
 
@@ -89,8 +96,6 @@ void		ft_env(char **input);
 t_export	*add_to_env(char *str);
 char		*get_value(char *var_name);
 int			get_value2(char *var_name);
-char		*get_varname(char *value);
-char		*get_varname2(char *var_name);
 void		builtins(char **input);
 
 //signals
@@ -111,6 +116,11 @@ void		reset_fds(void);
 void		free_resources(void);
 char		**pipe_dupped_arr(int index);
 int			word_size(char *str);
+char		*get_varname(char *value);
+char		*get_varname2(char *var_name);
+void		exp_loop(int i, char **input);
+void		ex_cmnd_loop(int index, char **aux);
+void		ex_cmnd_loop2(void);
 
 //parser
 void		parser(char *input);
@@ -119,7 +129,7 @@ char		**ft_split3(char const *str, char *s, int i);
 char		*ft_substr2(char const *s, unsigned int start, size_t len);
 char		**ft_split_minishell(char *input);
 char		*ft_strjoin3(char *s1, char s2, int flag);
-void		about_quotes(char *input, int *quote, size_t i);
+void		about_quotes(char *input, t_parsing *counts);
 char		**add_current(char **res, char **cur, int *k);
 int			its_what(char *str);
 void		set_inputvalue(void);

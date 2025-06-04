@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/04 19:14:11 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/04 21:43:31 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,11 @@ void	execute_simple_command(char **args, int infile, int outfile)
 	}
 	cmd_path = get_command_path(args[0]);
 	if (!cmd_path)
-		handle_error_and_exit(127, args[0]);
+	{
+		cmd_path = ft_strdup(args[0]);
+		ft_free_array(args, 0);
+		handle_error_and_exit(127, cmd_path);
+	}
 	if (infile != STDIN_FILENO)
 		close(infile);
 	if (outfile != STDOUT_FILENO)
@@ -73,11 +77,9 @@ void	run_command(char **args, int infile, int outfile)
 
 char	*execute_commands(char *line)
 {
-	t_child_pid	*current;
 	char		**aux;
-	int			status;
-	int			index;
 
+	aux = NULL;
 	if (ft_strncmp(line, "$?", 2) == 0)
 	{
 		exit_status(line);
@@ -85,44 +87,9 @@ char	*execute_commands(char *line)
 		return (line);
 	}
 	parser(line);
-	while (mshell()->input[0])
-	{
-		index = high_priority();
-		if (is_redirect(mshell()->input[index]))
-		{
-			if (redirection_operators_handler(index))
-				break ;
-		}
-		else if (is_special(mshell()->input[index]))
-		{
-			if (handle_special(index))
-				break ;
-		}
-		else
-		{
-			aux = dupped_arr(index);
-			if (aux)
-			{
-				if (is_builtin(aux[0]))
-					builtins(aux);
-				else
-					run_command(aux,
-						mshell()->infile, mshell()->outfile);
-				ft_free_array(aux, 0);
-			}
-		}
-	}
+	ex_cmnd_loop(0, aux);
 	reset_fds();
-	current = mshell()->child_pids;
-	while (current)
-	{
-		waitpid(current->pid, &status, 0);
-		if (WIFEXITED(status))
-			mshell()->exit_status = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-			mshell()->exit_status = 128 + WTERMSIG(status);
-		current = current->next;
-	}
+	ex_cmnd_loop2();
 	free_resources();
 	return (line);
 }

@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:02:32 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/02 13:19:43 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/04 20:41:17 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ char	**dupped_arr(int index)
 	int		j;
 
 	aux = NULL;
-	if (!mshell()->input || index < 0 || index >= (int) ft_arraylen(mshell()->input))
+	if (!mshell()->input || index < 0
+		|| index >= (int) ft_arraylen(mshell()->input))
 		return (NULL);
 	index--;
 	while (mshell()->input[++index])
@@ -95,7 +96,6 @@ char	**dupped_arr(int index)
 		i++;
 	}
 	set_inputvalue();
-	//ft_printf("AUX = %t\n", aux);
 	return (aux);
 }
 

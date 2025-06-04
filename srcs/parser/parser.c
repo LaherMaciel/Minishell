@@ -6,24 +6,24 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:10:31 by karocha-          #+#    #+#             */
-/*   Updated: 2025/05/30 17:58:57 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/04 21:11:12 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	about_quotes(char *input, int *quote, size_t i)
+void	about_quotes(char *input, t_parsing *counts)
 {
-	if (*quote == 0)
+	if (counts->quote == 0)
 	{
-		if (input[i] == '\'')
-			*quote = 1;
-		if (input[i] == '\"')
-			*quote = 2;
+		if (input[counts->i] == '\'')
+			counts->quote = 1;
+		if (input[counts->i] == '\"')
+			counts->quote = 2;
 	}
-	else if ((input[i] == '\'' && *quote == 1)
-		|| (input[i] == '\"' && *quote == 2))
-		*quote = 0;
+	else if ((input[counts->i] == '\'' && counts->quote == 1)
+		|| (input[counts->i] == '\"' && counts->quote == 2))
+		counts->quote = 0;
 }
 
 void	set_inputvalue(void)
@@ -51,12 +51,3 @@ void	parser(char *input)
 	mshell()->exit_status = 0;
 	free(input);
 }
-
-//ls>>test.txt|cat test.txt|grep "mini lib"
-//ls>test.txt | cat test.txt | grep "mini lib"
-//"ls | -a > something << dasd 'da sd a sd' fhjsdlf"
-//clear && make && valgrind ./minishell "ls | -a > something << dasd 'd as d asd' fhjsdlf"
-//ls>>test.txt|cat test.txt|grep "mini lib" ls | -a > something << dasd 'd as dasd' fhjsdlf '$USER'=$USER "HOME = $HOME" 'e'ch"o"
-//ls>>test.txt | cat test.txt|grep "mini lib" ls|-a>something << dasd 'd as d asd' fhjsdlf
-//ls | wc -l
-//'e'ch"o" "hello"

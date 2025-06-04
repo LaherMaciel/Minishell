@@ -6,39 +6,15 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 09:26:31 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/30 16:37:43 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/04 20:18:44 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
-//1 | 2 | 3 | 4 | 5 | 6
-//a | b | c | d | e | f
-//sleep 3 | sleep 3 | sleep 3 | sleep 3
-//sleep1 1 | sleep2 2 | sleep3 3 | sleep4 4
-void	piper(char **aux)
+void	purgatory(pid_t pid, int pipefd[2], int i, char **aux)
 {
-	pid_t	pid;
-	int		pipefd[2];
-	int		i;
-
-	i = 0;
-	if (pipe(pipefd) < 0)
-	{
-		perror("Minishell: pipe");
-		mshell()->exit_status = 1;
-		return ;
-	}
-	pid = create_child_process();
-	if (pid < 0)
-	{
-		perror("Minishell: fork");
-		mshell()->exit_status = 1;
-		close(pipefd[0]);
-		close(pipefd[1]);
-		return ;
-	}
-	else if (pid == 0)
+	if (pid == 0)
 	{
 		close(pipefd[0]);
 		if (mshell()->infile != STDERR_FILENO
@@ -65,12 +41,31 @@ void	piper(char **aux)
 	}
 }
 
+void	piper(char **aux)
+{
+	pid_t	pid;
+	int		pipefd[2];
+	int		i;
+
+	i = 0;
+	if (pipe(pipefd) < 0)
+	{
+		perror("Minishell: pipe");
+		mshell()->exit_status = 1;
+		return ;
+	}
+	pid = create_child_process();
+	purgatory(pid, pipefd, i, aux);
+}
+
 void	exit_status(char *line)
 {
 	if (line)
-		ft_fdprintf(mshell()->outfile, "%i%s: command not found\n", mshell()->exit_status, line + 2);
+		ft_fdprintf(mshell()->outfile, "%i%s: command not found\n",
+			mshell()->exit_status, line + 2);
 	else
-		ft_fdprintf(mshell()->outfile, "%i: command not found\n", mshell()->exit_status);
+		ft_fdprintf(mshell()->outfile, "%i: command not found\n",
+			mshell()->exit_status);
 }
 
 int	handle_special(int index)
@@ -91,28 +86,11 @@ int	handle_special(int index)
 	return (0);
 }
 
-char	**pipe_dupped_arr(int index)
+static void	clear_input(char **aux)
 {
-	char	**aux;
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
-	aux = NULL;
-	if (index <= 0)
-	{
-		ft_fdprintf(mshell()->outfile, "Minishell: syntax error near unexpected token `|'\n");
-		return (NULL);
-	}
-	if (!mshell()->input || index >= (int) ft_arraylen(mshell()->input))
-		return (NULL);
-	rm_index(index);
-	i = -1;
-	while (++i < index)
-		if (its_what(mshell()->input[i]) == 1
-			|| its_what(mshell()->input[i]) == 2)
-			aux = ft_append_to_array2(aux, 0, mshell()->input[i], 1);
-	if (!aux)
-		return (NULL);
 	i = -1;
 	while (aux[++i])
 	{
@@ -127,5 +105,30 @@ char	**pipe_dupped_arr(int index)
 		}
 	}
 	set_inputvalue();
+}
+
+char	**pipe_dupped_arr(int index)
+{
+	char	**aux;
+	int		i;
+
+	aux = NULL;
+	if (index <= 0)
+	{
+		ft_fdprintf(mshell()->outfile, "Minishell: "
+			"syntax error near unexpected token `|'\n");
+		return (NULL);
+	}
+	if (!mshell()->input || index >= (int) ft_arraylen(mshell()->input))
+		return (NULL);
+	rm_index(index);
+	i = -1;
+	while (++i < index)
+		if (its_what(mshell()->input[i]) == 1
+			|| its_what(mshell()->input[i]) == 2)
+			aux = ft_append_to_array2(aux, 0, mshell()->input[i], 1);
+	if (!aux)
+		return (NULL);
+	clear_input(aux);
 	return (aux);
 }

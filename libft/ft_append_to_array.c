@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_append_to_array.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 11:14:46 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/22 21:29:554 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/04 21:43:31 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

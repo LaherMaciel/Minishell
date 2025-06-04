@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:53:37 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/22 18:31:226 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/04 19:56:57 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@
 			mshell()->exit_status = 2;
 			return (mshell()->exit_status);
 		}
-		new_input = ft_append_to_array2(new_input, ft_arraylen(new_input), line, 1);
+		new_input = ft_append_to_array2(new_input,
+			ft_arraylen(new_input), line, 1);
 		free(line);
 	}
 	return (0);

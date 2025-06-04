@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:07:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/30 18:04:22 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/04 20:25:27 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,3 +70,24 @@ int	main(int argv, char **argc, char **env)
 	free_mshell();
 	return (0);
 }
+/*
+1 | 2|3 | 4   | 5 | 6
+ls -a|grep mini | wc -l | cat >> test.txt
+ls -a | grep mini | cat >> test.txt
+cat test.txt
+ls | wc -l
+clear
+pwd
+cd ..
+cd Minishell
+env
+export
+export a=1
+export
+env
+unset a
+export 
+env
+echo $PATH
+echo 1231234$USER=2
+*/

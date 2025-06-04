@@ -6,12 +6,12 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:24:50 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/04 19:30:08 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/04 21:43:45 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
- 
+
 void	sigint_handler(int sig)
 {
 	(void)sig;

@@ -3,21 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 20:17:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/22 21:34:50by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/04 21:43:45 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-/* 
-void	init_environ(void)
-{
-	extern char	**environ;
-}
- */
 
 void	ft_export(char **input)
 {
@@ -39,14 +32,7 @@ void	ft_export(char **input)
 		}
 	}
 	else
-	{
-		while (input[++i])
-		{
-			mshell()->env = add_to_env(input[i]);
-			mshell()->expt = add_to_export(input[i]);
-		}
-		mshell()->expt = export_sorter();
-	}
+		exp_loop(i, input);
 	mshell()->exit_status = 0;
 }
 
