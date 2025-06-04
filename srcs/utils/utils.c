@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 20:51:30 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/02 17:46:12 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/04 19:30:09 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,8 @@ void	handle_error_and_exit(int error, char *message)
 	char	*full_msg;
 
 	full_msg = NULL;
+	if (mshell()->heredoc)
+		exit(mshell()->exit_status);
 	if (error == -1)
 	{
 		full_msg = ft_strjoin(message, ": ");

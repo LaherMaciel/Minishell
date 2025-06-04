@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:24:50 by karocha-          #+#    #+#             */
-/*   Updated: 2025/05/26 17:54:45 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/04 19:30:08 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,4 +19,15 @@ void	sigint_handler(int sig)
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
+}
+
+void	sig_heredoc(int sig)
+{
+	int	i;
+
+	(void)sig;
+	i = -1;
+	while (++i < FOPEN_MAX)
+		close(i);
+	exit(0);
 }

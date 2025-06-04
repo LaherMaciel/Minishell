@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 20:59:19 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/23 11:43:24 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/04 19:17:11 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,23 +14,27 @@
 
 void	cleaning(char **input, int index, int i)
 {
-	size_t	aux_env;
-	size_t	aux_expt;
+	size_t		aux_env;
+	size_t		aux_expt;
+	t_export	*env;
+	t_export	*expt;
 
+	env = mshell()->env;
+	expt = mshell()->expt;
 	aux_env = ft_arraylen(mshell()->env->var_name);
 	aux_expt = ft_arraylen(mshell()->expt->var_name);
 	while (mshell()->expt->var_name[++i])
 	{
 		if (ft_strcmp(input[index], mshell()->expt->var_name[i]) == 0)
 		{
-			mshell()->env->value = ft_rm_from_array(mshell()->env->value,
-				aux_env, i);
-			mshell()->env->var_name = ft_rm_from_array(mshell()->env->var_name,
-				aux_env, i);
-			mshell()->expt->value = ft_rm_from_array(mshell()->expt->value,
-				aux_expt, i);
-			mshell()->expt->var_name = ft_rm_from_array(mshell()->expt->var_name,
-				aux_expt, i);
+			env->value = ft_rm_from_array(env->value,
+					aux_env, i);
+			env->var_name = ft_rm_from_array(env->var_name,
+					aux_env, i);
+			expt->value = ft_rm_from_array(expt->value,
+					aux_expt, i);
+			expt->var_name = ft_rm_from_array(expt->var_name,
+					aux_expt, i);
 		}
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 12:53:09 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/02 16:11:26 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/04 19:22:13 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ static char	**split_loop(char **res, char *input, int *k)
 	int		quote;
 	char	*cur;
 
-	//ft_printf("depois cur: %s\n", *cur);
 	i = 0;
 	quote = 0;
 	cur = NULL;
@@ -116,4 +115,3 @@ char	**ft_split_minishell(char *input)
 	result = split_loop(result, input, &k);
 	return (result);
 }
-//echo "$USER=1234567890"

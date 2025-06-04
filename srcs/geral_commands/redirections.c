@@ -12,15 +12,15 @@
 
 #include "../minishell.h"
 
-static int	handle_heredoc(char *input)
+/* static int	handle_heredoc(char *input)
 {
-	/* char	*line;
+	char	*line;
 	char	**new_input;
 
-	line = NULL; */
+	line = NULL;
 	(void)input;
 	ft_fdprintf(mshell()->outfile, "handle_heredoc\n");
-	/* while (ft_strcmp(line, input) != 0)
+	while (ft_strcmp(line, input) != 0)
 	{
 		line = readline("heredoc> ");
 		if (!line)
@@ -32,9 +32,9 @@ static int	handle_heredoc(char *input)
 		}
 		new_input = ft_append_to_array2(new_input, ft_arraylen(new_input), line, 1);
 		free(line);
-	} */
+	}
 	return (0);
-}
+} */
 
 static int	handle_input_redirection(char *input)
 {

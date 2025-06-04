@@ -53,6 +53,7 @@ typedef struct s_mshell
 	int			status;
 	int			infile;
 	int			outfile;
+	int			heredoc;
 }				t_mshell;
 
 //prompt
@@ -67,6 +68,7 @@ void		run_command(char **args, int infile, int outfile);
 void		execute_simple_command(char **args, int infile, int outfile);
 void		add_child_pid(pid_t pid);
 void		free_child_pids(void);
+int			handle_heredoc(char *delimiter);
 
 //BUILT-INS
 int			builtin_cd(char *input);
@@ -93,6 +95,7 @@ void		builtins(char **input);
 
 //signals
 void		sigint_handler(int sig);
+void		sig_heredoc(int sig);
 
 //utils
 int			create_child_process(void);
