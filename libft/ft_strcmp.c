@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 15:24:25 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/04 21:43:45 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/04 21:44:51 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

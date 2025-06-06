@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:32 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/02 16:21:30 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/06 00:35:36 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,40 @@ int	builtin_echo(char **input)
 	return (0);
 }
 
+void	builtin_exit(char **input)
+{
+	int	exit_status;
+
+	ft_printf("HERE\n");
+	if (ft_arraylen(input) > 2)
+	{
+		ft_fdprintf(STDERR_FILENO, "minishell: exit: too many arguments\n");
+		mshell()->exit_status = 1;
+		return ;
+	}
+	if (input[1])
+	{
+		if (!is_number(input[1]))
+		{
+			ft_fdprintf(STDERR_FILENO, "minishell: exit: %s: numeric "
+				"argument required\n", input[1]);
+			mshell()->exit_status = 255;
+			return ;
+		}
+		exit_status = ft_atoi(input[1]);
+		if (exit_status < -255 || exit_status > 255)
+		{
+			ft_fdprintf(STDERR_FILENO, "minishell: exit: %s: numeric "
+				"argument required\n", input[1]);
+			mshell()->exit_status = 255;
+			return ;
+		}
+		mshell()->exit_status = exit_status;
+	}
+	ft_printf("exit value = %i\n", mshell()->exit_status);
+	exit(mshell()->exit_status);
+}
+
 void	builtins(char **input)
 {
 	if (ft_strncmp(input[0], "cd", 0) == 0)
@@ -90,4 +124,6 @@ void	builtins(char **input)
 		ft_export(input);
 	else if (ft_strcmp(input[0], "unset") == 0)
 		ft_unset(input, 1);
+	else if (ft_strcmp(input[0], "exit") == 0)
+		builtin_exit(input);
 }

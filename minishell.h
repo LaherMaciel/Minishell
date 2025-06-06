@@ -121,6 +121,7 @@ char		*get_varname2(char *var_name);
 void		exp_loop(int i, char **input);
 void		ex_cmnd_loop(int index, char **aux);
 void		ex_cmnd_loop2(void);
+int			is_number(char *str);
 
 //parser
 void		parser(char *input);

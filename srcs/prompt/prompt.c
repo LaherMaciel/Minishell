@@ -77,12 +77,6 @@ static int	get_input(char **line, char *prompt)
 		return (1);
 	if (*line[0] != '\0')
 		add_history(*line);
-	if (strcmp(*line, "exit") == 0)
-	{
-		free(*line);
-		ft_printf("Terminating Minishell\n");
-		return (2);
-	}
 	if (ft_strcmp(prompt, "dquote> ") != 0
 		&& ft_strcmp(prompt, "squote> ") != 0)
 	{
@@ -114,8 +108,6 @@ char	*display_prompt(char *line)
 			write(1, "exit\n", 5);
 			return (NULL);
 		}
-		if (ret == 2)
-			return (NULL);
 		if (ret == 3)
 			continue ;
 		if (line[0] == '\0')

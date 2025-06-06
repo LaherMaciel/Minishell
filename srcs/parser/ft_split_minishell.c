@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_minishell.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 12:53:09 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/04 21:12:532 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/06 01:00:46 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 20:51:30 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/04 21:43:30 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/06 00:08:47 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ char	*get_command_path(char *cmd)
 	return (full_path);
 }
 
-static void	aux_error_exit(int error, char *message, char *full_msg)
+static char	*aux_error_exit(int error, char *message, char *full_msg)
 {
 	if (error == 0 || error == 1)
 	{
@@ -127,6 +127,7 @@ static void	aux_error_exit(int error, char *message, char *full_msg)
 		write(STDERR_FILENO, full_msg, ft_strlen(full_msg));
 		free(message);
 	}
+	return (full_msg);
 }
 
 /**
@@ -161,7 +162,7 @@ void	handle_error_and_exit(int error, char *message)
 		write(STDERR_FILENO, full_msg, ft_strlen(full_msg));
 	}
 	else
-		aux_error_exit(error, message, full_msg);
+		full_msg = aux_error_exit(error, message, full_msg);
 	if (full_msg)
 		free(full_msg);
 	exit (mshell()->exit_status);

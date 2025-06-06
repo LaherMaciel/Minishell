@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 19:40:38 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/04 20:03:49 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/06 00:18:04 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,22 @@ void	ex_cmnd_loop2(void)
 			mshell()->exit_status = 128 + WTERMSIG(status);
 		current = current->next;
 	}
+}
+
+int	is_number(char *str)
+{
+	int	i;
+
+	if (!str || !*str)
+		return (0);
+	i = 0;
+	if (str[i] == '-' || str[i] == '+')
+		i++;
+	while (str[i])
+	{
+		if (!ft_isdigit(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
 }
