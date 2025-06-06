@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:32 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/06 16:08:13 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/06 16:11:23 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	builtin_exit(char **input)
 {
 	int	exit_status;
 
-	ft_printf("HERE\n");
+	ft_printf("exit\n");
 	if (ft_arraylen(input) > 2)
 	{
 		ft_fdprintf(STDERR_FILENO, "minishell: exit: too many arguments\n");
@@ -106,8 +106,6 @@ void	builtin_exit(char **input)
 		}
 		mshell()->exit_status = exit_status;
 	}
-	ft_printf("exit value = %i\n", mshell()->exit_status);
-	ft_printf("exit\n");
 	exit(mshell()->exit_status);
 }
 
