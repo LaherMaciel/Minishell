@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils4.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 19:28:44 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/04 21:44:51 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/06 11:21:45 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,13 @@ int	word_size(char *str)
 
 void	exp_loop(int i, char **input)
 {
+	if (!ft_isalpha(input[1][0]) && input[1][0] != '_')
+	{
+		ft_fdprintf(mshell()->outfile, "export: `%s': not a valid identifier\n",
+			input[1]);
+		mshell()->exit_status = 1;
+		return ;
+	}
 	while (input[++i])
 	{
 		mshell()->env = add_to_env(input[i]);
