@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:32 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/06 16:11:23 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/06 16:21:54 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,24 @@ void	change_directory(char *path)
 
 	new_pwd = NULL;
 	old_pwd = NULL;
-	if (chdir(path))
+	if (!path)
+	{
+		path = get_value("HOME");
+		if (!path)
+		{
+			ft_fdprintf(STDERR_FILENO, "minishell: cd: HOME not set\n");
+			mshell()->exit_status = 1;
+			return ;
+		}
+		if (chdir(path))
+		{
+			perror("minishell: cd");
+			mshell()->exit_status = 1;
+			return ;
+		}
+		free(path);
+	}
+	else if (chdir(path))
 	{
 		perror("minishell: cd");
 		mshell()->exit_status = 1;
