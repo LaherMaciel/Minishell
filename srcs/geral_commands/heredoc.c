@@ -3,28 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 19:23:50 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/04 19:24:02 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/09 11:16:18 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static void	heredoc_loop(int fd[2], char **new_input, int i)
+/* static void	heredoc_loop(int fd[2], char **new_input, int i)
 {
 	mshell()->infile = fd[0];
 	mshell()->outfile = fd[1];
 	execute_commands(new_input[i]);
-}
+} */
 
 static void	exec_heredoc(char *delimiter, int fd[2])
 {
-	int		i;
 	char	*line;
-	char	**new_input;
 
+	close(fd[0]);
 	signal(SIGINT, sig_heredoc);
 	while (1)
 	{
@@ -32,17 +31,20 @@ static void	exec_heredoc(char *delimiter, int fd[2])
 		if (!line)
 		{
 			mshell()->exit_status = 2;
-			return ;
+			close(fd[1]);
+			exit(2);
 		}
 		if (ft_strcmp(line, delimiter) == 0)
+		{
+			free(line);
 			break ;
-		new_input = ft_append_to_array(new_input, 0, line, 0);
+		}
+		write(fd[1], line, ft_strlen(line));
+		write(fd[1], "\n", 1);
+		free(line);
 	}
-	i = -1;
-	while (new_input[++i])
-		heredoc_loop(fd, new_input, i);
-	free(new_input);
-	exit(mshell()->exit_status);
+	close(fd[1]);
+	exit(0);
 }
 
 int	handle_heredoc(char *delimiter)
@@ -57,14 +59,13 @@ int	handle_heredoc(char *delimiter)
 	pid = create_child_process();
 	if (pid == 0)
 		exec_heredoc(delimiter, fd);
-	else
-	{
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			mshell()->exit_status = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-			mshell()->exit_status = 128 + WTERMSIG(status);
-	}
+	close(fd[1]);
+	waitpid(pid, &status, 0);
+	if (WIFEXITED(status))
+		mshell()->exit_status = WEXITSTATUS(status);
+	else if (WIFSIGNALED(status))
+		mshell()->exit_status = 128 + WTERMSIG(status);
 	mshell()->heredoc = 0;
+	mshell()->infile = fd[0];
 	return (0);
 }
