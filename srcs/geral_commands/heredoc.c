@@ -3,20 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 19:23:50 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/09 11:16:18 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/09 11:24:43 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-/* static void	heredoc_loop(int fd[2], char **new_input, int i)
+/* static void    heredoc_loop(int fd[2], char *new_input, int i)
 {
 	mshell()->infile = fd[0];
 	mshell()->outfile = fd[1];
 	execute_commands(new_input[i]);
+}*/
+/* static void    heredoc_loop(int fd[2], char **new_input, int i)
+{
+    mshell()->infile = fd[0];
+    mshell()->outfile = fd[1];
+    execute_commands(new_input[i]);
 } */
 
 static void	exec_heredoc(char *delimiter, int fd[2])

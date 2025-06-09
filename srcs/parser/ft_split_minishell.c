@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 12:53:09 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/06 01:00:46 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/06 16:06:00 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,18 @@ static char	**handle_operator(char **res, char **cur, t_parsing *counts,
 	return (res);
 }
 
+static int	dollar_sign(char **cur, char *input, t_parsing *counts)
+{
+	if (word_size(input + counts->i + 1))
+		counts->i += word_size(input + counts->i + 1) + 1;
+	else
+	{
+		*cur = ft_strjoin3(*cur, input[counts->i], 1);
+		counts->i++;
+	}
+	return (counts->i);
+}
+
 static t_parsing	*process_token(char **cur, char *input, t_parsing *counts)
 {
 	char	*val;
@@ -55,7 +67,7 @@ static t_parsing	*process_token(char **cur, char *input, t_parsing *counts)
 		&& input[counts->i + 1] == '?')
 	{
 		*cur = ft_strjoin2(*cur, ft_itoa(mshell()->exit_status), 3);
-		counts->i += ft_strlen(*cur) + 1;
+		counts->i += 2;
 	}
 	if ((counts->quote == 0 || counts->quote == 2) && input[counts->i] == '$')
 	{
@@ -65,7 +77,7 @@ static t_parsing	*process_token(char **cur, char *input, t_parsing *counts)
 			*cur = ft_strjoin2(*cur, val, 1);
 			free(val);
 		}
-		counts->i += word_size(input + counts->i + 1) + 1;
+		counts->i = dollar_sign(cur, input, counts);
 	}
 	else
 	{
@@ -81,7 +93,7 @@ static char	**split_loop(char **res, char *input, t_parsing *counts)
 	char	*cur;
 
 	cur = NULL;
-	while (input[counts->i])
+	while (counts->i < ft_strlen(input))
 	{
 		about_quotes(input, counts);
 		if (counts->quote == 0

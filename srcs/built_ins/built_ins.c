@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:32 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/06 00:35:36 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/06 16:21:54 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,24 @@ void	change_directory(char *path)
 
 	new_pwd = NULL;
 	old_pwd = NULL;
-	if (chdir(path))
+	if (!path)
+	{
+		path = get_value("HOME");
+		if (!path)
+		{
+			ft_fdprintf(STDERR_FILENO, "minishell: cd: HOME not set\n");
+			mshell()->exit_status = 1;
+			return ;
+		}
+		if (chdir(path))
+		{
+			perror("minishell: cd");
+			mshell()->exit_status = 1;
+			return ;
+		}
+		free(path);
+	}
+	else if (chdir(path))
 	{
 		perror("minishell: cd");
 		mshell()->exit_status = 1;
@@ -80,12 +97,12 @@ void	builtin_exit(char **input)
 {
 	int	exit_status;
 
-	ft_printf("HERE\n");
+	ft_printf("exit\n");
 	if (ft_arraylen(input) > 2)
 	{
 		ft_fdprintf(STDERR_FILENO, "minishell: exit: too many arguments\n");
 		mshell()->exit_status = 1;
-		return ;
+		exit(mshell()->exit_status);
 	}
 	if (input[1])
 	{
@@ -94,7 +111,7 @@ void	builtin_exit(char **input)
 			ft_fdprintf(STDERR_FILENO, "minishell: exit: %s: numeric "
 				"argument required\n", input[1]);
 			mshell()->exit_status = 255;
-			return ;
+			exit(mshell()->exit_status);
 		}
 		exit_status = ft_atoi(input[1]);
 		if (exit_status < -255 || exit_status > 255)
@@ -102,11 +119,10 @@ void	builtin_exit(char **input)
 			ft_fdprintf(STDERR_FILENO, "minishell: exit: %s: numeric "
 				"argument required\n", input[1]);
 			mshell()->exit_status = 255;
-			return ;
+			exit(mshell()->exit_status);
 		}
 		mshell()->exit_status = exit_status;
 	}
-	ft_printf("exit value = %i\n", mshell()->exit_status);
 	exit(mshell()->exit_status);
 }
 
