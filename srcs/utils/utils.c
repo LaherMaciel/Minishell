@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 20:51:30 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/06 00:08:47 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/10 15:27:03 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,11 +89,19 @@ static char	*search_command_in_path(char *cmd, char *path_env)
  */
 char	*get_command_path(char *cmd)
 {
-	char	*path_env;
-	char	*full_path;
+	char		*path_env;
+	char		*full_path;
+	struct stat	stat_buf;
 
-	if (access(cmd, X_OK) == 0)
+	if (access(cmd, F_OK) == 0)
+	{
+		if (stat(cmd, &stat_buf) == 0 && S_ISDIR(stat_buf.st_mode))
+		{
+			handle_error_and_exit(-4, cmd);
+			return (NULL);
+		}
 		return (ft_strdup(cmd));
+	}
 	path_env = get_value("PATH");
 	if (!path_env)
 		return (NULL);
@@ -119,6 +127,13 @@ static char	*aux_error_exit(int error, char *message, char *full_msg)
 	{
 		full_msg = ft_strjoin(message, "\n");
 		write(STDERR_FILENO, message, ft_strlen(message));
+	}
+	else if (error == -4)
+	{
+		full_msg = ft_strjoin("minishell: ", message);
+		full_msg = ft_strjoin2(full_msg, ": Is a directory\n", 1);
+		write(STDERR_FILENO, full_msg, ft_strlen(full_msg));
+		mshell()->exit_status = 126;
 	}
 	else if (error == 127)
 	{

@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 19:40:38 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/06 00:18:04 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/10 16:27:44 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,20 +64,27 @@ void	ex_cmnd_loop2(void)
 	}
 }
 
-int	is_number(char *str)
+bool	is_valid_exit_code(const char *str)
 {
-	int	i;
-
 	if (!str || !*str)
-		return (0);
-	i = 0;
-	if (str[i] == '-' || str[i] == '+')
-		i++;
-	while (str[i])
+		return (false);
+	if (*str == '+' || *str == '-')
+		str++;
+	if (!*str)
+		return (false);
+	while (*str)
 	{
-		if (!ft_isdigit(str[i]))
-			return (0);
-		i++;
+		if (!ft_isdigit(*str))
+			return (false);
+		str++;
 	}
-	return (1);
+	return (true);
+}
+
+int	normalize_exit_status(int status)
+{
+	status %= 256;
+	if (status < 0)
+		status += 256;
+	return (status);
 }

@@ -96,7 +96,7 @@ void		ft_env(char **input);
 t_export	*add_to_env(char *str);
 char		*get_value(char *var_name);
 int			get_value2(char *var_name);
-void		builtins(char **input);
+int			builtins(char **input);
 
 //signals
 void		sigint_handler(int sig);
@@ -121,7 +121,8 @@ char		*get_varname2(char *var_name);
 void		exp_loop(int i, char **input);
 void		ex_cmnd_loop(int index, char **aux);
 void		ex_cmnd_loop2(void);
-int			is_number(char *str);
+bool		is_valid_exit_code(const char *str);
+int			normalize_exit_status(int status);
 
 //parser
 void		parser(char *input);

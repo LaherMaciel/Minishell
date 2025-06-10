@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 19:23:50 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/09 11:24:43 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/10 18:38:29 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,13 @@ int	handle_heredoc(char *delimiter)
 	pid_t	pid;
 	int		status;
 
+	if (!delimiter)
+	{
+		ft_fdprintf(STDERR_FILENO, "Minishell: syntax error near"
+			" unexpected token `newline'\n");
+		mshell()->exit_status = 2;
+		return (1);
+	}
 	mshell()->heredoc = 1;
 	if (pipe(fd) < 0)
 		return (perror(NULL), 0);

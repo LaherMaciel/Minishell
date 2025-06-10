@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 20:59:19 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/06 16:26:25 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/10 18:01:37 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,21 @@ void	cleaning(char **input, int index, int i)
 	expt = mshell()->expt;
 	aux_env = ft_arraylen(mshell()->env->var_name);
 	aux_expt = ft_arraylen(mshell()->expt->var_name);
-	while (mshell()->expt->var_name[++i])
+	while (mshell()->env->var_name[++i])
 	{
-		if (ft_strcmp(input[index], mshell()->expt->var_name[i]) == 0)
+		if (ft_strcmp(input[index], mshell()->env->var_name[i]) == 0)
 		{
 			env->value = ft_rm_from_array(env->value,
 					aux_env, i);
 			env->var_name = ft_rm_from_array(env->var_name,
 					aux_env, i);
+		}
+	}
+	i = -1;
+	while (mshell()->expt->var_name[++i])
+	{
+		if (ft_strcmp(input[index], mshell()->expt->var_name[i]) == 0)
+		{
 			expt->value = ft_rm_from_array(expt->value,
 					aux_expt, i);
 			expt->var_name = ft_rm_from_array(expt->var_name,

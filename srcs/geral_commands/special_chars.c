@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 09:26:31 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/04 20:18:44 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/10 17:47:21 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	purgatory(pid_t pid, int pipefd[2], int i, char **aux)
 		}
 		if (pipefd[1] != STDOUT_FILENO && dup2(pipefd[1], STDOUT_FILENO) < 0)
 			handle_error_and_exit(-1, "dup2 failed for output_fd");
+		if (builtins(aux))
+			exit(mshell()->exit_status);
 		execute_simple_command(aux, mshell()->infile, pipefd[1]);
 	}
 	else
