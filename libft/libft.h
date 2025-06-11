@@ -114,6 +114,5 @@ char		**ft_append_to_array2(char **array, size_t arraylen,
 				char *str, int flag);
 void		*ft_realloc(void *ptr, size_t size);
 int			ft_isspace(int c);
-long long	ft_strtoll(const char *str, char **endptr, int base);
 
 #endif

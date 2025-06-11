@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_ins.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:32 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/11 20:00:18 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/11 20:20:08 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,6 @@ int	builtin_echo(char **input)
 
 void	builtin_exit(char **input)
 {
-	int		exit_status;
-	bool	overflow;
-
-	overflow = false;
 	ft_printf("exit\n");
 	if (ft_arraylen(input) > 2)
 	{
@@ -84,23 +80,7 @@ void	builtin_exit(char **input)
 		mshell()->exit_status = 1;
 		return ;
 	}
-	if (input[1])
-	{
-		if (!is_valid_exit_code(input[1]))
-		{
-			ft_fdprintf(STDERR_FILENO, "minishell: exit: %s: numeric"
-				" argument required\n", input[1]);
-			exit(2);
-		}
-		exit_status = ft_safe_atoi(input[1], &overflow);
-		if (overflow)
-		{
-			ft_fdprintf(STDERR_FILENO, "minishell: exit: %s: numeric"
-				" argument required\n", input[1]);
-			exit(2);
-		}
-		mshell()->exit_status = normalize_exit_status(exit_status);
-	}
+	builtin_ex_aux(input);
 	exit(mshell()->exit_status);
 }
 

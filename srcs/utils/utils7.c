@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils7.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 11:30:42 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/11 20:02:21 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/11 20:20:15 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,45 +111,27 @@ void	aux_token(char **cur, char *input, t_parsing *counts)
 	}
 }
 
-int	ft_safe_atoi(const char *str, bool *overflow)
+void	builtin_ex_aux(char **input)
 {
-	long long	result;
-	int			sign;
-	const char	*ptr;
+	int		exit_status;
+	bool	overflow;
 
-	result = 0;
-	sign = 1;
-	ptr = str;
-	*overflow = false;
-	while (ft_isspace(*ptr))
-		ptr++;
-	if (*ptr == '-')
+	overflow = false;
+	if (input[1])
 	{
-		sign = -1;
-		ptr++;
-	}
-	else if (*ptr == '+')
-		ptr++;
-	while (ft_isdigit(*ptr))
-	{
-		if (((result * sign) == LONG_MIN / 10
-				&& (*ptr - '0') > (LONG_MIN % 10) * -1)
-			|| (result > (LONG_MAX - (*ptr - '0')) / 10 && sign == 1))
+		if (!is_valid_exit_code(input[1]))
 		{
-			*overflow = true;
-			break ;
+			ft_fdprintf(STDERR_FILENO, "minishell: exit: %s: numeric"
+				" argument required\n", input[1]);
+			exit(2);
 		}
-		result = result * 10 + (*ptr - '0');
-		ptr++;
+		exit_status = ft_safe_atoi(input[1], &overflow);
+		if (overflow)
+		{
+			ft_fdprintf(STDERR_FILENO, "minishell: exit: %s: numeric"
+				" argument required\n", input[1]);
+			exit(2);
+		}
+		mshell()->exit_status = normalize_exit_status(exit_status);
 	}
-	if (*overflow)
-	{
-		if (sign == 1)
-			return (255);
-		else if (sign == -1)
-			return (-255);
-		else
-			return (0);
-	}
-	return ((int)(result * sign));
 }
