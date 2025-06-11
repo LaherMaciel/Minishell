@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_ins.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:32 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/11 09:57:56 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/11 20:00:18 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,10 @@ int	builtin_echo(char **input)
 
 void	builtin_exit(char **input)
 {
-	int	exit_status;
+	int		exit_status;
+	bool	overflow;
 
+	overflow = false;
 	ft_printf("exit\n");
 	if (ft_arraylen(input) > 2)
 	{
@@ -90,7 +92,13 @@ void	builtin_exit(char **input)
 				" argument required\n", input[1]);
 			exit(2);
 		}
-		exit_status = ft_atoi(input[1]);
+		exit_status = ft_safe_atoi(input[1], &overflow);
+		if (overflow)
+		{
+			ft_fdprintf(STDERR_FILENO, "minishell: exit: %s: numeric"
+				" argument required\n", input[1]);
+			exit(2);
+		}
 		mshell()->exit_status = normalize_exit_status(exit_status);
 	}
 	exit(mshell()->exit_status);

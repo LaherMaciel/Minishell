@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils7.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 11:30:42 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/11 17:34:13 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/11 20:02:21 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,4 +109,47 @@ void	aux_token(char **cur, char *input, t_parsing *counts)
 		*cur = ft_strjoin2(*cur, ft_itoa(mshell()->exit_status), 3);
 		counts->i += 2;
 	}
+}
+
+int	ft_safe_atoi(const char *str, bool *overflow)
+{
+	long long	result;
+	int			sign;
+	const char	*ptr;
+
+	result = 0;
+	sign = 1;
+	ptr = str;
+	*overflow = false;
+	while (ft_isspace(*ptr))
+		ptr++;
+	if (*ptr == '-')
+	{
+		sign = -1;
+		ptr++;
+	}
+	else if (*ptr == '+')
+		ptr++;
+	while (ft_isdigit(*ptr))
+	{
+		if (((result * sign) == LONG_MIN / 10
+				&& (*ptr - '0') > (LONG_MIN % 10) * -1)
+			|| (result > (LONG_MAX - (*ptr - '0')) / 10 && sign == 1))
+		{
+			*overflow = true;
+			break ;
+		}
+		result = result * 10 + (*ptr - '0');
+		ptr++;
+	}
+	if (*overflow)
+	{
+		if (sign == 1)
+			return (255);
+		else if (sign == -1)
+			return (-255);
+		else
+			return (0);
+	}
+	return ((int)(result * sign));
 }
