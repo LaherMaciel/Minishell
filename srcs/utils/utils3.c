@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:02:32 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/04 20:41:17 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/11 11:30:32 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,24 +64,12 @@ void	rm_indexs(int index1, int index2)
 	set_inputvalue();
 }
 
-char	**dupped_arr(int index)
+static void	dup_loop(char **aux)
 {
-	char	**aux;
-	int		i;
-	int		j;
+	int	i;
+	int	j;
 
-	aux = NULL;
-	if (!mshell()->input || index < 0
-		|| index >= (int) ft_arraylen(mshell()->input))
-		return (NULL);
-	index--;
-	while (mshell()->input[++index])
-		if (its_what(mshell()->input[index]) == 1
-			|| its_what(mshell()->input[index]) == 2)
-			aux = ft_append_to_array2(aux, 0, mshell()->input[index], 1);
 	i = 0;
-	if (!aux)
-		return (NULL);
 	while (aux[i])
 	{
 		j = -1;
@@ -95,23 +83,24 @@ char	**dupped_arr(int index)
 		}
 		i++;
 	}
+}
+
+char	**dupped_arr(int index)
+{
+	char	**aux;
+
+	aux = NULL;
+	if (!mshell()->input || index < 0
+		|| index >= (int) ft_arraylen(mshell()->input))
+		return (NULL);
+	index--;
+	while (mshell()->input[++index])
+		if (its_what(mshell()->input[index]) == 1
+			|| its_what(mshell()->input[index]) == 2)
+			aux = ft_append_to_array2(aux, 0, mshell()->input[index], 1);
+	if (!aux)
+		return (NULL);
+	dup_loop(aux);
 	set_inputvalue();
 	return (aux);
-}
-
-void	reset_fds(void)
-{
-	if (mshell()->infile != STDIN_FILENO)
-		close(mshell()->infile);
-	if (mshell()->outfile != STDOUT_FILENO)
-		close(mshell()->outfile);
-	mshell()->infile = STDIN_FILENO;
-	mshell()->outfile = STDOUT_FILENO;
-}
-
-void	free_resources(void)
-{
-	ft_free_array(mshell()->input, 0);
-	free(mshell()->input_value);
-	free_child_pids();
 }

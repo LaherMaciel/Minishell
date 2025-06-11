@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_ins.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:32 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/10 17:43:31 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/11 09:57:56 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,29 +19,7 @@ void	change_directory(char *path)
 
 	new_pwd = NULL;
 	old_pwd = NULL;
-	if (!path)
-	{
-		path = get_value("HOME");
-		if (!path)
-		{
-			ft_fdprintf(STDERR_FILENO, "minishell: cd: HOME not set\n");
-			mshell()->exit_status = 1;
-			return ;
-		}
-		if (chdir(path))
-		{
-			perror("minishell: cd");
-			mshell()->exit_status = 1;
-			return ;
-		}
-		free(path);
-	}
-	else if (chdir(path))
-	{
-		perror("minishell: cd");
-		mshell()->exit_status = 1;
-		return ;
-	}
+	check_and_change(path);
 	old_pwd = ft_strjoin2("OLDPWD=", get_value("PWD"), 2);
 	add_to_env(old_pwd);
 	add_to_export(old_pwd);

@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_minishell.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 12:53:09 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/06 16:06:00 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/11 11:18:45 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-static char	**add_token(char **res, char **cur, t_parsing *counts, char *str)
-{
-	res = add_current(res, cur, &counts->k);
-	res[counts->k] = ft_strdup(str);
-	if (!res[counts->k])
-		return (NULL);
-	(counts->k)++;
-	return (res);
-}
 
 static char	**handle_operator(char **res, char **cur, t_parsing *counts,
 	char *input)

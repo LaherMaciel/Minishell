@@ -3,45 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   special_chars.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 09:26:31 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/10 17:47:21 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/11 11:16:09 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-
-void	purgatory(pid_t pid, int pipefd[2], int i, char **aux)
-{
-	if (pid == 0)
-	{
-		close(pipefd[0]);
-		if (mshell()->infile != STDERR_FILENO
-			&& dup2(mshell()->infile, STDIN_FILENO) < 0)
-		{
-			if (errno == 9 && mshell()->infile == -1)
-				handle_error_and_exit(0, "dup2 failed for input_fd");
-			else
-				handle_error_and_exit(-1, "dup2 failed for input_fd");
-		}
-		if (pipefd[1] != STDOUT_FILENO && dup2(pipefd[1], STDOUT_FILENO) < 0)
-			handle_error_and_exit(-1, "dup2 failed for output_fd");
-		if (builtins(aux))
-			exit(mshell()->exit_status);
-		execute_simple_command(aux, mshell()->infile, pipefd[1]);
-	}
-	else
-	{
-		close(pipefd[1]);
-		add_child_pid(pid);
-		if (mshell()->infile != STDIN_FILENO)
-			close(mshell()->infile);
-		mshell()->infile = pipefd[0];
-		while (++i < 15000000)
-			;
-	}
-}
 
 void	piper(char **aux)
 {

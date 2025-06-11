@@ -123,6 +123,9 @@ void		ex_cmnd_loop(int index, char **aux);
 void		ex_cmnd_loop2(void);
 bool		is_valid_exit_code(const char *str);
 int			normalize_exit_status(int status);
+void		check_and_change(char *path);
+void		purgatory(pid_t pid, int pipefd[2], int i, char **aux);
+char		**add_token(char **res, char **cur, t_parsing *counts, char *str);
 
 //parser
 void		parser(char *input);

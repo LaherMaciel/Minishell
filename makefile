@@ -6,7 +6,7 @@ PROMPT_C = prompt.c \
 
 BUILTINS_C =  built_ins.c export.c unset.c env.c\
 
-UTILS_C = utils.c utils2.c utils3.c utils4.c utils5.c\
+UTILS_C = utils.c utils2.c utils3.c utils4.c utils5.c utils6.c utils7.c\
 
 PARSER_C = parser.c split_out_quotes.c ft_substr2.c ft_split_minishell.c ft_strjoin3.c its_what.c\
 
@@ -104,7 +104,7 @@ fclean: clean
 
 norm:
 	@echo "[" "$(YELLOW)..$(RESET)" "] | Norminetting...$(RESET)"
-	@if norminette srcs/ libft/ images/ > .norminette.log ; then \
+	@if norminette srcs/ libft/ > .norminette.log ; then \
 	    if grep -q "Error!" .norminette.log; then \
 	        echo "[" "$(RED)!!$(RESET)" "] | Norminette found errors.$(RESET)"; \
 	        grep "Error!" .norminette.log | awk '{print "[ " "$(RED)!!$(RESET)" " ] | " $$0}'; \
@@ -113,7 +113,7 @@ norm:
 	    fi; \
 	else \
 	    echo "[" "$(RED)XX$(RESET)" "] | Norminette Error!"; \
-		norminette srcs/ libft/ images/ | awk '/Error!/ {print "[ " "$(RED)!!$(RESET)" " ] | " $$0}'; \
+		norminette srcs/ libft/ | awk '/Error!/ {print "[ " "$(RED)!!$(RESET)" " ] | " $$0}'; \
 	fi
 
 re: fclean

@@ -1,1 +1,19 @@
-cat | ls
+4
+minishell
+minishell.h
+minishell.pdf
+minishell_evalsheet.pdf
+4
+4
+minishell
+minishell.h
+minishell.pdf
+minishell_evalsheet.pdf
+minishell
+minishell.h
+minishell.pdf
+minishell_evalsheet.pdf
+minishell
+minishell.h
+minishell.pdf
+minishell_evalsheet.pdf

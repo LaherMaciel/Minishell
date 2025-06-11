@@ -3,47 +3,45 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 20:59:19 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/10 18:01:37 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/11 10:09:43 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-void	cleaning(char **input, int index, int i)
+void	loop_clean(char **input, int index, size_t len, t_export *exp)
 {
-	size_t		aux_env;
-	size_t		aux_expt;
+	size_t	i;
+
+	i = 0;
+	while (i < len)
+	{
+		if (ft_strcmp(input[index], exp->var_name[i]) == 0)
+		{
+			exp->value = ft_rm_from_array(exp->value, len, i);
+			exp->var_name = ft_rm_from_array(exp->var_name, len, i);
+			break ;
+		}
+		i++;
+	}
+}
+
+static void	cleaning(char **input, int index)
+{
 	t_export	*env;
 	t_export	*expt;
+	size_t		aux_env;
+	size_t		aux_expt;
 
 	env = mshell()->env;
 	expt = mshell()->expt;
-	aux_env = ft_arraylen(mshell()->env->var_name);
-	aux_expt = ft_arraylen(mshell()->expt->var_name);
-	while (mshell()->env->var_name[++i])
-	{
-		if (ft_strcmp(input[index], mshell()->env->var_name[i]) == 0)
-		{
-			env->value = ft_rm_from_array(env->value,
-					aux_env, i);
-			env->var_name = ft_rm_from_array(env->var_name,
-					aux_env, i);
-		}
-	}
-	i = -1;
-	while (mshell()->expt->var_name[++i])
-	{
-		if (ft_strcmp(input[index], mshell()->expt->var_name[i]) == 0)
-		{
-			expt->value = ft_rm_from_array(expt->value,
-					aux_expt, i);
-			expt->var_name = ft_rm_from_array(expt->var_name,
-					aux_expt, i);
-		}
-	}
+	aux_env = ft_arraylen(env->var_name);
+	aux_expt = ft_arraylen(expt->var_name);
+	loop_clean(input, index, aux_env, env);
+	loop_clean(input, index, aux_expt, expt);
 }
 
 void	ft_unset(char **input, int index)
@@ -52,7 +50,7 @@ void	ft_unset(char **input, int index)
 		return ;
 	while (input[index])
 	{
-		cleaning(input, index, -1);
+		cleaning(input, index);
 		index++;
 	}
 	mshell()->exit_status = 0;

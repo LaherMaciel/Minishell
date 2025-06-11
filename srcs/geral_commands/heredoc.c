@@ -3,27 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 19:23:50 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/10 18:38:29 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/11 10:14:30 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-/* static void    heredoc_loop(int fd[2], char *new_input, int i)
-{
-	mshell()->infile = fd[0];
-	mshell()->outfile = fd[1];
-	execute_commands(new_input[i]);
-}*/
-/* static void    heredoc_loop(int fd[2], char **new_input, int i)
-{
-    mshell()->infile = fd[0];
-    mshell()->outfile = fd[1];
-    execute_commands(new_input[i]);
-} */
 
 static void	exec_heredoc(char *delimiter, int fd[2])
 {
@@ -53,19 +40,26 @@ static void	exec_heredoc(char *delimiter, int fd[2])
 	exit(0);
 }
 
+static int	check_delimiter(char *delimiter)
+{
+	if (!delimiter)
+	{
+		ft_fdprintf(STDERR_FILENO, "Minishell: syntax error near"
+			" unexpected token `newline'\n");
+		mshell()->exit_status = 2;
+		return (0);
+	}
+	return (1);
+}
+
 int	handle_heredoc(char *delimiter)
 {
 	int		fd[2];
 	pid_t	pid;
 	int		status;
 
-	if (!delimiter)
-	{
-		ft_fdprintf(STDERR_FILENO, "Minishell: syntax error near"
-			" unexpected token `newline'\n");
-		mshell()->exit_status = 2;
+	if (!check_delimiter(delimiter))
 		return (1);
-	}
 	mshell()->heredoc = 1;
 	if (pipe(fd) < 0)
 		return (perror(NULL), 0);
