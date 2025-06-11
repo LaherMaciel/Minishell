@@ -6,7 +6,7 @@
 /*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 12:53:09 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/11 11:18:45 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/11 17:34:05 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,7 @@ static t_parsing	*process_token(char **cur, char *input, t_parsing *counts)
 {
 	char	*val;
 
-	if ((counts->quote == 0 || counts->quote == 2)
-		&& input[counts->i + 1] == '?')
-	{
-		*cur = ft_strjoin2(*cur, ft_itoa(mshell()->exit_status), 3);
-		counts->i += 2;
-	}
+	aux_token(cur, input, counts);
 	if ((counts->quote == 0 || counts->quote == 2) && input[counts->i] == '$')
 	{
 		if (get_value2(input + counts->i + 1))
@@ -71,7 +66,8 @@ static t_parsing	*process_token(char **cur, char *input, t_parsing *counts)
 	}
 	else
 	{
-		if (input[counts->i] != '\'' && input[counts->i] != '\"')
+		if (input[counts->i] != '\'' && input[counts->i] != '\"'
+			&& input[counts->i] != '\n')
 			*cur = ft_strjoin3(*cur, input[counts->i], 1);
 		(counts->i)++;
 	}

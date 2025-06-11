@@ -6,7 +6,7 @@
 /*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 11:30:42 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/11 11:35:31 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/11 17:34:13 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,4 +99,14 @@ char	*get_command_path(char *cmd)
 		mshell()->exit_status = 127;
 	free(path_env);
 	return (full_path);
+}
+
+void	aux_token(char **cur, char *input, t_parsing *counts)
+{
+	if ((counts->quote == 0 || counts->quote == 2)
+		&& input[counts->i + 1] == '?')
+	{
+		*cur = ft_strjoin2(*cur, ft_itoa(mshell()->exit_status), 3);
+		counts->i += 2;
+	}
 }

@@ -126,6 +126,7 @@ int			normalize_exit_status(int status);
 void		check_and_change(char *path);
 void		purgatory(pid_t pid, int pipefd[2], int i, char **aux);
 char		**add_token(char **res, char **cur, t_parsing *counts, char *str);
+void		aux_token(char **cur, char *input, t_parsing *counts);
 
 //parser
 void		parser(char *input);
