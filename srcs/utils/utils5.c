@@ -6,62 +6,51 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 19:40:38 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/11 19:20:39 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/12 16:30:26 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static void	aux_loop(char **aux, int index)
+char	**add_token(char **res, char **cur, t_parsing *counts, char *str)
 {
-	aux = dupped_arr(index);
-	if (aux)
-	{
-		if (is_builtin(aux[0]))
-			builtins(aux);
-		else
-			run_command(aux,
-				mshell()->infile, mshell()->outfile);
-		ft_free_array(aux, 0);
-	}
+	res = add_current(res, cur, &counts->k);
+	res[counts->k] = ft_strdup(str);
+	if (!res[counts->k])
+		return (NULL);
+	(counts->k)++;
+	return (res);
 }
 
-void	ex_cmnd_loop(int index, char **aux)
+void	exit_status(char *line)
 {
-	while (mshell()->input[0])
-	{
-		index = high_priority();
-		if (is_redirect(mshell()->input[index]))
-		{
-			if (redirection_operators_handler(index))
-				break ;
-		}
-		else if (is_special(mshell()->input[index]))
-		{
-			if (handle_special(index))
-				break ;
-		}
-		else
-			aux_loop(aux, index);
-	}
+	if (line)
+		ft_fdprintf(mshell()->outfile, "%i%s: command not found\n",
+			mshell()->exit_status, line + 2);
+	else
+		ft_fdprintf(mshell()->outfile, "%i: command not found\n",
+			mshell()->exit_status);
 }
 
-void	ex_cmnd_loop2(void)
+void	clear_input(char **aux)
 {
-	t_child_pid	*current;
-	int			status;
+	int	i;
+	int	j;
 
-	current = mshell()->child_pids;
-	status = 0;
-	while (current)
+	i = -1;
+	while (aux[++i])
 	{
-		waitpid(current->pid, &status, 0);
-		if (WIFEXITED(status))
-			mshell()->exit_status = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-			mshell()->exit_status = 128 + WTERMSIG(status);
-		current = current->next;
+		j = -1;
+		while (mshell()->input[++j])
+		{
+			if (ft_strcmp(aux[i], mshell()->input[j]) == 0)
+			{
+				mshell()->input = ft_rm_from_array(mshell()->input, 0, j);
+				break ;
+			}
+		}
 	}
+	set_inputvalue();
 }
 
 bool	is_valid_exit_code(const char *str)

@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   special_chars.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 09:26:31 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/11 11:16:09 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/12 14:47:12 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
 
+//echo hello > test | echo world > test2 | cat test
+//echo hello > test | cat test | echo world > test2 | cat test2
 void	piper(char **aux)
 {
 	pid_t	pid;
@@ -25,6 +27,8 @@ void	piper(char **aux)
 		mshell()->exit_status = 1;
 		return ;
 	}
+	ft_printf("\npipe args:\n%tinfile = %i, outfile = %i\n\n", aux,
+		mshell()->infile, mshell()->outfile);
 	pid = create_child_process();
 	purgatory(pid, pipefd, i, aux);
 }

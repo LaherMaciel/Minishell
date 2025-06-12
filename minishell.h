@@ -69,7 +69,7 @@ char		*display_prompt(char *line);
 //commands executions
 char		*execute_commands(char *line);
 int			redirection_operators_handler(int index);
-int			handle_special(int index);
+int			pipe_handler(int index);
 void		exit_status(char *line);
 void		run_command(char **args, int infile, int outfile);
 void		execute_simple_command(char **args, int infile, int outfile);
@@ -119,16 +119,16 @@ int			word_size(char *str);
 char		*get_varname(char *value);
 char		*get_varname2(char *var_name);
 void		exp_loop(int i, char **input);
-void		ex_cmnd_loop(int index, char **aux);
-void		ex_cmnd_loop2(void);
 bool		is_valid_exit_code(const char *str);
 int			normalize_exit_status(int status);
 void		check_and_change(char *path);
-void		purgatory(pid_t pid, int pipefd[2], int i, char **aux);
 char		**add_token(char **res, char **cur, t_parsing *counts, char *str);
 void		aux_token(char **cur, char *input, t_parsing *counts);
 int			ft_safe_atoi(char *str, bool *overflow);
 void		builtin_ex_aux(char **input);
+void		clear_input(char **aux);
+void		reset_outfile(int fd);
+void		reset_infile(int fd);
 
 //parser
 void		parser(char *input);

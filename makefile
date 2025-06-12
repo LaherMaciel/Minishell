@@ -1,6 +1,6 @@
 NAME = minishell
 
-GCOMMANDS_C = command_executions.c redirections.c special_chars.c child_process_tracker.c heredoc.c\
+GCOMMANDS_C = command_executions.c redirections.c piper.c child_process_tracker.c heredoc.c\
 
 PROMPT_C = prompt.c \
 
@@ -123,7 +123,7 @@ run: $(NAME)
 	./$(NAME)
 
 val: $(NAME)
-	valgrind ./$(NAME)
+	valgrind --track-fds=yes --show-leak-kinds=all ./$(NAME)
 
 val_full: $(NAME)
 	valgrind --track-fds=yes --trace-children=yes --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME)

@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:32:11 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/23 10:57:04 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/12 14:38:20 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,7 @@ int	is_special(char *str)
 
 int	its_what(char *str)
 {
-	if (is_redirect(str))
-		return (4);
-	if (is_special(str))
+	if (is_redirect(str) || is_special(str))
 		return (3);
 	if (is_builtin(str))
 		return (2);

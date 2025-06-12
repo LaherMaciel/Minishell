@@ -3,24 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils7.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 11:30:42 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/11 20:20:15 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/12 16:29:39 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-void	reset_fds(void)
-{
-	if (mshell()->infile != STDIN_FILENO)
-		close(mshell()->infile);
-	if (mshell()->outfile != STDOUT_FILENO)
-		close(mshell()->outfile);
-	mshell()->infile = STDIN_FILENO;
-	mshell()->outfile = STDOUT_FILENO;
-}
 
 /**
  * @brief Search for a command in the directories listed in the PATH environment

@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/10 17:15:04 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/12 16:01:01 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,52 @@ void	run_command(char **args, int infile, int outfile)
 	}
 	else if (pid > 0)
 		add_child_pid(pid);
+}
+
+void	ex_cmnd_loop2(void)
+{
+	t_child_pid	*current;
+	int			status;
+
+	current = mshell()->child_pids;
+	status = 0;
+	while (current)
+	{
+		waitpid(current->pid, &status, 0);
+		if (WIFEXITED(status))
+			mshell()->exit_status = WEXITSTATUS(status);
+		else if (WIFSIGNALED(status))
+			mshell()->exit_status = 128 + WTERMSIG(status);
+		current = current->next;
+	}
+}
+
+void	ex_cmnd_loop(int index, char **aux)
+{
+	while (mshell()->input[0])
+	{
+		index = high_priority();
+		if (is_redirect(mshell()->input[index]))
+		{
+			if (redirection_operators_handler(index))
+				break ;
+		}
+		else if (is_special(mshell()->input[index]))
+		{
+			if (pipe_handler(index))
+				break ;
+		}
+		else
+		{
+			aux = dupped_arr(index);
+			if (aux)
+			{
+				run_command(aux,
+					mshell()->infile, mshell()->outfile);
+				ft_free_array(aux, 0);
+			}
+		}
+	}
 }
 
 char	*execute_commands(char *line)
