@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/12 16:01:01 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/12 18:37:55 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,13 @@ void	run_command(char **args, int infile, int outfile)
 {
 	pid_t	pid;
 
+	if (is_builtin(args[0]))
+	{
+		if (builtins(args))
+			return ;
+		else
+			handle_error_and_exit(1, "Built-in command failed");
+	}
 	pid = create_child_process();
 	if (pid == 0)
 	{
