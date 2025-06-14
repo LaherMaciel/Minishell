@@ -61,6 +61,7 @@ typedef struct s_parsing
 	int		k;
 	size_t	i;
 	int		quote;
+	t_list	result;
 }			t_parsing;
 
 //prompt
@@ -82,7 +83,7 @@ int			builtin_cd(char *input);
 int			builtin_pwd(void);
 int			builtin_echo(char **input);
 int			execute_builtin(char **input);
-void		change_directory(char *path);
+char		*change_directory(char *path);
 void		init_environ(void);
 t_export	*init_export(char **env);
 void		ft_export(char **input);
@@ -98,6 +99,7 @@ char		*get_value(char *var_name);
 int			get_value2(char *var_name);
 int			builtins(char **input);
 void		builtin_exit(char **input);
+void		update_shlvl(void);
 
 //signals
 void		sigint_handler(int sig);

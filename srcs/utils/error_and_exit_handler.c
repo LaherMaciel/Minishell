@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 20:51:30 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/14 14:22:09 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/14 16:52:24 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,13 @@ static char	*conditioner(int error, char *message, char *full_msg)
 		full_msg = ft_strjoin2(full_msg, ": Is a directory\n", 1);
 		write(STDERR_FILENO, full_msg, ft_strlen(full_msg));
 		mshell()->exit_status = 126;
+	}
+	else if (error == 126)
+	{
+		full_msg = ft_strjoin("minishell: ", message);
+		full_msg = ft_strjoin2(full_msg, ": Is a file\n", 1);
+		write(STDERR_FILENO, full_msg, ft_strlen(full_msg));
+		free(message);
 	}
 	else if (error == 127)
 	{

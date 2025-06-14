@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:32 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/14 15:22:06 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/14 16:00:17 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	builtin_echo(char **input)
 int	builtins(char **input)
 {
 	if (ft_strncmp(input[0], "cd", 0) == 0)
-		change_directory(input[1]);
+		input[1] = change_directory(input[1]);
 	else if (ft_strncmp(input[0], "pwd", 0) == 0)
 		builtin_pwd();
 	else if (ft_strcmp(input[0], "echo") == 0)

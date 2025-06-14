@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/14 14:54:32 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/14 16:14:01 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	run_command(char **args, int infile, int outfile)
 		add_child_pid(pid);
 }
 
-void	ex_cmnd_loop2(void)
+static void	wait_for_childs(void)
 {
 	t_child_pid	*current;
 	int			status;
@@ -142,7 +142,7 @@ char	*execute_commands(char *line)
 	parser(line);
 	ex_cmnd_loop(0, aux);
 	reset_fds();
-	ex_cmnd_loop2();
+	wait_for_childs();
 	free_resources();
 	return (line);
 }

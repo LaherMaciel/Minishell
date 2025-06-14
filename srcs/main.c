@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:07:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/14 15:10:40 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/14 16:36:57 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ static void	receive_input(void)
 	}
 }
 
+//update_shlvl();
 int	main(int argv, char **argc, char **env)
 {
 	(void)argv;

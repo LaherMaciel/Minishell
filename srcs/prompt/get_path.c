@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 14:19:52 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/14 14:55:47 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/14 16:48:41 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,19 @@ static char	*search_command_in_path(char *cmd, char *path_env)
 	return (full_path);
 }
 
+char	*check_input_type(char *cmd)
+{
+	struct stat	stat_buf;
+
+	if (stat(cmd, &stat_buf) == 0 && S_ISDIR(stat_buf.st_mode))
+		mshell()->exit_status = -4;
+	else if (stat(cmd, &stat_buf) == 0 && S_ISREG(stat_buf.st_mode))
+		mshell()->exit_status = 126;
+	else
+		return (ft_strdup(cmd));
+	return (NULL);
+}
+
 /**
  * @brief Resolve the full path of a command by checking the PATH environment
  * variable.
@@ -70,22 +83,9 @@ char	*get_command_path(char *cmd)
 {
 	char		*path_env;
 	char		*full_path;
-	struct stat	stat_buf;
 
 	if (access(cmd, X_OK) == 0)
-	{
-		if (stat(cmd, &stat_buf) == 0 && S_ISDIR(stat_buf.st_mode))
-		{
-			mshell()->exit_status = -4;
-			return (NULL);
-		}
-		else if (stat(cmd, &stat_buf) == 0 && !S_ISREG(stat_buf.st_mode))
-		{
-			mshell()->exit_status = 126;
-			return (NULL);
-		}
-		return (ft_strdup(cmd));
-	}
+		return (check_input_type(cmd));
 	path_env = get_value("PATH");
 	if (!path_env)
 		return (NULL);

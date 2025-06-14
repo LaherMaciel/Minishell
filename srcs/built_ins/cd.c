@@ -6,13 +6,31 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 15:21:52 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/14 15:47:37 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/14 17:00:51 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int	return_to_oldpwd(char *path)
+static void	no_path(char *path)
+{
+	path = get_value("HOME");
+	if (!path)
+	{
+		ft_fdprintf(STDERR_FILENO, "minishell: cd: HOME not set\n");
+		mshell()->exit_status = 1;
+		return ;
+	}
+	if (chdir(path))
+	{
+		perror("minishell: cd");
+		mshell()->exit_status = 1;
+		return ;
+	}
+	free(path);
+}
+
+static char	*return_to_oldpwd(char *path)
 {
 	if (ft_strcmp(path, "-") == 0)
 	{
@@ -22,37 +40,24 @@ int	return_to_oldpwd(char *path)
 		{
 			ft_fdprintf(STDERR_FILENO, "minishell: cd: OLDPWD not set\n");
 			mshell()->exit_status = 1;
-			return (1);
+			return (NULL);
 		}
 		if (chdir(path))
 		{
 			perror("minishell: cd");
 			mshell()->exit_status = 1;
-			return (1);
+			return (NULL);
 		}
 	}
-	return (0);
+	return (path);
 }
 
 static char	*check_and_change(char *path)
 {
 	if (!path)
-	{
-		path = get_value("HOME");
-		if (!path)
-		{
-			ft_fdprintf(STDERR_FILENO, "minishell: cd: HOME not set\n");
-			mshell()->exit_status = 1;
-			return (NULL);
-		}
-		if (chdir(path))
-		{
-			perror("minishell: cd");
-			mshell()->exit_status = 1;
-			return (NULL);
-		}
-		path = NULL;
-	}
+		no_path(path);
+	else if (ft_strcmp(path, "-") == 0)
+		path = return_to_oldpwd(path);
 	else if (chdir(path))
 	{
 		perror("minishell: cd");
@@ -62,7 +67,7 @@ static char	*check_and_change(char *path)
 	return (path);
 }
 
-void	change_directory(char *path)
+char	*change_directory(char *path)
 {
 	char	*new_pwd;
 	char	*old_pwd;
@@ -78,4 +83,5 @@ void	change_directory(char *path)
 	add_to_env(new_pwd);
 	add_to_export(new_pwd);
 	free(new_pwd);
+	return (path);
 }

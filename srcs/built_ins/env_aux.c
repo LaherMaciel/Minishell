@@ -6,11 +6,35 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 13:21:08 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/14 13:22:22 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/14 16:02:40 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+void	update_shlvl(void)
+{
+	char	*shlvl_str;
+	int		shlvl;
+	char	*num_str;
+	char	*full;
+
+	shlvl_str = getenv("SHLVL");
+	if (shlvl_str)
+		shlvl = ft_atoi(shlvl_str) + 1;
+	else
+		shlvl = 1;
+	num_str = ft_itoa(shlvl);
+	if (!num_str)
+		return ;
+	full = ft_strjoin("SHLVL=", num_str);
+	free(num_str);
+	if (!full)
+		return ;
+	add_to_env(full);
+	add_to_export(full);
+	free(full);
+}
 
 t_export	*init_env(char **org_env)
 {
