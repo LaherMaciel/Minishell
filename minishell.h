@@ -97,6 +97,7 @@ t_export	*add_to_env(char *str);
 char		*get_value(char *var_name);
 int			get_value2(char *var_name);
 int			builtins(char **input);
+void		builtin_exit(char **input);
 
 //signals
 void		sigint_handler(int sig);
@@ -125,10 +126,10 @@ void		check_and_change(char *path);
 char		**add_token(char **res, char **cur, t_parsing *counts, char *str);
 void		aux_token(char **cur, char *input, t_parsing *counts);
 int			ft_safe_atoi(char *str, bool *overflow);
-void		builtin_ex_aux(char **input);
 void		clear_input(char **aux);
 void		reset_outfile(int fd);
 void		reset_infile(int fd);
+void		clean_exit(int exit_status);
 
 //parser
 void		parser(char *input);

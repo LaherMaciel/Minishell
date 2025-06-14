@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_ins.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:32 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/11 20:20:08 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/14 13:16:22 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,19 +69,6 @@ int	builtin_echo(char **input)
 		ft_fdprintf(mshell()->outfile, "\n");
 	mshell()->exit_status = 0;
 	return (0);
-}
-
-void	builtin_exit(char **input)
-{
-	ft_printf("exit\n");
-	if (ft_arraylen(input) > 2)
-	{
-		ft_fdprintf(STDERR_FILENO, "minishell: exit: too many arguments\n");
-		mshell()->exit_status = 1;
-		return ;
-	}
-	builtin_ex_aux(input);
-	exit(mshell()->exit_status);
 }
 
 int	builtins(char **input)

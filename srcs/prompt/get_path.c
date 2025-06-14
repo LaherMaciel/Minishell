@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils7.c                                           :+:      :+:    :+:   */
+/*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/11 11:30:42 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/12 16:29:39 by lahermaciel      ###   ########.fr       */
+/*   Created: 2025/06/14 14:19:52 by lahermaciel       #+#    #+#             */
+/*   Updated: 2025/06/14 14:20:24 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,39 +89,4 @@ char	*get_command_path(char *cmd)
 		mshell()->exit_status = 127;
 	free(path_env);
 	return (full_path);
-}
-
-void	aux_token(char **cur, char *input, t_parsing *counts)
-{
-	if ((counts->quote == 0 || counts->quote == 2)
-		&& input[counts->i + 1] == '?')
-	{
-		*cur = ft_strjoin2(*cur, ft_itoa(mshell()->exit_status), 3);
-		counts->i += 2;
-	}
-}
-
-void	builtin_ex_aux(char **input)
-{
-	int		exit_status;
-	bool	overflow;
-
-	overflow = false;
-	if (input[1])
-	{
-		if (!is_valid_exit_code(input[1]))
-		{
-			ft_fdprintf(STDERR_FILENO, "minishell: exit: %s: numeric"
-				" argument required\n", input[1]);
-			exit(2);
-		}
-		exit_status = ft_safe_atoi(input[1], &overflow);
-		if (overflow)
-		{
-			ft_fdprintf(STDERR_FILENO, "minishell: exit: %s: numeric"
-				" argument required\n", input[1]);
-			exit(2);
-		}
-		mshell()->exit_status = normalize_exit_status(exit_status);
-	}
 }

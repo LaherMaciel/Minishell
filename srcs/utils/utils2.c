@@ -6,82 +6,49 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:59:35 by karocha-          #+#    #+#             */
-/*   Updated: 2025/05/23 09:21:57 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/14 14:22:42 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-t_export	*init_env(char **org_env)
+void	aux_token(char **cur, char *input, t_parsing *counts)
 {
-	t_export	*expt;
-	char		**splitted;
-	int			i;
-
-	expt = mshell()->env;
-	if (!expt)
-		return (NULL);
-	expt->var_name = ft_calloc(sizeof(char *), (ft_arraylen(org_env) + 1));
-	if (!expt->var_name)
-		return (NULL);
-	expt->value = ft_calloc(sizeof(char *), (ft_arraylen(org_env) + 1));
-	if (!expt->value)
-		return (NULL);
-	i = 0;
-	while (org_env[i])
+	if ((counts->quote == 0 || counts->quote == 2)
+		&& input[counts->i + 1] == '?')
 	{
-		splitted = ft_split(org_env[i], '=');
-		if (splitted == NULL)
-			return (ft_free_export(expt));
-		expt->var_name[i] = ft_strdup(splitted[0]);
-		expt->value[i] = ft_strdup(splitted[1]);
-		ft_free_array(splitted, 0);
-		i++;
+		*cur = ft_strjoin2(*cur, ft_itoa(mshell()->exit_status), 3);
+		counts->i += 2;
 	}
-	return (expt);
 }
 
-char	**default_env(void)
+char	**add_token(char **res, char **cur, t_parsing *counts, char *str)
 {
-	char	**env;
-	int		i;
-
-	env = ft_calloc(ft_arraylen(mshell()->env->var_name) + 1, sizeof(char *));
-	i = -1;
-	while (mshell()->env->var_name[++i])
-	{
-		env[i] = ft_strjoin(mshell()->env->var_name[i], "=");
-		env[i] = ft_strjoin2(env[i], mshell()->env->value[i], 1);
-	}
-	return (env);
+	res = add_current(res, cur, &counts->k);
+	res[counts->k] = ft_strdup(str);
+	if (!res[counts->k])
+		return (NULL);
+	(counts->k)++;
+	return (res);
 }
 
-t_export	*update_var(t_export *env, char **splitted)
+void	clear_input(char **aux)
 {
 	int	i;
+	int	j;
 
-	i = 0;
-	while (env->var_name && env->var_name[i])
+	i = -1;
+	while (aux[++i])
 	{
-		if (ft_strcmp(env->var_name[i], splitted[0]) == 0)
+		j = -1;
+		while (mshell()->input[++j])
 		{
-			free(env->value[i]);
-			env->value[i] = ft_strdup(splitted[1]);
-			ft_free_array(splitted, 0);
-			return (env);
+			if (ft_strcmp(aux[i], mshell()->input[j]) == 0)
+			{
+				mshell()->input = ft_rm_from_array(mshell()->input, 0, j);
+				break ;
+			}
 		}
-		i++;
 	}
-	return (NULL);
-}
-
-char	**add_current(char **res, char **cur, int *k)
-{
-	if (*cur)
-	{
-		res[*k] = *cur;
-		(*k)++;
-		*cur = NULL;
-	}
-	return (res);
+	set_inputvalue();
 }

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/05 20:51:30 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/11 11:36:07 by karocha-         ###   ########.fr       */
+/*   Created: 2025/06/11 11:16:25 by karocha-          #+#    #+#             */
+/*   Updated: 2025/06/14 14:23:03 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 /**
  * @brief Create a child process using fork().
@@ -33,80 +33,49 @@ int	create_child_process(void)
 	return (pid);
 }
 
-static char	*conditioner(int error, char *message, char *full_msg)
+void	free_resources(void)
 {
-	if (error == -4)
-	{
-		full_msg = ft_strjoin("minishell: ", message);
-		full_msg = ft_strjoin2(full_msg, ": Is a directory\n", 1);
-		write(STDERR_FILENO, full_msg, ft_strlen(full_msg));
-		mshell()->exit_status = 126;
-	}
-	else if (error == 127)
-	{
-		full_msg = ft_strjoin("minishell: ", message);
-		full_msg = ft_strjoin2(full_msg, ": command not found\n", 1);
-		write(STDERR_FILENO, full_msg, ft_strlen(full_msg));
-		free(message);
-	}
-	return (full_msg);
+	ft_free_array(mshell()->input, 0);
+	free(mshell()->input_value);
+	free_child_pids();
 }
 
-static char	*aux_error_exit(int error, char *message, char *full_msg)
+void	reset_fds(void)
 {
-	if (error == 0 || error == 1)
+	if (mshell()->infile != STDIN_FILENO)
+		close(mshell()->infile);
+	if (mshell()->outfile != STDOUT_FILENO)
+		close(mshell()->outfile);
+	mshell()->infile = STDIN_FILENO;
+	mshell()->outfile = STDOUT_FILENO;
+}
+
+t_export	*update_var(t_export *env, char **splitted)
+{
+	int	i;
+
+	i = 0;
+	while (env->var_name && env->var_name[i])
 	{
-		if (error == 1)
+		if (ft_strcmp(env->var_name[i], splitted[0]) == 0)
 		{
-			full_msg = ft_strjoin(message, "\n");
-			write(STDERR_FILENO, message, ft_strlen(message));
+			free(env->value[i]);
+			env->value[i] = ft_strdup(splitted[1]);
+			ft_free_array(splitted, 0);
+			return (env);
 		}
-		mshell()->exit_status = error;
+		i++;
 	}
-	else if (error == -2)
-	{
-		full_msg = ft_strjoin(message, "\n");
-		write(STDERR_FILENO, message, ft_strlen(message));
-	}
-	else
-		full_msg = conditioner(error, message, full_msg);
-	return (full_msg);
+	return (NULL);
 }
 
-/**
- * @brief Handle errors and exit the program.
- *
- * This function prints an error message based on the error code and exits the
- * program with the appropriate status.
- *
- * @param int error - The error code.
- * @param char *message - The error message to print.
- */
-void	handle_error_and_exit(int error, char *message)
+char	**add_current(char **res, char **cur, int *k)
 {
-	char	*full_msg;
-
-	full_msg = NULL;
-	if (mshell()->heredoc)
-		exit(mshell()->exit_status);
-	if (error == -1)
+	if (*cur)
 	{
-		full_msg = ft_strjoin(message, ": ");
-		full_msg = ft_strjoin2(full_msg, strerror(errno), 1);
-		full_msg = ft_strjoin2(full_msg, "\n", 1);
-		write(STDERR_FILENO, full_msg, ft_strlen(full_msg));
+		res[*k] = *cur;
+		(*k)++;
+		*cur = NULL;
 	}
-	else if (error == -3)
-	{
-		full_msg = ft_strjoin("minishell: ", strerror(errno));
-		full_msg = ft_strjoin2(full_msg, ": ", 1);
-		full_msg = ft_strjoin2(full_msg, message, 1);
-		full_msg = ft_strjoin2(full_msg, "\n", 1);
-		write(STDERR_FILENO, full_msg, ft_strlen(full_msg));
-	}
-	else
-		full_msg = aux_error_exit(error, message, full_msg);
-	if (full_msg)
-		free(full_msg);
-	exit (mshell()->exit_status);
+	return (res);
 }

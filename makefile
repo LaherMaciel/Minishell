@@ -2,11 +2,11 @@ NAME = minishell
 
 GCOMMANDS_C = command_executions.c redirections.c piper.c child_process_tracker.c heredoc.c\
 
-PROMPT_C = prompt.c \
+PROMPT_C = prompt.c get_path.c\
 
-BUILTINS_C =  built_ins.c export.c unset.c env.c\
+BUILTINS_C =  built_ins.c export.c unset.c env.c env_aux.c exit.c exit_aux.c\
 
-UTILS_C = utils.c utils2.c utils3.c utils4.c utils5.c utils6.c utils7.c utils8.c\
+UTILS_C = error_and_exit_handler.c utils.c utils2.c utils3.c utils4.c\
 
 PARSER_C = parser.c split_out_quotes.c ft_substr2.c ft_split_minishell.c ft_strjoin3.c its_what.c\
 
@@ -123,12 +123,12 @@ run: $(NAME)
 	./$(NAME)
 
 val: $(NAME)
-	valgrind --track-fds=yes --show-leak-kinds=all ./$(NAME)
+	valgrind --suppressions=suppress_readline.supp --track-fds=yes --show-leak-kinds=all --trace-children=yes ./$(NAME)
 
 val_full: $(NAME)
-	valgrind --track-fds=yes --trace-children=yes --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME)
+	valgrind --suppressions=suppress_readline.supp --track-fds=yes --trace-children=yes --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME)
 
 val_full_errocommand: $(NAME)
-	valgrind --track-fds=yes --trace-children=yes --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME)
+	valgrind --suppressions=suppress_readline.supp --track-fds=yes --trace-children=yes --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME)
 
 .PHONY: all clean fclean re
