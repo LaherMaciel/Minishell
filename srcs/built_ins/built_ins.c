@@ -6,29 +6,11 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:32 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/14 13:16:22 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/14 15:22:06 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-void	change_directory(char *path)
-{
-	char	*new_pwd;
-	char	*old_pwd;
-
-	new_pwd = NULL;
-	old_pwd = NULL;
-	check_and_change(path);
-	old_pwd = ft_strjoin2("OLDPWD=", get_value("PWD"), 2);
-	add_to_env(old_pwd);
-	add_to_export(old_pwd);
-	free(old_pwd);
-	new_pwd = ft_strjoin2("PWD=", getcwd(NULL, 0), 2);
-	add_to_env(new_pwd);
-	add_to_export(new_pwd);
-	free(new_pwd);
-}
 
 int	builtin_pwd(void)
 {

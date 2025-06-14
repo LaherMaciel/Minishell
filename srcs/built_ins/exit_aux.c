@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 13:22:59 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/14 14:09:20 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/14 14:47:44 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,7 @@ void	clean_exit(int exit_status)
 			mshell()->exit_status = 128 + WTERMSIG(status);
 		current = current->next;
 	}
-	free_child_pids();
-	ft_free_array(mshell()->input, 0);
-	free(mshell()->input_value);
+	clean_resource();
 	if (mshell()->infile != STDIN_FILENO)
 		close(mshell()->infile);
 	if (mshell()->outfile != STDOUT_FILENO)

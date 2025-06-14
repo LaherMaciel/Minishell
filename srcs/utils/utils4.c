@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils4.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 19:28:44 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/11 11:21:42 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/14 15:17:30 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,31 +80,4 @@ void	exp_loop(int i, char **input)
 		mshell()->expt = add_to_export(input[i]);
 	}
 	mshell()->expt = export_sorter();
-}
-
-void	check_and_change(char *path)
-{
-	if (!path)
-	{
-		path = get_value("HOME");
-		if (!path)
-		{
-			ft_fdprintf(STDERR_FILENO, "minishell: cd: HOME not set\n");
-			mshell()->exit_status = 1;
-			return ;
-		}
-		if (chdir(path))
-		{
-			perror("minishell: cd");
-			mshell()->exit_status = 1;
-			return ;
-		}
-		free(path);
-	}
-	else if (chdir(path))
-	{
-		perror("minishell: cd");
-		mshell()->exit_status = 1;
-		return ;
-	}
 }

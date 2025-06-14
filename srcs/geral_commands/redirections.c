@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:53:37 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/04 19:56:57 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/14 14:35:36 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ int	redirection_operators_handler(int index)
 {
 	int	value;
 
+	value = 0;
 	if (ft_strcmp(mshell()->input[index], "<<") == 0)
 		value = handle_heredoc(mshell()->input[index + 1]);
 	else if (ft_strcmp(mshell()->input[index], "<") == 0)

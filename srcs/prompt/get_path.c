@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 14:19:52 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/14 14:20:24 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/14 14:55:47 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,11 +72,16 @@ char	*get_command_path(char *cmd)
 	char		*full_path;
 	struct stat	stat_buf;
 
-	if (access(cmd, F_OK) == 0)
+	if (access(cmd, X_OK) == 0)
 	{
 		if (stat(cmd, &stat_buf) == 0 && S_ISDIR(stat_buf.st_mode))
 		{
-			handle_error_and_exit(-4, cmd);
+			mshell()->exit_status = -4;
+			return (NULL);
+		}
+		else if (stat(cmd, &stat_buf) == 0 && !S_ISREG(stat_buf.st_mode))
+		{
+			mshell()->exit_status = 126;
 			return (NULL);
 		}
 		return (ft_strdup(cmd));

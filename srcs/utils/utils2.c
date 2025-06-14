@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:59:35 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/14 14:22:42 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/14 14:44:01 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,11 @@ void	clear_input(char **aux)
 		}
 	}
 	set_inputvalue();
+}
+
+void	clean_resource(void)
+{
+	free_child_pids();
+	ft_free_array(mshell()->input, 0);
+	free(mshell()->input_value);
 }

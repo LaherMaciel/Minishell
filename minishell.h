@@ -122,7 +122,6 @@ char		*get_varname2(char *var_name);
 void		exp_loop(int i, char **input);
 bool		is_valid_exit_code(const char *str);
 int			normalize_exit_status(int status);
-void		check_and_change(char *path);
 char		**add_token(char **res, char **cur, t_parsing *counts, char *str);
 void		aux_token(char **cur, char *input, t_parsing *counts);
 int			ft_safe_atoi(char *str, bool *overflow);
@@ -130,6 +129,7 @@ void		clear_input(char **aux);
 void		reset_outfile(int fd);
 void		reset_infile(int fd);
 void		clean_exit(int exit_status);
+void		clean_resource(void);
 
 //parser
 void		parser(char *input);
