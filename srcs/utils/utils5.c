@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils5.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 15:56:08 by lawences          #+#    #+#             */
-/*   Updated: 2025/06/16 18:42:13 by lawences         ###   ########.fr       */
+/*   Updated: 2025/06/16 20:35:43 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	clean_exit(int exit_status)
 	exit(exit_status);
 }
 
-void	clean_trash()
+void	clean_trash(void)
 {
 	t_child_pid	*current;
 	int			status;

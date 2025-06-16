@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 22:25:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/10 17:42:26 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/16 19:27:43 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,7 @@ void	ft_env(char **input)
 		}
 	}
 	else
-	{
 		ft_fdprintf(mshell()->outfile, "\ninput: %t\n", input);
-	}
 	mshell()->exit_status = 0;
 }
 

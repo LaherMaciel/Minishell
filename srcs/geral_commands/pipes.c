@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 09:26:31 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/16 18:47:05 by lawences         ###   ########.fr       */
+/*   Updated: 2025/06/16 20:34:57 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ static void	aux_purgatory(int pipefd[2], char **aux)
 		else
 			handle_error_and_exit(-1, "dup2 failed for input_fd");
 	}
-	if (mshell()->outfile != STDOUT_FILENO && dup2(mshell()->outfile, STDOUT_FILENO) < 0)
+	if (mshell()->outfile != STDOUT_FILENO && dup2(mshell()->outfile,
+			STDOUT_FILENO) < 0)
 		handle_error_and_exit(-1, "dup2 failed for output_fd");
 	if (builtins(aux))
 	{
@@ -65,9 +66,7 @@ void	piper(char **aux)
 {
 	pid_t	pid;
 	int		pipefd[2];
-	int		i;
 
-	i = 0;
 	if (pipe(pipefd) < 0)
 	{
 		perror("minishell: pipe");

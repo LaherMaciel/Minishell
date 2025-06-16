@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 20:17:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/10 17:42:17 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/16 20:33:52 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,12 @@ void	ft_export(char **input)
 	{
 		while (mshell()->expt->var_name[i])
 		{
-			if (mshell()->expt->value[i] != NULL)
+			if (mshell()->expt->value[i] == NULL)
+				ft_fdprintf(mshell()->outfile, "declare -x %s\n",
+					mshell()->expt->var_name[i]);
+			else if (mshell()->expt->value[i] != NULL)
 				ft_fdprintf(mshell()->outfile, "declare -x %s=\"%s\"\n",
-					mshell()->expt->var_name[i],
-					mshell()->expt->value[i]);
+					mshell()->expt->var_name[i], mshell()->expt->value[i]);
 			else
 				ft_fdprintf(mshell()->outfile, "declare -x %s=\"\"\n",
 					mshell()->expt->var_name[i]);

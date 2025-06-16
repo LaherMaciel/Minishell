@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils4.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 19:28:44 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/16 15:19:29 by lawences         ###   ########.fr       */
+/*   Updated: 2025/06/16 20:35:31 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ int	word_size(char *str)
 
 void	exp_loop(int i, char **input)
 {
+	char	*aux;
+
 	if (!ft_isalpha(input[1][0]) && input[1][0] != '_')
 	{
 		ft_fdprintf(mshell()->outfile, "export: `%s': not a valid identifier\n",
@@ -76,8 +78,14 @@ void	exp_loop(int i, char **input)
 	}
 	while (input[++i])
 	{
-		mshell()->env = add_to_env(input[i]);
-		mshell()->expt = add_to_export(input[i]);
+		aux = ft_strnstr(input[i], "=", ft_strlen(input[i]));
+		if (aux && aux[0] == '=')
+		{
+			mshell()->env = add_to_env(input[i]);
+			mshell()->expt = add_to_export(input[i]);
+		}
+		else
+			mshell()->expt = add_to_export(input[i]);
 	}
 	mshell()->expt = export_sorter();
 }

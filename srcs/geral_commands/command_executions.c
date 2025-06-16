@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_executions.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/16 18:04:46 by lawences         ###   ########.fr       */
+/*   Updated: 2025/06/16 20:34:15 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	execute_simple_command(char **args, int infile, int outfile)
 		close(outfile);
 	signal(SIGINT, SIG_DFL);
 	env = default_env();
-	//clean_trash();
 	execve(cmd_path, args, env);
 	handle_error_and_exit(-1, "Execution failed");
 }
