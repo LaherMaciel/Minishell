@@ -2,7 +2,7 @@ NAME = minishell
 
 GCOMMANDS_C = command_executions.c redirections.c pipes.c child_process_tracker.c heredoc.c\
 
-PROMPT_C = prompt.c get_path.c\
+PROMPT_C = prompt.c get_path.c get_path_copy.c\
 
 BUILTINS_C =  built_ins.c export.c unset.c env.c env_aux.c exit.c exit_aux.c cd.c\
 

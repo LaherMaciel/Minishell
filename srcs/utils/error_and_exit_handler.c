@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 20:51:30 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/15 17:47:58 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/16 22:40:07 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,15 +28,30 @@ static char	*conditioner(int error, char *message, char *full_msg)
 	if (error == -4)
 	{
 		full_msg = ft_strjoin("minishell: ", message);
-		full_msg = ft_strjoin2(full_msg, ": is a directory\n", 1);
+		full_msg = ft_strjoin2(full_msg, ": No such file or directory\n", 1);
+		write(STDERR_FILENO, full_msg, ft_strlen(full_msg));
+		mshell()->exit_status = 126;
+	}
+	else if (error == -5)
+	{
+		full_msg = ft_strjoin("minishell: ", message);
+		full_msg = ft_strjoin2(full_msg, ": not a regular file\n", 1);
 		write(STDERR_FILENO, full_msg, ft_strlen(full_msg));
 		mshell()->exit_status = 126;
 	}
 	else if (error == 126)
 	{
 		full_msg = ft_strjoin("minishell: ", message);
-		full_msg = ft_strjoin2(full_msg, ": is a file\n", 1);
+		full_msg = ft_strjoin2(full_msg, ": Permission denied\n", 1);
 		write(STDERR_FILENO, full_msg, ft_strlen(full_msg));
+		free(message);
+	}
+	else if (error == -6)
+	{
+		full_msg = ft_strjoin("minishell: ", message);
+		full_msg = ft_strjoin2(full_msg, ": No such file or directory\n", 1);
+		write(STDERR_FILENO, full_msg, ft_strlen(full_msg));
+		mshell()->exit_status = 127;
 		free(message);
 	}
 	else if (error == 127)
@@ -44,6 +59,7 @@ static char	*conditioner(int error, char *message, char *full_msg)
 		full_msg = ft_strjoin("minishell: ", message);
 		full_msg = ft_strjoin2(full_msg, ": command not found\n", 1);
 		write(STDERR_FILENO, full_msg, ft_strlen(full_msg));
+		mshell()->exit_status = 127;
 		free(message);
 	}
 	return (full_msg);

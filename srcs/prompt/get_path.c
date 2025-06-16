@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 14:19:52 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/14 16:48:41 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/16 21:44:37 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
  * @param char *path_env - The PATH environment variable.
  *
  * @return char* - The full path to the command if found, otherwise NULL.
- */
+ *//* 
 static char	*search_command_in_path(char *cmd, char *path_env)
 {
 	size_t	i;
@@ -58,13 +58,13 @@ char	*check_input_type(char *cmd)
 
 	if (stat(cmd, &stat_buf) == 0 && S_ISDIR(stat_buf.st_mode))
 		mshell()->exit_status = -4;
-	else if (stat(cmd, &stat_buf) == 0 && S_ISREG(stat_buf.st_mode))
+	else if (stat(cmd, &stat_buf) == 0 && !S_ISREG(stat_buf.st_mode))
 		mshell()->exit_status = 126;
 	else
 		return (ft_strdup(cmd));
 	return (NULL);
 }
-
+ */
 /**
  * @brief Resolve the full path of a command by checking the PATH environment
  * variable.
@@ -78,7 +78,7 @@ char	*check_input_type(char *cmd)
  * the command is not found.
  *
  * @return char* - The full path to the command if found, otherwise NULL.
- */
+ *//* 
 char	*get_command_path(char *cmd)
 {
 	char		*path_env;
@@ -95,3 +95,4 @@ char	*get_command_path(char *cmd)
 	free(path_env);
 	return (full_path);
 }
+ */
