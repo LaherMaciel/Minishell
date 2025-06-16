@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:07:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/14 16:36:57 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/16 17:47:34 by lawences         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	free_mshell(void)
 {
 	ft_free_export(NULL);
 	ft_free_export(mshell()->env);
-	ft_free_array(mshell()->aux_env, 0);
 }
 
 t_mshell	*mshell(void)
@@ -30,6 +29,7 @@ void	init_shell(char **env)
 {
 	mshell()->input = NULL;
 	mshell()->input_value = 0;
+	mshell()->redirected = 0;
 	mshell()->infile = STDIN_FILENO;
 	mshell()->outfile = STDOUT_FILENO;
 	mshell()->exit_status = 0;
@@ -43,7 +43,6 @@ void	init_shell(char **env)
 	if (!mshell()->expt)
 		handle_error_and_exit(-2, "Failed to create export struct");
 	mshell()->expt = init_export(env);
-	mshell()->aux_env = NULL;
 	mshell()->expt = export_sorter();
 }
 

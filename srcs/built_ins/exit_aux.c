@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit_aux.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 13:22:59 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/14 14:47:44 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/16 15:55:52 by lawences         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,29 +74,4 @@ int	ft_safe_atoi(char *str, bool *overflow)
 		ptr++;
 	}
 	return (ft_safe_atoi_aux2(result, sign, overflow));
-}
-
-void	clean_exit(int exit_status)
-{
-	t_child_pid	*current;
-	int			status;
-
-	current = mshell()->child_pids;
-	status = 0;
-	while (current)
-	{
-		waitpid(current->pid, &status, 0);
-		if (WIFEXITED(status))
-			mshell()->exit_status = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-			mshell()->exit_status = 128 + WTERMSIG(status);
-		current = current->next;
-	}
-	clean_resource();
-	if (mshell()->infile != STDIN_FILENO)
-		close(mshell()->infile);
-	if (mshell()->outfile != STDOUT_FILENO)
-		close(mshell()->outfile);
-	free_mshell();
-	exit(exit_status);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   its_what.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:32:11 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/15 17:05:03 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/16 14:52:40 by lawences         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,7 @@ int	is_special(char *str)
 
 int	its_what(char *str)
 {
-	if (is_special(str))
-		return (4);
-	if (is_redirect(str))
+	if (is_redirect(str) || is_special(str))
 		return (3);
 	if (is_builtin(str))
 		return (2);

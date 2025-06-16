@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils4.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 19:28:44 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/15 16:46:32 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/16 15:19:29 by lawences         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,6 @@ void	print_input(int flag, size_t i)
 		ft_printf("infile = %i\noutfile = %i\n",
 			mshell()->infile, mshell()->outfile);
 		ft_printf("exit_status = %i\nNr of child process "
-			"= %i\n", mshell()->exit_status, mshell()->exit_status);
+			"= %i\n", mshell()->exit_status, mshell()->num_children);
 	}
 }

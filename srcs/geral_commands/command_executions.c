@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_executions.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/15 16:46:56 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/16 18:04:46 by lawences         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,9 @@ void	execute_simple_command(char **args, int infile, int outfile)
 		close(infile);
 	if (outfile != STDOUT_FILENO)
 		close(outfile);
-	if (mshell()->aux_env)
-		ft_free_array(mshell()->aux_env, 0);
 	signal(SIGINT, SIG_DFL);
 	env = default_env();
+	//clean_trash();
 	execve(cmd_path, args, env);
 	handle_error_and_exit(-1, "Execution failed");
 }
@@ -97,6 +96,7 @@ static void	wait_for_childs(void)
 		else if (WIFSIGNALED(status))
 			mshell()->exit_status = 128 + WTERMSIG(status);
 		current = current->next;
+		mshell()->num_children--;
 	}
 }
 
@@ -140,9 +140,7 @@ char	*execute_commands(char *line)
 		return (line);
 	}
 	parser(line);
-	print_input(0, 0);
 	ex_cmnd_loop(0, aux);
-	print_input(0, 0);
 	reset_fds();
 	wait_for_childs();
 	free_resources();

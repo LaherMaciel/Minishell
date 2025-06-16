@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:53:37 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/15 17:49:03 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/16 18:17:21 by lawences         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	handle_input_redirection(char *input)
 	mshell()->infile = open(input, O_RDONLY);
 	if (mshell()->infile < 0)
 	{
-		mshell()->infile = 0;
+		mshell()->infile = STDIN_FILENO;
 		ft_fdprintf(STDERR_FILENO, "minishell: %s: %s\n",
 			input, strerror(errno));
 		mshell()->exit_status = 1;
@@ -74,7 +74,7 @@ static int	handle_output_redirection(char *input)
 	mshell()->outfile = open(input, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (mshell()->outfile < 0)
 	{
-		mshell()->outfile = 0;
+		mshell()->outfile = STDOUT_FILENO;
 		ft_fdprintf(STDERR_FILENO, "minishell: %s: %s\n",
 			strerror(errno), input);
 		mshell()->exit_status = errno;
@@ -93,11 +93,15 @@ static int	handle_append_redirection(char *input)
 		return (mshell()->exit_status);
 	}
 	if (mshell()->outfile != STDOUT_FILENO)
+	{
+		ft_printf("append STDOUT_FILENO = %i & outfile = %i\n",
+			STDOUT_FILENO, mshell()->outfile);
 		close(mshell()->outfile);
+	}
 	mshell()->outfile = open(input, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (mshell()->outfile < 0)
 	{
-		mshell()->outfile = 0;
+		mshell()->outfile = STDOUT_FILENO;
 		ft_fdprintf(STDERR_FILENO, "minishell: %s: ",
 			"%s\n", strerror(errno), input);
 		mshell()->exit_status = errno;
@@ -119,6 +123,7 @@ int	redirection_operators_handler(int index)
 		value = handle_append_redirection(mshell()->input[index + 1]);
 	else if (ft_strcmp(mshell()->input[index], ">") == 0)
 		value = handle_output_redirection(mshell()->input[index + 1]);
+	mshell()->redirected = 1;
 	rm_indexs(index, index + 1);
 	return (value);
 }

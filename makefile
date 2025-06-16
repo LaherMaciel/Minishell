@@ -6,7 +6,7 @@ PROMPT_C = prompt.c get_path.c\
 
 BUILTINS_C =  built_ins.c export.c unset.c env.c env_aux.c exit.c exit_aux.c cd.c\
 
-UTILS_C = error_and_exit_handler.c utils.c utils2.c utils3.c utils4.c\
+UTILS_C = error_and_exit_handler.c utils.c utils2.c utils3.c utils4.c utils5.c\
 
 PARSER_C = parser.c split_out_quotes.c ft_substr2.c ft_split_minishell.c ft_strjoin3.c its_what.c\
 

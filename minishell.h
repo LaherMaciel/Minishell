@@ -46,9 +46,7 @@ typedef struct s_mshell
 	int			exit_status;
 	char		**input;
 	int			*input_value;
-	char		**aux_env;
-	char		*line;
-	char		*cmd;
+	int			redirected;
 	int			pid;
 	int			status;
 	int			infile;
@@ -134,6 +132,7 @@ void		clean_exit(int exit_status);
 void		clean_resource(void);
 char		**list_to_array(t_list *lst);
 void		print_input(int flag, size_t i);
+void		clean_trash();
 
 //parser
 void		parser(char *input);
