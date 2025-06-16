@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:10:31 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/04 21:11:12 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/15 16:11:33 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	parser(char *input)
 {
 	if (!input)
 		return ;
+	//mshell()->input = ft_split_minishell_lst(input);
 	mshell()->input = ft_split_minishell(input);
 	if (!mshell()->input)
 		return ;

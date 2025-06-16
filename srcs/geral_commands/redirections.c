@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:53:37 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/14 14:35:36 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/15 17:49:03 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	handle_input_redirection(char *input)
 {
 	if (!input)
 	{
-		ft_fdprintf(STDERR_FILENO, "Minishell: ",
+		ft_fdprintf(STDERR_FILENO, "minishell: ",
 			"syntax error near unexpected token `newline'\n");
 		mshell()->exit_status = 2;
 		return (mshell()->exit_status);
@@ -52,7 +52,7 @@ static int	handle_input_redirection(char *input)
 	if (mshell()->infile < 0)
 	{
 		mshell()->infile = 0;
-		ft_fdprintf(STDERR_FILENO, "Minishell: %s: %s\n",
+		ft_fdprintf(STDERR_FILENO, "minishell: %s: %s\n",
 			input, strerror(errno));
 		mshell()->exit_status = 1;
 		return (1);
@@ -65,7 +65,7 @@ static int	handle_output_redirection(char *input)
 	if (!input)
 	{
 		ft_fdprintf(STDERR_FILENO,
-			"Minishell: syntax error near unexpected token `newline'\n");
+			"minishell: syntax error near unexpected token `newline'\n");
 		mshell()->exit_status = 2;
 		return (mshell()->exit_status);
 	}
@@ -75,7 +75,7 @@ static int	handle_output_redirection(char *input)
 	if (mshell()->outfile < 0)
 	{
 		mshell()->outfile = 0;
-		ft_fdprintf(STDERR_FILENO, "Minishell: %s: %s\n",
+		ft_fdprintf(STDERR_FILENO, "minishell: %s: %s\n",
 			strerror(errno), input);
 		mshell()->exit_status = errno;
 		return (1);
@@ -88,7 +88,7 @@ static int	handle_append_redirection(char *input)
 	if (!input)
 	{
 		ft_fdprintf(STDERR_FILENO,
-			"Minishell: syntax error near unexpected token `newline'\n");
+			"minishell: syntax error near unexpected token `newline'\n");
 		mshell()->exit_status = 2;
 		return (mshell()->exit_status);
 	}
@@ -98,7 +98,7 @@ static int	handle_append_redirection(char *input)
 	if (mshell()->outfile < 0)
 	{
 		mshell()->outfile = 0;
-		ft_fdprintf(STDERR_FILENO, "Minishell: %s: ",
+		ft_fdprintf(STDERR_FILENO, "minishell: %s: ",
 			"%s\n", strerror(errno), input);
 		mshell()->exit_status = errno;
 		return (1);

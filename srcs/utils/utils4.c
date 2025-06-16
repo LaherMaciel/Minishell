@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 19:28:44 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/14 15:17:30 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/15 16:46:32 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,32 @@ void	exp_loop(int i, char **input)
 		mshell()->expt = add_to_export(input[i]);
 	}
 	mshell()->expt = export_sorter();
+}
+
+void	print_input(int flag, size_t i)
+{
+	if (flag == 1 || flag == 0)
+	{
+		while (mshell()->input[i])
+		{
+			ft_printf("input[%i] = %s\n", i, mshell()->input[i]);
+			if (mshell()->input_value[i] == 3)
+				ft_printf("REDIRECT OR PIPE\n");
+			else if (mshell()->input_value[i] == 2)
+				ft_printf("BUILTIN\n");
+			else if (mshell()->input_value[i] == 1)
+				ft_printf("COMMAND OR ARGUMENT\n");
+			else
+				ft_printf("Undefine\n");
+			i++;
+			ft_printf("\n");
+		}
+	}
+	if (flag == 2 || flag == 0)
+	{
+		ft_printf("infile = %i\noutfile = %i\n",
+			mshell()->infile, mshell()->outfile);
+		ft_printf("exit_status = %i\nNr of child process "
+			"= %i\n", mshell()->exit_status, mshell()->exit_status);
+	}
 }

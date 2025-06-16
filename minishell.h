@@ -66,6 +66,7 @@ typedef struct s_parsing
 
 //prompt
 char		*display_prompt(char *line);
+char		*get_command_path(char *cmd);
 
 //commands executions
 char		*execute_commands(char *line);
@@ -108,7 +109,6 @@ void		sig_heredoc(int sig);
 //utils
 int			create_child_process(void);
 void		handle_error_and_exit(int error, char *message);
-char		*get_command_path(char *cmd);
 void		handle_error_and_exit(int error, char *message);
 t_export	*update_var(t_export *env, char **splitted);
 int			high_priority(void);
@@ -132,6 +132,8 @@ void		reset_outfile(int fd);
 void		reset_infile(int fd);
 void		clean_exit(int exit_status);
 void		clean_resource(void);
+char		**list_to_array(t_list *lst);
+void		print_input(int flag, size_t i);
 
 //parser
 void		parser(char *input);
@@ -147,6 +149,7 @@ void		set_inputvalue(void);
 int			is_special(char *str);
 int			is_builtin(char *str);
 int			is_redirect(char *str);
+char		**ft_split_minishell_lst(char *input);
 
 //main
 t_mshell	*mshell(void);

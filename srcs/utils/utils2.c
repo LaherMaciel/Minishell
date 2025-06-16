@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:59:35 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/14 14:44:01 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/14 17:12:06 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,4 +58,23 @@ void	clean_resource(void)
 	free_child_pids();
 	ft_free_array(mshell()->input, 0);
 	free(mshell()->input_value);
+}
+
+char	**list_to_array(t_list *lst)
+{
+	char	**array;
+	size_t	i;
+	size_t	len;
+
+	len = ft_lstsize(lst);
+	array = ft_calloc(len + 1, sizeof(char *));
+	if (!array)
+		return (NULL);
+	i = 0;
+	while (lst)
+	{
+		array[i++] = ft_strdup(lst->content);
+		lst = lst->next;
+	}
+	return (array);
 }
