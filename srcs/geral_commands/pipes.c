@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   piper.c                                            :+:      :+:    :+:   */
+/*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 09:26:31 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/15 17:48:38 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/16 12:03:58 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,9 +54,9 @@ void	piper(char **aux)
 		mshell()->exit_status = 1;
 		return ;
 	}
-	if (mshell()->outfile != STDOUT_FILENO)
+	/* if (mshell()->outfile != STDOUT_FILENO)
 		close(mshell()->outfile);
-	mshell()->outfile = STDOUT_FILENO;
+	mshell()->outfile = STDOUT_FILENO; */
 	pid = create_child_process();
 	if (pid == 0)
 		aux_purgatory(pipefd, aux);
