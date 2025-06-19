@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_executions.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/16 20:34:15 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/19 17:06:57 by lawences         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ void	ex_cmnd_loop(int index, char **aux)
 	while (mshell()->input[0])
 	{
 		index = high_priority();
+		print_input(0, 0);
 		if (is_redirect(mshell()->input[index]))
 		{
 			if (redirection_operators_handler(index))

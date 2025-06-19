@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 22:25:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/16 19:27:43 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/19 17:04:01 by lawences         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,25 @@ void	ft_env(char **input)
 	else
 		ft_fdprintf(mshell()->outfile, "\ninput: %t\n", input);
 	mshell()->exit_status = 0;
+}
+
+int	check_var_name(char *var_name)
+{
+	t_export	*env;
+	int			i;
+
+	env = mshell()->env;
+	if (!env)
+		return (0);
+	i = 0;
+	while (env->var_name && env->var_name[i])
+	{
+		if (ft_strncmp(env->var_name[i], var_name,
+				word_size(var_name)) == 0)
+			return (i);
+		i++;
+	}
+	return (0);
 }
 
 char	*get_value(char *var_name)

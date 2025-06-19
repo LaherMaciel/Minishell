@@ -6,7 +6,7 @@
 /*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 11:16:25 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/16 18:22:53 by lawences         ###   ########.fr       */
+/*   Updated: 2025/06/19 14:32:45 by lawences         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,4 @@ t_export	*update_var(t_export *env, char **splitted)
 		i++;
 	}
 	return (NULL);
-}
-
-char	**add_current(char **res, char **cur, int *k)
-{
-	if (*cur)
-	{
-		res[*k] = *cur;
-		(*k)++;
-		*cur = NULL;
-	}
-	return (res);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 09:26:31 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/16 20:34:57 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/19 16:17:54 by lawences         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,8 @@ char	**pipe_dupped_arr(int index)
 	rm_index(index);
 	i = -1;
 	while (++i < index)
-		if (its_what(mshell()->input[i]) == 1
-			|| its_what(mshell()->input[i]) == 2)
+		if (mshell()->input_value[i] == 1
+			|| mshell()->input_value[i] == 2)
 			aux = ft_append_to_array2(aux, 0, mshell()->input[i], 1);
 	if (!aux)
 		return (NULL);
@@ -114,6 +114,7 @@ int	pipe_handler(int index)
 	if (ft_strcmp(mshell()->input[index], "|") == 0)
 	{
 		aux = pipe_dupped_arr(index);
+		ft_printf("\n%t\n\n", aux);
 		if (!aux || !aux[0])
 		{
 			mshell()->exit_status = 2;

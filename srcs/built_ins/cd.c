@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 15:21:52 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/14 17:00:51 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/19 17:03:45 by lawences         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,15 @@
 
 static void	no_path(char *path)
 {
-	path = get_value("HOME");
-	if (!path)
+	if (!check_var_name("HOME"))
 	{
 		ft_fdprintf(STDERR_FILENO, "minishell: cd: HOME not set\n");
 		mshell()->exit_status = 1;
 		return ;
 	}
+	path = get_value("HOME");
+	if (!path)
+		return ;
 	if (chdir(path))
 	{
 		perror("minishell: cd");

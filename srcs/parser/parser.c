@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:10:31 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/16 20:35:16 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/19 16:18:58 by lawences         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,29 +26,41 @@ void	about_quotes(char *input, t_parsing *counts)
 		counts->quote = 0;
 }
 
-void	set_inputvalue(void)
+void	set_inputvalue(int index)
 {
 	int		i;
+	int		*new_array;
 
 	i = -1;
-	if (mshell()->input_value)
-		free(mshell()->input_value);
-	mshell()->input_value = ft_calloc(ft_arraylen(mshell()->input) + 1,
+	new_array = mshell()->input_value;
+	mshell()->input_value = ft_calloc(ft_arraylen(mshell()->input),
 		sizeof(int));
-	while (mshell()->input[++i])
-		mshell()->input_value[i] = its_what(mshell()->input[i]);
+	if (new_array)
+	{
+		while (new_array[++i])
+		{
+
+			if (new_array[i] != index)
+				mshell()->input_value[i] = new_array[i];
+		}
+		free(new_array);
+	}
+	else
+	{
+		while (mshell()->input[++i])
+			mshell()->input_value[i] = its_what(mshell()->input[i]);
+	}
 }
 
 void	parser(char *input)
 {
 	if (!input)
 		return ;
-	//mshell()->input = ft_split_minishell_lst(input);
-	mshell()->input = ft_split_minishell(input);
+	ft_split_minishell_lst(input);
 	if (!mshell()->input)
-		return ;
-	mshell()->input_value = NULL;
-	set_inputvalue();
+		mshell()->exit_status = 1;
+	if (!mshell()->input_value)
+		mshell()->exit_status = 1;
 	mshell()->exit_status = 0;
 	free(input);
 }

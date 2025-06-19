@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:02:32 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/11 11:30:32 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/19 15:55:36 by lawences         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ void	rm_index(int index)
 	char	**array;
 
 	array = mshell()->input;
+	set_inputvalue(index);
 	array = ft_rm_from_array(array, ft_arraylen(mshell()->input), index);
 	mshell()->input = array;
-	set_inputvalue();
 }
 
 void	rm_indexs(int index1, int index2)
@@ -49,6 +49,16 @@ void	rm_indexs(int index1, int index2)
 	int		i;
 
 	array = mshell()->input;
+	if (index1 > index2)
+	{
+		set_inputvalue(index1);
+		set_inputvalue(index2);
+	}
+	else
+	{
+		set_inputvalue(index2);
+		set_inputvalue(index1);
+	}
 	str = array[index2];
 	array = ft_rm_from_array(array, ft_arraylen(array), index1);
 	i = -1;
@@ -61,7 +71,6 @@ void	rm_indexs(int index1, int index2)
 		}
 	}
 	mshell()->input = array;
-	set_inputvalue();
 }
 
 static void	dup_loop(char **aux)
@@ -93,6 +102,7 @@ char	**dupped_arr(int index)
 	if (!mshell()->input || index < 0
 		|| index >= (int) ft_arraylen(mshell()->input))
 		return (NULL);
+	set_inputvalue(index);
 	index--;
 	while (mshell()->input[++index])
 		if (its_what(mshell()->input[index]) == 1
@@ -101,6 +111,5 @@ char	**dupped_arr(int index)
 	if (!aux)
 		return (NULL);
 	dup_loop(aux);
-	set_inputvalue();
 	return (aux);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils4.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 19:28:44 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/16 20:35:31 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/19 14:46:30 by lawences         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,6 @@ char	*get_varname(char *value)
 		i++;
 	}
 	return (NULL);
-}
-
-int	word_size(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] && (ft_isalpha(str[i]) || ft_isdigit(str[i])))
-		i++;
-	return (i);
 }
 
 void	exp_loop(int i, char **input)

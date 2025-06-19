@@ -3,15 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_minishell.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 12:53:09 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/11 17:34:05 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/19 15:21:32 by lawences         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
+/*
 static char	**handle_operator(char **res, char **cur, t_parsing *counts,
 	char *input)
 {
@@ -114,3 +114,4 @@ char	**ft_split_minishell(char *input)
 	result = split_loop(result, input, &counts);
 	return (result);
 }
+*/
