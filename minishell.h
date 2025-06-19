@@ -54,6 +54,13 @@ typedef struct s_mshell
 	int			heredoc;
 }				t_mshell;
 
+typedef struct s_pars_lst
+{
+	char				*content;
+	int					value;
+	struct s_pars_lst	*next;
+}					t_pars_lst;
+
 typedef struct s_parsing
 {
 	int		k;
@@ -149,6 +156,12 @@ int			is_special(char *str);
 int			is_builtin(char *str);
 int			is_redirect(char *str);
 char		**ft_split_minishell_lst(char *input);
+int			ft_lstsize_shell(t_pars_lst *lst);
+t_pars_lst	*ft_lstnew_shell(void *content);
+t_pars_lst	*ft_lstlast_shell(t_pars_lst *lst);
+void		ft_lstdelone_shell(t_pars_lst *lst, void (*del)(void*));
+void		ft_lstclear_shell(t_pars_lst **lst, void (*del)(void*));
+void		ft_lstadd_back_shell(t_pars_lst **lst, t_pars_lst *new);
 
 //main
 t_mshell	*mshell(void);

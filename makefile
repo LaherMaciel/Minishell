@@ -9,6 +9,9 @@ BUILTINS_C =  built_ins.c export.c unset.c env.c env_aux.c exit.c exit_aux.c cd.
 UTILS_C = error_and_exit_handler.c utils.c utils2.c utils3.c utils4.c utils5.c\
 
 PARSER_C = parser.c split_out_quotes.c ft_substr2.c ft_split_minishell.c ft_strjoin3.c its_what.c\
+			ft_lstadd_back_shell.c ft_lstclear_shell.c ft_lstdelone_shell.c\
+			ft_lstlast_shell.c ft_lstnew_shell.c ft_lstsize_shell.c
+
 
 LIBFT_DIRECTORY = libft/
 LIBFT_HEADER = $(LIBFT_DIRECTORY)libft.h
