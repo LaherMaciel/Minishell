@@ -153,7 +153,7 @@ void		set_inputvalue(int index);
 int			is_special(char *str);
 int			is_builtin(char *str);
 int			is_redirect(char *str);
-void		ft_split_minishell_lst(char *input);
+void		ft_split_shell_lst(char *input);
 int			ft_lstsize_shell(t_pars_lst *lst);
 t_pars_lst	*ft_lstnew_shell(void *content);
 t_pars_lst	*ft_lstlast_shell(t_pars_lst *lst);

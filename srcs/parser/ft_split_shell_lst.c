@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split_minishell_lst.c                           :+:      :+:    :+:   */
+/*   ft_split_shell_lst.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 12:53:09 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/19 16:38:45 by lawences         ###   ########.fr       */
+/*   Updated: 2025/06/19 18:02:15 by lawences         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,13 @@ static t_parsing	*process_token_lst(t_pars_lst **lst,
 		if (get_value2(input + counts->i + 1))
 		{
 			val = get_value(input + counts->i + 1);
-			if (counts->quote == 2)  // Inside double quotes - preserve spaces
-			{
+			if (counts->quote == 2)
 				*cur = ft_strjoin2(*cur, val, 1);
-			}
-			else  // Unquoted - split by spaces
+			else
 			{
 				splitted = ft_split(val, ' ');
 				i = -1;
-				if (*cur && splitted[0])  // Add current buffer first if exists
+				if (*cur && splitted[0])
 				{
 					*cur = ft_strjoin2(*cur, splitted[0], 1);
 					new_node = ft_lstnew_shell(ft_strdup(*cur));
@@ -141,11 +139,14 @@ static t_pars_lst	*split_loop_lst(t_pars_lst **lst, char *input, t_parsing *coun
 			counts = process_token_lst(lst, &cur, input, counts);
 	}
 	if (cur)
+	{
 		ft_lstadd_back_shell(lst, ft_lstnew_shell(ft_strdup(cur)));
+		free(cur);
+	}
 	return (*lst);
 }
 
-void	ft_split_minishell_lst(char *input)
+void	ft_split_shell_lst(char *input)
 {
 	t_parsing	counts;
 	t_pars_lst	*result;

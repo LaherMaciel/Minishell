@@ -6,7 +6,7 @@
 /*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:10:31 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/19 16:18:58 by lawences         ###   ########.fr       */
+/*   Updated: 2025/06/19 18:02:21 by lawences         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	parser(char *input)
 {
 	if (!input)
 		return ;
-	ft_split_minishell_lst(input);
+	ft_split_shell_lst(input);
 	if (!mshell()->input)
 		mshell()->exit_status = 1;
 	if (!mshell()->input_value)

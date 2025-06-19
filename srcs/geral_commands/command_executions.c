@@ -104,7 +104,6 @@ void	ex_cmnd_loop(int index, char **aux)
 	while (mshell()->input[0])
 	{
 		index = high_priority();
-		print_input(0, 0);
 		if (is_redirect(mshell()->input[index]))
 		{
 			if (redirection_operators_handler(index))
