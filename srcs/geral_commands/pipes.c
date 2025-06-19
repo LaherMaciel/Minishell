@@ -6,7 +6,7 @@
 /*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 09:26:31 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/19 16:17:54 by lawences         ###   ########.fr       */
+/*   Updated: 2025/06/19 18:10:28 by lawences         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ char	**pipe_dupped_arr(int index)
 	aux = NULL;
 	if (index <= 0)
 	{
-		ft_fdprintf(mshell()->outfile, "minishell: "
+		ft_fdprintf(STDERR_FILENO, "minishell: "
 			"syntax error near unexpected token `|'\n");
 		return (NULL);
 	}
@@ -114,7 +114,6 @@ int	pipe_handler(int index)
 	if (ft_strcmp(mshell()->input[index], "|") == 0)
 	{
 		aux = pipe_dupped_arr(index);
-		ft_printf("\n%t\n\n", aux);
 		if (!aux || !aux[0])
 		{
 			mshell()->exit_status = 2;

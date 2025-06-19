@@ -6,7 +6,7 @@
 /*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:53:37 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/16 18:17:21 by lawences         ###   ########.fr       */
+/*   Updated: 2025/06/19 18:10:02 by lawences         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,11 +93,7 @@ static int	handle_append_redirection(char *input)
 		return (mshell()->exit_status);
 	}
 	if (mshell()->outfile != STDOUT_FILENO)
-	{
-		ft_printf("append STDOUT_FILENO = %i & outfile = %i\n",
-			STDOUT_FILENO, mshell()->outfile);
 		close(mshell()->outfile);
-	}
 	mshell()->outfile = open(input, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (mshell()->outfile < 0)
 	{
