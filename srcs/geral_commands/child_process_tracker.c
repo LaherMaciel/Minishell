@@ -6,11 +6,11 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 13:37:12 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/29 11:24:52 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/23 10:02:17 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 void	add_child_pid(pid_t pid)
 {

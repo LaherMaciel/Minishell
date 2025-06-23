@@ -3,47 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_shell_lst.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 12:53:09 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/19 18:02:15 by lawences         ###   ########.fr       */
+/*   Updated: 2025/06/23 12:50:21 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-
-static t_pars_lst	*handle_operator_lst(t_pars_lst **lst, char **cur, t_parsing *counts, char *input)
+static t_pars_lst	*handle_operator_lst(t_pars_lst **lst, t_pars_lst **new_node, 
+	t_parsing *counts, char *input)
 {
-	t_pars_lst	*new_node;
+	t_pars_lst *temp_node;
 
+	if ((*new_node) && (*new_node)->content)
+	{
+		ft_lstadd_back_shell(lst, *new_node);
+		*new_node = NULL;
+	}
 	if (input[counts->i] == '>' && input[counts->i + 1] == '>')
 	{
-		new_node = ft_lstnew_shell(ft_strdup(">>"));
-		new_node->value = 3;
-		ft_lstadd_back_shell(lst, new_node);
+		temp_node = ft_lstnew_shell(ft_strdup(">>"), counts->quote);
+		temp_node->quoted = counts->quote;
+		ft_lstadd_back_shell(lst, temp_node);
 		counts->i += 2;
 	}
 	else if (input[counts->i] == '<' && input[counts->i + 1] == '<')
 	{
-		new_node = ft_lstnew_shell(ft_strdup("<<"));
-		new_node->value = 3;
-		ft_lstadd_back_shell(lst, new_node);
+		temp_node = ft_lstnew_shell(ft_strdup("<<"), counts->quote);
+		temp_node->quoted = counts->quote;
+		ft_lstadd_back_shell(lst, temp_node);
 		counts->i += 2;
 	}
 	else
 	{
-		if (*cur)
-		{
-			new_node = ft_lstnew_shell(ft_strdup(*cur));
-			new_node->value = 3;
-			ft_lstadd_back_shell(lst, new_node);
-			free(*cur);
-			*cur = NULL;
-		}
-		new_node = ft_lstnew_shell(ft_substr(input, counts->i, 1));
-		new_node->value = 3;
-		ft_lstadd_back_shell(lst, new_node);
+		temp_node = ft_lstnew_shell(ft_substr(input, counts->i, 1), counts->quote);
+		temp_node->quoted = counts->quote;
+		ft_lstadd_back_shell(lst, temp_node);
 		counts->i++;
 	}
 	return (*lst);
@@ -62,87 +59,94 @@ static int	dollar_sign_lst(char **cur, char *input, t_parsing *counts)
 }
 
 static t_parsing	*process_token_lst(t_pars_lst **lst,
-	char **cur, char *input, t_parsing *counts)
+	t_pars_lst **new_node, char *input, t_parsing *counts)
 {
-	char		*val;
-	char		**splitted;
-	int			i;
-	t_pars_lst	*new_node;
+	char	*val;
+	char	**splitted;
+	int		i;
 
-	aux_token(cur, input, counts);
+	if (!*new_node)
+		*new_node = ft_lstnew_shell(NULL, counts->quote);
+	aux_token(&((*new_node)->content), input, counts);
 	if ((counts->quote == 0 || counts->quote == 2) && input[counts->i] == '$')
 	{
 		if (get_value2(input + counts->i + 1))
 		{
 			val = get_value(input + counts->i + 1);
 			if (counts->quote == 2)
-				*cur = ft_strjoin2(*cur, val, 1);
+			{
+				(*new_node)->content = ft_strjoin2((*new_node)->content, val, 1);
+				(*new_node)->quoted = counts->quote;
+			}
 			else
 			{
 				splitted = ft_split(val, ' ');
 				i = -1;
-				if (*cur && splitted[0])
+				if ((*new_node)->content && splitted[0])
 				{
-					*cur = ft_strjoin2(*cur, splitted[0], 1);
-					new_node = ft_lstnew_shell(ft_strdup(*cur));
-					new_node->value = 1;
-					ft_lstadd_back_shell(lst, new_node);
-					free(*cur);
-					*cur = NULL;
+					(*new_node)->content = ft_strjoin2((*new_node)->content, splitted[0], 1);
+					(*new_node)->quoted = counts->quote;
+					ft_lstadd_back_shell(lst, *new_node);
+					*new_node = ft_lstnew_shell(NULL, 0);
 					i = 0;
 				}
 				while (splitted[++i])
 				{
-					new_node = ft_lstnew_shell(ft_strdup(splitted[i]));
-					new_node->value = 1;
-					ft_lstadd_back_shell(lst, new_node);
+					t_pars_lst *temp = ft_lstnew_shell(ft_strdup(splitted[i]), 0);
+					temp->quoted = counts->quote;
+					ft_lstadd_back_shell(lst, temp);
 				}
 				ft_free_array(splitted, 0);
 			}
 			free(val);
 		}
-		counts->i = dollar_sign_lst(cur, input, counts);
+		counts->i = dollar_sign_lst(&((*new_node)->content), input, counts);
 	}
 	else
 	{
 		if (((input[counts->i] == '\'' && counts->quote == 2)
 			|| (input[counts->i] == '\"' && counts->quote == 1))
 			|| (input[counts->i] != '\'' && input[counts->i] != '\"' && input[counts->i] != '\n'))
-			*cur = ft_strjoin3(*cur, input[counts->i], 1);
-		(counts->i)++;
+		{
+			(*new_node)->content = ft_strjoin3((*new_node)->content, input[counts->i], 1);
+			if ((*new_node)->quoted == 0 && counts->quote != 0)
+				(*new_node)->quoted = 1;
+		}
+		counts->i++;
 	}
 	return (counts);
 }
 
-static t_pars_lst	*split_loop_lst(t_pars_lst **lst, char *input, t_parsing *counts)
+static t_pars_lst	*split_loop_lst(t_pars_lst **lst, char *input,
+	t_parsing *counts)
 {
-	char	*cur;
+	t_pars_lst	*new_node;
 
-	cur = NULL;
+	new_node = NULL;
 	while (counts->i < ft_strlen(input))
 	{
 		about_quotes(input, counts);
 		if (counts->quote == 0
 			&& (ft_strchr("|><&", input[counts->i])))
-			*lst = handle_operator_lst(lst, &cur, counts, input);
+			*lst = handle_operator_lst(lst, &new_node, counts, input);
 		else if (counts->quote == 0 && input[counts->i] == ' ')
 		{
-			if (cur)
+			 if (new_node && new_node->content)
 			{
-				ft_lstadd_back_shell(lst, ft_lstnew_shell(ft_strdup(cur)));
-				free(cur);
-				cur = NULL;
+				ft_lstadd_back_shell(lst, new_node);
+				new_node = NULL;
 			}
 			counts->i++;
 		}
 		else
-			counts = process_token_lst(lst, &cur, input, counts);
+			counts = process_token_lst(lst, &new_node, input, counts);
 	}
-	if (cur)
+	if (new_node && new_node->content)
 	{
-		ft_lstadd_back_shell(lst, ft_lstnew_shell(ft_strdup(cur)));
-		free(cur);
+		ft_lstadd_back_shell(lst, new_node);
 	}
+	else
+		free(new_node);
 	return (*lst);
 }
 

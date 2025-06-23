@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   command_executions.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/19 17:06:57 by lawences         ###   ########.fr       */
+/*   Updated: 2025/06/23 14:27:24 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 /**
  * @brief Execute a command with its arguments.
@@ -101,7 +101,9 @@ static void	wait_for_childs(void)
 
 void	ex_cmnd_loop(int index, char **aux)
 {
-	while (mshell()->input[0])
+	int count = -1;
+
+	while (mshell()->input[0] && ++count < 20)
 	{
 		index = high_priority();
 		if (is_redirect(mshell()->input[index]))

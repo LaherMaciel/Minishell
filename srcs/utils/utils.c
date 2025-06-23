@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 11:16:25 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/19 14:32:45 by lawences         ###   ########.fr       */
+/*   Updated: 2025/06/23 14:29:21 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	free_resources(void)
 {
 	ft_free_array(mshell()->input, 0);
 	free(mshell()->input_value);
+	free(mshell()->quoted);
 	free_child_pids();
 }
 

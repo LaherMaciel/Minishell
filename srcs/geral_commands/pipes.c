@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 09:26:31 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/19 18:10:28 by lawences         ###   ########.fr       */
+/*   Updated: 2025/06/23 14:36:11 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 /**
  * 
@@ -46,7 +46,7 @@ static void	aux_purgatory(int pipefd[2], char **aux)
 	execute_simple_command(aux, mshell()->infile, mshell()->outfile);
 }
 
-void	purgatory(pid_t pid, int pipefd[2], int i)
+void	purgatory(pid_t pid, int pipefd[2])
 {
 	close(pipefd[1]);
 	add_child_pid(pid);
@@ -58,8 +58,6 @@ void	purgatory(pid_t pid, int pipefd[2], int i)
 	if (mshell()->infile != STDIN_FILENO)
 		close(mshell()->infile);
 	mshell()->infile = pipefd[0];
-	while (i < 15000000)
-		i++;
 }
 
 void	piper(char **aux)
@@ -77,7 +75,7 @@ void	piper(char **aux)
 	if (pid == 0)
 		aux_purgatory(pipefd, aux);
 	else
-		purgatory(pid, pipefd, 0);
+		purgatory(pid, pipefd);
 	mshell()->redirected = 0;
 }
 

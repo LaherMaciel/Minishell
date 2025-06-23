@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_aux.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 14:42:36 by lawences          #+#    #+#             */
-/*   Updated: 2025/06/19 15:46:26 by lawences         ###   ########.fr       */
+/*   Updated: 2025/06/23 12:12:33 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ char	**add_current(char **res, char **cur, int *k)
 	return (res);
 }
 
-void	aux_token(char **cur, char *input, t_parsing *counts)
+void	aux_token(char **content, char *input, t_parsing *counts)
 {
 	if ((counts->quote == 0 || counts->quote == 2)
 		&& input[counts->i + 1] == '?')
 	{
-		*cur = ft_strjoin2(*cur, ft_itoa(mshell()->exit_status), 3);
+		*content = ft_strjoin2(*content, ft_itoa(mshell()->exit_status), 3);
 		counts->i += 2;
 	}
 }
@@ -39,14 +39,12 @@ void	add_token_lst(t_pars_lst **lst, char **cur, char *str)
 
 	if (*cur)
 	{
-		new_node = ft_lstnew_shell(ft_strdup(*cur));
-		new_node->value = 3;
+		new_node = ft_lstnew_shell(ft_strdup(*cur), 0);
 		ft_lstadd_back_shell(lst, new_node);
 		free(*cur);
 		*cur = NULL;
 	}
-	new_node = ft_lstnew_shell(ft_strdup(str));
-	new_node->value = 3;
+	new_node = ft_lstnew_shell(ft_strdup(str), 0);
 	ft_lstadd_back_shell(lst, new_node);
 }
 

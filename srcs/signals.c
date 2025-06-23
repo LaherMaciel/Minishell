@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/30 10:24:50 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/04 21:44:51 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/23 14:40:33 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	sigint_handler(int sig)
 {
 	(void)sig;
+	mshell()->exit_status = 130;
 	write(1, "\n", 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);

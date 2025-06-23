@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:53:37 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/19 18:10:02 by lawences         ###   ########.fr       */
+/*   Updated: 2025/06/23 14:03:27 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minishell.h"
+#include "../../minishell.h"
 
 /* static int	handle_heredoc(char *input)
 {

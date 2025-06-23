@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils4.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 19:28:44 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/19 14:46:30 by lawences         ###   ########.fr       */
+/*   Updated: 2025/06/23 12:53:07 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,10 @@ void	print_input(int flag, size_t i)
 				ft_printf("COMMAND OR ARGUMENT\n");
 			else
 				ft_printf("Undefine\n");
+			if (mshell()->quoted[i])
+				ft_printf("inside quotes = true\n");
+			else
+				ft_printf("inside quotes = false\n");
 			i++;
 			ft_printf("\n");
 		}

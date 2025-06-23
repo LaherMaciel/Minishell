@@ -44,6 +44,7 @@ typedef struct s_mshell
 	t_child_pid	*child_pids;
 	int			num_children;
 	int			exit_status;
+	int			*quoted;
 	char		**input;
 	int			*input_value;
 	int			redirected;
@@ -57,7 +58,7 @@ typedef struct s_mshell
 typedef struct s_pars_lst
 {
 	char				*content;
-	int					value;
+	int					quoted;
 	struct s_pars_lst	*next;
 }					t_pars_lst;
 
@@ -137,7 +138,7 @@ void		reset_infile(int fd);
 void		clean_exit(int exit_status);
 void		clean_resource(void);
 void		print_input(int flag, size_t i);
-void		clean_trash();
+void		clean_trash(void);
 
 //parser
 void		parser(char *input);
@@ -148,21 +149,24 @@ char		**ft_split_minishell(char *input);
 char		*ft_strjoin3(char *s1, char s2, int flag);
 void		about_quotes(char *input, t_parsing *counts);
 char		**add_current(char **res, char **cur, int *k);
-int			its_what(char *str);
+int			its_what(char *str, int quoted);
 void		set_inputvalue(int index);
+void		set_inputvalues(int index1, int index2);
 int			is_special(char *str);
 int			is_builtin(char *str);
 int			is_redirect(char *str);
 void		ft_split_shell_lst(char *input);
 int			ft_lstsize_shell(t_pars_lst *lst);
-t_pars_lst	*ft_lstnew_shell(void *content);
+t_pars_lst	*ft_lstnew_shell(void *content, int quoted);
 t_pars_lst	*ft_lstlast_shell(t_pars_lst *lst);
 void		ft_lstdelone_shell(t_pars_lst *lst, void (*del)(void*));
 void		ft_lstclear_shell(t_pars_lst **lst, void (*del)(void*));
 void		ft_lstadd_back_shell(t_pars_lst **lst, t_pars_lst *new);
 void		add_token_lst(t_pars_lst **lst, char **cur, char *str);
-void		aux_token(char **cur, char *input, t_parsing *counts);
+void		aux_token(char **content, char *input, t_parsing *counts);
 void		list_to_mshell(t_pars_lst *lst);
+void		print_pars_node(t_pars_lst *node, int index);
+void		print_pars_list(t_pars_lst *lst);
 
 //main
 t_mshell	*mshell(void);

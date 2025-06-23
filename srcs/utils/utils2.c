@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:59:35 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/19 16:29:50 by lawences         ###   ########.fr       */
+/*   Updated: 2025/06/23 14:00:29 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	clear_input(char **aux)
 		{
 			if (ft_strcmp(aux[i], mshell()->input[j]) == 0)
 			{
-				set_inputvalue(j);
 				mshell()->input = ft_rm_from_array(mshell()->input, 0, j);
+				set_inputvalue(j);
 				break ;
 			}
 		}

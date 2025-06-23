@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:02:32 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/19 15:55:36 by lawences         ###   ########.fr       */
+/*   Updated: 2025/06/23 14:27:09 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,48 @@ int	high_priority(void)
 	int	index;
 	int	highest;
 
-	i = ft_arraylen(mshell()->input);
+	i = -1;
 	highest = INT_MIN;
-	while (i >= 0)
+	while (mshell()->input[++i])
 	{
-		if (mshell()->input_value[i] >= highest)
+		if (mshell()->input_value[i] > highest)
 		{
 			highest = mshell()->input_value[i];
 			index = i;
 		}
-		i--;
 	}
 	return (index);
 }
 
 void	rm_index(int index)
 {
+	int		i;
+	int		j;
+	int		*quoted;
 	char	**array;
 
+	i = -1;
+	j = 0;
 	array = mshell()->input;
-	set_inputvalue(index);
+	if (mshell()->input_value)
+		free(mshell()->input_value);
+	mshell()->input_value = ft_calloc(ft_arraylen(mshell()->input) + 1,
+		sizeof(int));
+	quoted = mshell()->quoted;
+	mshell()->quoted = ft_calloc(ft_arraylen(mshell()->input) + 1,
+		sizeof(int));
+	while (mshell()->input[++i])
+	{
+		if (i != index)
+		{
+			mshell()->quoted[j] = quoted[i];
+			mshell()->input_value[j] = its_what(mshell()->input[i],
+				mshell()->quoted[i]);
+			j++;
+		}
+	}
+	if (quoted)
+		free(quoted);
 	array = ft_rm_from_array(array, ft_arraylen(mshell()->input), index);
 	mshell()->input = array;
 }
@@ -49,17 +71,8 @@ void	rm_indexs(int index1, int index2)
 	int		i;
 
 	array = mshell()->input;
-	if (index1 > index2)
-	{
-		set_inputvalue(index1);
-		set_inputvalue(index2);
-	}
-	else
-	{
-		set_inputvalue(index2);
-		set_inputvalue(index1);
-	}
 	str = array[index2];
+	set_inputvalues(index1, index2);
 	array = ft_rm_from_array(array, ft_arraylen(array), index1);
 	i = -1;
 	while (array[++i])
@@ -102,14 +115,14 @@ char	**dupped_arr(int index)
 	if (!mshell()->input || index < 0
 		|| index >= (int) ft_arraylen(mshell()->input))
 		return (NULL);
-	set_inputvalue(index);
 	index--;
 	while (mshell()->input[++index])
-		if (its_what(mshell()->input[index]) == 1
-			|| its_what(mshell()->input[index]) == 2)
+		if (its_what(mshell()->input[index], mshell()->quoted[index]) == 1
+			|| its_what(mshell()->input[index], mshell()->quoted[index]) == 2)
 			aux = ft_append_to_array2(aux, 0, mshell()->input[index], 1);
 	if (!aux)
 		return (NULL);
 	dup_loop(aux);
+	set_inputvalue(index);
 	return (aux);
 }
