@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 11:16:25 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/23 14:29:21 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/24 19:50:07 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ int	create_child_process(void)
 void	free_resources(void)
 {
 	ft_free_array(mshell()->input, 0);
-	free(mshell()->input_value);
+	free(mshell()->input_v);
 	free(mshell()->quoted);
 	free_child_pids();
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:07:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/24 13:08:12 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/24 19:50:07 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_mshell	*mshell(void)
 void	init_shell(char **env)
 {
 	mshell()->input = NULL;
-	mshell()->input_value = 0;
+	mshell()->input_v = 0;
 	mshell()->redirected = 0;
 	mshell()->infile = STDIN_FILENO;
 	mshell()->outfile = STDOUT_FILENO;
@@ -36,14 +36,21 @@ void	init_shell(char **env)
 	mshell()->env = ft_calloc(sizeof(t_export), 1);
 	if (!mshell()->env)
 		exit(EXIT_FAILURE);
-	mshell()->env = init_env(env);
-	if (mshell()->env == NULL)
-		handle_error_and_exit(-2, "Failed to create env struct");
 	mshell()->expt = ft_calloc(sizeof(t_export), 1);
 	if (!mshell()->expt)
 		handle_error_and_exit(-2, "Failed to create export struct");
-	mshell()->expt = init_export(env);
-	mshell()->expt = export_sorter();
+	if (!env || !env[0])
+		start_no_env();
+	else
+	{
+		mshell()->env = init_env(env);
+		if (mshell()->env == NULL)
+			handle_error_and_exit(-2, "Failed to create env struct");
+		mshell()->expt = init_export(env);
+		if (mshell()->expt == NULL)
+			handle_error_and_exit(-2, "Failed to create export struct");
+		mshell()->expt = export_sorter();
+	}
 }
 
 static void	receive_input(void)

@@ -46,7 +46,7 @@ typedef struct s_mshell
 	int			exit_status;
 	int			*quoted;
 	char		**input;
-	int			*input_value;
+	int			*input_v;
 	int			redirected;
 	int			pid;
 	int			status;
@@ -83,7 +83,8 @@ void		run_command(char **args, int infile, int outfile);
 void		execute_simple_command(char **args, int infile, int outfile);
 void		add_child_pid(pid_t pid);
 void		free_child_pids(void);
-int			handle_heredoc(char *delimiter);
+int			handle_heredoc(char *delimiter, int fd[2]);
+void		aux_ex_cmnd_loop(int index, char **aux);
 
 //BUILT-INS
 int			builtin_cd(char *input);
@@ -108,6 +109,7 @@ int			builtins(char **input);
 void		builtin_exit(char **input);
 void		update_shlvl(void);
 int			check_var_name(char *var_name);
+void		start_no_env(void);
 
 //signals
 void		sigint_handler(int sig);
@@ -164,7 +166,7 @@ void		ft_lstclear_shell(t_pars_lst **lst, void (*del)(void*));
 void		ft_lstadd_back_shell(t_pars_lst **lst, t_pars_lst *new);
 void		add_token_lst(t_pars_lst **lst, char **cur, char *str);
 void		aux_token(char **content, char *input, t_parsing *counts);
-void		list_to_mshell(t_pars_lst *lst);
+void		list_to_mshell(t_pars_lst *lst, size_t i);
 void		print_pars_node(t_pars_lst *node, int index);
 void		print_pars_list(t_pars_lst *lst);
 

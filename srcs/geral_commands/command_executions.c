@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_executions.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/24 12:19:10 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/24 19:36:46 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,13 +101,12 @@ static void	wait_for_childs(void)
 
 void	ex_cmnd_loop(int index, char **aux)
 {
-	int count = -1;
+	int	count;
 
+	count = -1;
 	while (mshell()->input[0] && ++count < 20)
 	{
 		index = high_priority();
-		/* ft_printf("index = %i\n", index);
-		print_input(0, 0); */
 		if (is_redirect(mshell()->input[index]))
 		{
 			if (redirection_operators_handler(index))
@@ -119,15 +118,7 @@ void	ex_cmnd_loop(int index, char **aux)
 				break ;
 		}
 		else
-		{
-			aux = dupped_arr(index);
-			if (aux)
-			{
-				run_command(aux,
-					mshell()->infile, mshell()->outfile);
-				ft_free_array(aux, 0);
-			}
-		}
+			aux_ex_cmnd_loop(index, aux);
 	}
 }
 

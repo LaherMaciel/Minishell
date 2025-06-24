@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstutils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 14:43:04 by lawences          #+#    #+#             */
-/*   Updated: 2025/06/23 12:07:42 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/24 19:44:59 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,11 @@ void	ft_lstadd_back_shell(t_pars_lst **lst, t_pars_lst *new)
  * @return A pointer to the newly created element, or NULL if memory allocation
  * fails.
  */
-t_pars_lst *ft_lstnew_shell(void *content, int quoted)
+t_pars_lst	*ft_lstnew_shell(void *content, int quoted)
 {
-	t_pars_lst *new_list = malloc(sizeof(t_pars_lst));
+	t_pars_lst	*new_list;
+
+	new_list = malloc(sizeof(t_pars_lst));
 	if (!new_list)
 		return (NULL);
 	new_list->content = content;

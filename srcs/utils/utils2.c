@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:59:35 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/23 14:00:29 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/24 19:50:07 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,5 +37,5 @@ void	clean_resource(void)
 {
 	free_child_pids();
 	ft_free_array(mshell()->input, 0);
-	free(mshell()->input_value);
+	free(mshell()->input_v);
 }

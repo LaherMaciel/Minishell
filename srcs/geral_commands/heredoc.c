@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 19:23:50 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/24 12:13:49 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/24 19:38:20 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,8 @@ static int	check_delimiter(char *delimiter)
 	return (1);
 }
 
-int	handle_heredoc(char *delimiter)
+int	handle_heredoc(char *delimiter, int fd[2])
 {
-	int		fd[2];
 	pid_t	pid;
 	int		status;
 

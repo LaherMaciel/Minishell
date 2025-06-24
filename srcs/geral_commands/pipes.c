@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 09:26:31 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/24 12:19:31 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/24 19:50:07 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,13 +17,7 @@
  */
 static void	child_purgatory(int pipefd[2], char **aux)
 {
-	close(pipefd[0]);
-	if (mshell()->outfile != STDOUT_FILENO && mshell()->redirected == 0)
-	{
-		close(mshell()->outfile);
-		mshell()->outfile = pipefd[1];
-	}
-	else if (mshell()->outfile != STDOUT_FILENO && mshell()->redirected == 1)
+	if (mshell()->outfile != STDOUT_FILENO && mshell()->redirected == 1)
 		close(pipefd[1]);
 	else
 		mshell()->outfile = pipefd[1];
@@ -73,7 +67,15 @@ void	piper(char **aux)
 	}
 	pid = create_child_process();
 	if (pid == 0)
+	{
+		close(pipefd[0]);
+		if (mshell()->outfile != STDOUT_FILENO && mshell()->redirected == 0)
+		{
+			close(mshell()->outfile);
+			mshell()->outfile = pipefd[1];
+		}
 		child_purgatory(pipefd, aux);
+	}
 	else
 		purgatory(pid, pipefd);
 	mshell()->redirected = 0;
@@ -96,8 +98,8 @@ char	**pipe_dupped_arr(int index)
 	rm_index(index);
 	i = -1;
 	while (++i < index)
-		if (mshell()->input_value[i] == 1
-			|| mshell()->input_value[i] == 2)
+		if (mshell()->input_v[i] == 1
+			|| mshell()->input_v[i] == 2)
 			aux = ft_append_to_array2(aux, 0, mshell()->input[i], 1);
 	if (!aux)
 		return (NULL);
@@ -112,7 +114,6 @@ int	pipe_handler(int index)
 	if (ft_strcmp(mshell()->input[index], "|") == 0)
 	{
 		aux = pipe_dupped_arr(index);
-		//ft_printf("aux\n%t\n\n", aux);
 		if (!aux || !aux[0])
 		{
 			mshell()->exit_status = 2;

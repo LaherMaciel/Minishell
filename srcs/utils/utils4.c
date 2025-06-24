@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils4.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 19:28:44 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/23 12:53:07 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/24 20:01:48 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	exp_loop(int i, char **input)
 	}
 	mshell()->expt = export_sorter();
 }
-
+/* 
 void	print_input(int flag, size_t i)
 {
 	if (flag == 1 || flag == 0)
@@ -87,11 +87,11 @@ void	print_input(int flag, size_t i)
 		while (mshell()->input[i])
 		{
 			ft_printf("input[%i] = %s\n", i, mshell()->input[i]);
-			if (mshell()->input_value[i] == 3)
+			if (mshell()->input_v[i] == 3)
 				ft_printf("REDIRECT OR PIPE\n");
-			else if (mshell()->input_value[i] == 2)
+			else if (mshell()->input_v[i] == 2)
 				ft_printf("BUILTIN\n");
-			else if (mshell()->input_value[i] == 1)
+			else if (mshell()->input_v[i] == 1)
 				ft_printf("COMMAND OR ARGUMENT\n");
 			else
 				ft_printf("Undefine\n");
@@ -110,4 +110,4 @@ void	print_input(int flag, size_t i)
 		ft_printf("exit_status = %i\nNr of child process "
 			"= %i\n", mshell()->exit_status, mshell()->num_children);
 	}
-}
+} */

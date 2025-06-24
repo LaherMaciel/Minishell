@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_path_copy.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 14:19:52 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/16 22:40:20 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/24 20:00:23 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,12 +57,12 @@ static int	check_executable(const char *cmd, int flag)
  * @param path_env PATH environment variable value
  * @return char* Full path if found and executable, NULL otherwise
  */
-static char *search_command_in_path(char *cmd, char *path_env)
+static char	*search_command_in_path(char *cmd, char *path_env)
 {
-	size_t i;
-	char **paths;
-	char *full_path;
-	int exec_status;
+	size_t	i;
+	char	**paths;
+	char	*full_path;
+	int		exec_status;
 
 	paths = ft_split(path_env, ':');
 	if (!paths)
@@ -78,11 +78,11 @@ static char *search_command_in_path(char *cmd, char *path_env)
 			break ;
 		exec_status = check_executable(full_path, 0);
 		if (exec_status == 0)
-			break ; // Found executable
+			break ;
 		free(full_path);
 		full_path = NULL;
 		if (exec_status == 126)
-			break ; // Found but no permission
+			break ;
 	}
 	ft_free_array(paths, 0);
 	return (full_path);
@@ -116,7 +116,7 @@ char	*check_absolute_path(char *cmd)
  * @param cmd Command to locate
  * @return char* Full path if found and executable, NULL otherwise
  */
-char *get_command_path(char *cmd)
+char	*get_command_path(char *cmd)
 {
 	char	*path_env;
 	char	*full_path;
@@ -125,7 +125,8 @@ char *get_command_path(char *cmd)
 	if (!path_env)
 	{
 		mshell()->exit_status = 127;
-		ft_fdprintf(STDERR_FILENO, "minishell: %s: No such file or directory\n", cmd);
+		ft_fdprintf(STDERR_FILENO,
+			"minishell: %s: No such file or directory\n", cmd);
 		return (NULL);
 	}
 	full_path = search_command_in_path(cmd, path_env);

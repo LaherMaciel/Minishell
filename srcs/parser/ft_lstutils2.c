@@ -59,10 +59,9 @@ void	ft_lstclear_shell(t_pars_lst **lst, void (*del)(void*))
 	*lst = NULL;
 }
 
-void	list_to_mshell(t_pars_lst *lst)
+void	list_to_mshell(t_pars_lst *lst, size_t i)
 {
 	t_pars_lst	*head;
-	size_t		i;
 	size_t		len;
 
 	head = lst;
@@ -73,16 +72,15 @@ void	list_to_mshell(t_pars_lst *lst)
 	mshell()->quoted = ft_calloc(len + 1, sizeof(int));
 	if (!mshell()->quoted)
 		return ;
-	i = -1;
-	mshell()->input_value = ft_calloc(len + 1, sizeof(int));
-	if (!mshell()->input_value)
+	mshell()->input_v = ft_calloc(len + 1, sizeof(int));
+	if (!mshell()->input_v)
 		return ;
 	i = 0;
 	while (lst)
 	{
 		mshell()->input[i] = ft_strdup(lst->content);
 		mshell()->quoted[i] = lst->quoted;
-		mshell()->input_value[i] = its_what(mshell()->input[i],
+		mshell()->input_v[i] = its_what(mshell()->input[i],
 			mshell()->quoted[i]);
 		i++;
 		lst = lst->next;
@@ -96,7 +94,7 @@ void	list_to_mshell(t_pars_lst *lst)
  * @param node The node to print information about
  * @param index The position of the node in the list (0-based)
  */
-void	print_pars_node(t_pars_lst *node, int index)
+/* void	print_pars_node(t_pars_lst *node, int index)
 {
 	if (!node)
 	{
@@ -107,14 +105,14 @@ void	print_pars_node(t_pars_lst *node, int index)
 	ft_printf("  Content: '%s'\n", node->content ? node->content : "(NULL)");
 	ft_printf("  Quoted: %s\n", node->quoted ? "true" : "false");
 	ft_printf("  Next: %s\n", node->next ? "->" : "(NULL)");
-}
+} */
 
 /**
  * @brief Prints all nodes in a parsing list
  * 
  * @param lst The head of the list to print
  */
-void	print_pars_list(t_pars_lst *lst)
+/* void	print_pars_list(t_pars_lst *lst)
 {
 	t_pars_lst	*current;
 	int			i;
@@ -142,3 +140,4 @@ void	print_pars_list(t_pars_lst *lst)
 
 	ft_printf("=== End of List ===\n\n");
 }
+ */

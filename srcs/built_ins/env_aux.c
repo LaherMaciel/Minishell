@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_aux.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 13:21:08 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/14 16:02:40 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/24 19:19:08 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,18 @@ void	update_shlvl(void)
 	add_to_env(full);
 	add_to_export(full);
 	free(full);
+}
+
+void	start_no_env(void)
+{
+	char	*pwd;
+
+	pwd = ft_strjoin2("PWD=", getcwd(NULL, 0), 2);
+	add_to_env(pwd);
+	add_to_env("SHLVL=1");
+	add_to_export(pwd);
+	add_to_export("SHLVL=1");
+	add_to_export("OLDPWD");
 }
 
 t_export	*init_env(char **org_env)

@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_shell_lst.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 12:53:09 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/23 12:50:21 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/24 19:56:29 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-static t_pars_lst	*handle_operator_lst(t_pars_lst **lst, t_pars_lst **new_node, 
-	t_parsing *counts, char *input)
+static t_pars_lst	*handle_operator_lst(t_pars_lst **lst,
+		t_pars_lst **new_node, t_parsing *counts, char *input)
 {
-	t_pars_lst *temp_node;
+	t_pars_lst	*temp_node;
 
 	if ((*new_node) && (*new_node)->content)
 	{
@@ -161,5 +161,5 @@ void	ft_split_shell_lst(char *input)
 	counts.i = 0;
 	counts.quote = 0;
 	result = split_loop_lst(&result, input, &counts);
-	list_to_mshell(result);
+	list_to_mshell(result, 0);
 }

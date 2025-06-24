@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:02:32 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/24 12:36:13 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/24 19:50:07 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ int	high_priority(void)
 	highest = INT_MIN;
 	while (mshell()->input[++i])
 	{
-		if (mshell()->input_value[i] > highest)
+		if (mshell()->input_v[i] > highest)
 		{
-			highest = mshell()->input_value[i];
+			highest = mshell()->input_v[i];
 			index = i;
 		}
 	}
@@ -41,9 +41,9 @@ void	rm_index(int index)
 	i = -1;
 	j = 0;
 	array = mshell()->input;
-	if (mshell()->input_value)
-		free(mshell()->input_value);
-	mshell()->input_value = ft_calloc(ft_arraylen(mshell()->input) + 1,
+	if (mshell()->input_v)
+		free(mshell()->input_v);
+	mshell()->input_v = ft_calloc(ft_arraylen(mshell()->input) + 1,
 		sizeof(int));
 	quoted = mshell()->quoted;
 	mshell()->quoted = ft_calloc(ft_arraylen(mshell()->input) + 1,
@@ -53,7 +53,7 @@ void	rm_index(int index)
 		if (i != index)
 		{
 			mshell()->quoted[j] = quoted[i];
-			mshell()->input_value[j] = its_what(mshell()->input[i],
+			mshell()->input_v[j] = its_what(mshell()->input[i],
 				mshell()->quoted[i]);
 			j++;
 		}

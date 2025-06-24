@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:10:31 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/24 12:35:23 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/24 19:58:52 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,16 @@
 
 void	about_quotes(char *input, t_parsing *counts)
 {
-	if (counts->quote == 0) {
-		if (input[counts->i] == '\'') counts->quote = 1;
-		if (input[counts->i] == '\"') counts->quote = 2;
+	if (counts->quote == 0)
+	{
+		if (input[counts->i] == '\'')
+			counts->quote = 1;
+		if (input[counts->i] == '\"')
+			counts->quote = 2;
 	}
-	else if ((input[counts->i] == '\'' && counts->quote == 1) ||
-			 (input[counts->i] == '\"' && counts->quote == 2)) {
+	else if ((input[counts->i] == '\'' && counts->quote == 1)
+		|| (input[counts->i] == '\"' && counts->quote == 2))
 		counts->quote = 0;
-	}
 }
 
 void	set_inputvalue(int index)
@@ -31,9 +33,9 @@ void	set_inputvalue(int index)
 	int		*quoted;
 
 	i = -1;
-	if (mshell()->input_value)
-		free(mshell()->input_value);
-	mshell()->input_value = ft_calloc(ft_arraylen(mshell()->input) + 1,
+	if (mshell()->input_v)
+		free(mshell()->input_v);
+	mshell()->input_v = ft_calloc(ft_arraylen(mshell()->input) + 1,
 		sizeof(int));
 	quoted = mshell()->quoted;
 	mshell()->quoted = ft_calloc(ft_arraylen(mshell()->input) + 1,
@@ -44,7 +46,7 @@ void	set_inputvalue(int index)
 		if (i != index)
 		{
 			mshell()->quoted[j] = quoted[i];
-			mshell()->input_value[j] = its_what(mshell()->input[j],
+			mshell()->input_v[j] = its_what(mshell()->input[j],
 				mshell()->quoted[j]);
 			j++;
 		}
@@ -59,9 +61,9 @@ void	set_inputvalues(int index1, int index2)
 	int	j;
 	int	*quoted;
 
-	if (mshell()->input_value)
-		free(mshell()->input_value);
-	mshell()->input_value = ft_calloc(ft_arraylen(mshell()->input) + 1,
+	if (mshell()->input_v)
+		free(mshell()->input_v);
+	mshell()->input_v = ft_calloc(ft_arraylen(mshell()->input) + 1,
 		sizeof(int));
 	quoted = mshell()->quoted;
 	mshell()->quoted = ft_calloc(ft_arraylen(mshell()->input) + 1,
@@ -73,7 +75,7 @@ void	set_inputvalues(int index1, int index2)
 		if (i != index1 && i != index2)
 		{
 			mshell()->quoted[j] = quoted[i];
-			mshell()->input_value[j] = its_what(mshell()->input[i],
+			mshell()->input_v[j] = its_what(mshell()->input[i],
 				mshell()->quoted[i]);
 			j++;
 		}
@@ -89,7 +91,7 @@ void	parser(char *input)
 	ft_split_shell_lst(input);
 	if (!mshell()->input)
 		mshell()->exit_status = 1;
-	if (!mshell()->input_value)
+	if (!mshell()->input_v)
 		mshell()->exit_status = 1;
 	mshell()->exit_status = 0;
 	free(input);
