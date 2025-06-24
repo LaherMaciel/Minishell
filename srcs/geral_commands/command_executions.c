@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/23 14:27:24 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/24 12:19:10 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ void	ex_cmnd_loop(int index, char **aux)
 	while (mshell()->input[0] && ++count < 20)
 	{
 		index = high_priority();
+		/* ft_printf("index = %i\n", index);
+		print_input(0, 0); */
 		if (is_redirect(mshell()->input[index]))
 		{
 			if (redirection_operators_handler(index))

@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 09:26:31 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/23 14:36:11 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/24 12:19:31 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * 
  */
-static void	aux_purgatory(int pipefd[2], char **aux)
+static void	child_purgatory(int pipefd[2], char **aux)
 {
 	close(pipefd[0]);
 	if (mshell()->outfile != STDOUT_FILENO && mshell()->redirected == 0)
@@ -73,7 +73,7 @@ void	piper(char **aux)
 	}
 	pid = create_child_process();
 	if (pid == 0)
-		aux_purgatory(pipefd, aux);
+		child_purgatory(pipefd, aux);
 	else
 		purgatory(pid, pipefd);
 	mshell()->redirected = 0;
@@ -112,6 +112,7 @@ int	pipe_handler(int index)
 	if (ft_strcmp(mshell()->input[index], "|") == 0)
 	{
 		aux = pipe_dupped_arr(index);
+		//ft_printf("aux\n%t\n\n", aux);
 		if (!aux || !aux[0])
 		{
 			mshell()->exit_status = 2;

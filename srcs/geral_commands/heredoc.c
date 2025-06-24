@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 19:23:50 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/11 10:14:30 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/24 12:13:49 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void	exec_heredoc(char *delimiter, int fd[2])
 	char	*line;
 
 	close(fd[0]);
+	mshell()->infile = STDIN_FILENO;
 	signal(SIGINT, sig_heredoc);
 	while (1)
 	{
@@ -61,6 +62,11 @@ int	handle_heredoc(char *delimiter)
 	if (!check_delimiter(delimiter))
 		return (1);
 	mshell()->heredoc = 1;
+	if (mshell()->outfile != STDOUT_FILENO)
+		close(mshell()->outfile);
+	mshell()->outfile = STDOUT_FILENO;
+	if (mshell()->infile != STDIN_FILENO)
+		close(mshell()->infile);
 	if (pipe(fd) < 0)
 		return (perror(NULL), 0);
 	pid = create_child_process();
