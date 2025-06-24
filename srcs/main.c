@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:07:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/23 10:09:11 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/24 13:08:12 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,14 @@ int	main(int argv, char **argc, char **env)
 	(void)argv;
 	(void)argc;
 	init_shell(env);
+	/* if (!isatty(STDIN_FILENO))
+	{
+		char *line = display_prompt(NULL);
+		if (line)
+			free(line);
+	}
+	else
+		receive_input(); */
 	receive_input();
 	free_mshell();
 	return (0);
