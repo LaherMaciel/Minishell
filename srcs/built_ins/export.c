@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 20:17:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/24 19:17:05 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/25 17:29:58 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,16 @@
 
 void	ft_export(char **input)
 {
-	int	i;
+	int		i;
+	char	*env_varname;
 
-	i = 0;
+	i = -1;
 	if (!input || input[1] == NULL)
 	{
-		while (mshell()->expt->var_name[i])
+		while (mshell()->expt->var_name[++i])
 		{
-			if (mshell()->expt->value[i] == NULL)
+			env_varname = get_varname2(mshell()->expt->var_name[i]);
+			if (mshell()->expt->value[i] == NULL || !env_varname)
 				ft_fdprintf(mshell()->outfile, "declare -x %s\n",
 					mshell()->expt->var_name[i]);
 			else if (mshell()->expt->value[i] != NULL)
@@ -30,11 +32,10 @@ void	ft_export(char **input)
 			else
 				ft_fdprintf(mshell()->outfile, "declare -x %s=\"\"\n",
 					mshell()->expt->var_name[i]);
-			i++;
 		}
 	}
 	else
-		exp_loop(i, input);
+		exp_loop(++i, input);
 	mshell()->exit_status = 0;
 }
 

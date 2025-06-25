@@ -80,8 +80,7 @@ void	list_to_mshell(t_pars_lst *lst, size_t i)
 	{
 		mshell()->input[i] = ft_strdup(lst->content);
 		mshell()->quoted[i] = lst->quoted;
-		mshell()->input_v[i] = its_what(mshell()->input[i],
-			mshell()->quoted[i]);
+		mshell()->input_v[i] = its_what(i);
 		i++;
 		lst = lst->next;
 	}

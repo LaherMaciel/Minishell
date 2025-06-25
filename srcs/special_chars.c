@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 09:26:31 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/23 10:19:23 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/25 15:35:59 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,8 +99,7 @@ char	**pipe_dupped_arr(int index)
 	rm_index(index);
 	i = -1;
 	while (++i < index)
-		if (its_what(mshell()->input[i], mshell()->quoted[i]) == 1
-			|| its_what(mshell()->input[i], mshell()->quoted[i]) == 2)
+		if (its_what(i) == 1 || its_what(i) == 2)
 			aux = ft_append_to_array2(aux, 0, mshell()->input[i], 1);
 	if (!aux)
 		return (NULL);

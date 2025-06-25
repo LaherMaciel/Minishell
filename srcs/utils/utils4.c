@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils4.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 19:28:44 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/25 09:39:11 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/25 17:29:50 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,15 @@ char	*get_varname2(char *var_name)
 	t_export	*env;
 	int			i;
 
+	if (!var_name)
+		return (NULL);
 	env = mshell()->env;
-	if (!env)
+	if (!env || !env->var_name)
 		return (NULL);
 	i = 0;
 	while (env->var_name && env->var_name[i])
 	{
-		if (ft_strncmp(env->var_name[i], var_name,
-				ft_strlen(env->var_name[i])) == 0)
+		if (ft_strcmp(env->var_name[i], var_name) == 0)
 			return (env->var_name[i]);
 		i++;
 	}
@@ -36,8 +37,10 @@ char	*get_varname(char *value)
 	t_export	*env;
 	int			i;
 
+	if (!value)
+		return (NULL);
 	env = mshell()->env;
-	if (!env)
+	if (!env || !env->var_name)
 		return (NULL);
 	i = 0;
 	ft_printf("value = '%s'\n", value);
@@ -59,6 +62,8 @@ void	exp_loop(int i, char **input)
 {
 	char	*aux;
 
+	if (!input || !input[1] || !input[1][0])
+		return ;
 	if (!ft_isalpha(input[1][0]) && input[1][0] != '_')
 	{
 		ft_fdprintf(mshell()->outfile, "export: `%s': not a valid identifier\n",

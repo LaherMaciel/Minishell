@@ -153,7 +153,7 @@ char		**ft_split_minishell(char *input);
 char		*ft_strjoin3(char *s1, char s2, int flag);
 void		about_quotes(char *input, t_parsing *counts);
 char		**add_current(char **res, char **cur, int *k);
-int			its_what(char *str, int quoted);
+int			its_what(int index);
 void		set_inputvalue(int index);
 void		set_inputvalues(int index1, int index2);
 int			is_special(char *str);
@@ -174,7 +174,7 @@ void		print_pars_list(t_pars_lst *lst);
 void		add_operator(t_pars_lst **lst, char *type, t_parsing *counts);
 int			dollar_sign_lst(char **cur, char *input, t_parsing *counts);
 t_parsing	*process_token_lst(t_pars_lst **lst,
-	t_pars_lst **new_node, char *input, t_parsing *counts);
+				t_pars_lst **new_node, char *input, t_parsing *counts);
 
 //main
 t_mshell	*mshell(void);

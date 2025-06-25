@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 15:24:25 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/04 21:44:51 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/25 17:23:18 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,6 @@ int	ft_strcmp(const char *str1, const char *str2)
 	if (!str1)
 		return (-1);
 	if (!str2)
-		return (1);
-	if (!str1[a] && !str2[a])
-		return (0);
-	if (!str1[a])
-		return (-1);
-	if (!str2[a])
 		return (1);
 	while (str1[a] || str2[a])
 	{

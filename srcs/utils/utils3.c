@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:02:32 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/25 09:39:20 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/25 15:35:49 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ static void	aux_rm_idex(int index, int *quoted)
 		if (i != index)
 		{
 			mshell()->quoted[j] = quoted[i];
-			mshell()->input_v[j] = its_what(mshell()->input[i],
-				mshell()->quoted[i]);
+			mshell()->input_v[j] = its_what(i);
 			j++;
 		}
 	}
@@ -104,8 +103,7 @@ char	**dupped_arr(int index)
 		return (NULL);
 	index--;
 	while (mshell()->input[++index])
-		if (its_what(mshell()->input[index], mshell()->quoted[index]) == 1
-			|| its_what(mshell()->input[index], mshell()->quoted[index]) == 2)
+		if (its_what(index) == 1 || its_what(index) == 2)
 			aux = ft_append_to_array2(aux, 0, mshell()->input[index], 1);
 	if (!aux)
 		return (NULL);

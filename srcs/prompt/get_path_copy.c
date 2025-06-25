@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_path_copy.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 14:19:52 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/25 11:07:37 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/25 16:39:05 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	check_executable(const char *cmd, int flag)
 	if (access(cmd, F_OK) != 0)
 	{
 		if (flag)
-			mshell()->exit_status = -6;
+			mshell()->exit_status = -4;
 		else
 			mshell()->exit_status = 127;
 		return (-6);

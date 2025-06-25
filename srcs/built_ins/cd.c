@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 15:21:52 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/19 17:03:45 by lawences         ###   ########.fr       */
+/*   Updated: 2025/06/25 16:53:05 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ char	*change_directory(char *path)
 	new_pwd = ft_strjoin2("PWD=", getcwd(NULL, 0), 2);
 	add_to_env(new_pwd);
 	add_to_export(new_pwd);
+	mshell()->expt = export_sorter();
 	free(new_pwd);
 	return (path);
 }

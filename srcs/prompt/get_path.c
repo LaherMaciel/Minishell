@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 14:19:52 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/25 10:09:50 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/25 16:48:58 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,14 @@ char	*get_command_path(char *cmd)
 
 	path_env = get_value("PATH");
 	if (!path_env)
-	{
-		mshell()->exit_status = 127;
-		ft_fdprintf(STDERR_FILENO,
-			"minishell: %s: No such file or directory\n", cmd);
-		return (NULL);
-	}
+		return (check_absolute_path(cmd));
 	full_path = search_command_in_path(cmd, path_env);
 	free(path_env);
 	if (!full_path)
 		return (check_absolute_path(cmd));
 	return (full_path);
 }
+
 /**
  * @brief Search for a command in the directories listed in the PATH environment
  * variable.
@@ -75,7 +71,7 @@ static char	*search_command_in_path(char *cmd, char *path_env)
 	}
 	ft_free_array(paths, 0);
 	return (full_path);
-}
+} */
 
 char	*check_input_type(char *cmd)
 {
@@ -89,7 +85,7 @@ char	*check_input_type(char *cmd)
 		return (ft_strdup(cmd));
 	return (NULL);
 }
- */
+
 /**
  * @brief Resolve the full path of a command by checking the PATH environment
  * variable.
@@ -113,7 +109,10 @@ char	*get_command_path(char *cmd)
 		return (check_input_type(cmd));
 	path_env = get_value("PATH");
 	if (!path_env)
+	{
+		mshell()->exit_status = -6;
 		return (NULL);
+	}
 	full_path = search_command_in_path(cmd, path_env);
 	if (!full_path)
 		mshell()->exit_status = 127;

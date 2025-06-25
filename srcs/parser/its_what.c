@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 14:32:11 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/23 11:07:18 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/25 15:33:55 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,12 @@ int	is_special(char *str)
 	return (0);
 }
 
-int	its_what(char *str, int quoted)
+int	its_what(int index)
 {
-	if ((is_redirect(str) || is_special(str)) && !quoted)
+	if ((is_redirect(mshell()->input[index])
+			|| is_special(mshell()->input[index])) && !mshell()->quoted[index])
 		return (3);
-	if (is_builtin(str))
+	if (is_builtin(mshell()->input[index]))
 		return (2);
 	return (1);
 }

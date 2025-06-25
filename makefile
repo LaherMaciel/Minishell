@@ -126,7 +126,7 @@ run: $(NAME)
 	./$(NAME)
 
 val: $(NAME)
-	valgrind --track-fds=yes --show-leak-kinds=all --trace-children=yes ./$(NAME)
+	valgrind --suppressions=suppress_readline.supp --track-fds=yes --show-leak-kinds=all --trace-children=yes ./$(NAME)
 
 val_full: $(NAME)
 	valgrind --suppressions=suppress_readline.supp --track-fds=yes --trace-children=yes --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME)

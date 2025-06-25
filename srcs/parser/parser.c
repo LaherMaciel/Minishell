@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:10:31 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/24 19:58:52 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/25 15:35:23 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ void	set_inputvalue(int index)
 		if (i != index)
 		{
 			mshell()->quoted[j] = quoted[i];
-			mshell()->input_v[j] = its_what(mshell()->input[j],
-				mshell()->quoted[j]);
+			mshell()->input_v[j] = its_what(j);
 			j++;
 		}
 	}
@@ -75,8 +74,7 @@ void	set_inputvalues(int index1, int index2)
 		if (i != index1 && i != index2)
 		{
 			mshell()->quoted[j] = quoted[i];
-			mshell()->input_v[j] = its_what(mshell()->input[i],
-				mshell()->quoted[i]);
+			mshell()->input_v[j] = its_what(i);
 			j++;
 		}
 	}

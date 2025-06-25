@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 22:25:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/24 19:10:12 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/25 15:51:31 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	ft_env(char **input)
 		while (mshell()->env->var_name[i])
 		{
 			if (mshell()->env->value[i] != NULL)
-				ft_fdprintf(mshell()->outfile, "%s=\"%s\"\n",
+				ft_fdprintf(mshell()->outfile, "%s=%s\n",
 					mshell()->env->var_name[i],
 					mshell()->env->value[i]);
 			else
