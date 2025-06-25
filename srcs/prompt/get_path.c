@@ -3,15 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 14:19:52 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/16 21:44:37 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/25 10:09:50 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
+/**
+ * @brief Get full path to command with permission checking
+ * 
+ * @param cmd Command to locate
+ * @return char* Full path if found and executable, NULL otherwise
+ */
+char	*get_command_path(char *cmd)
+{
+	char	*path_env;
+	char	*full_path;
+
+	path_env = get_value("PATH");
+	if (!path_env)
+	{
+		mshell()->exit_status = 127;
+		ft_fdprintf(STDERR_FILENO,
+			"minishell: %s: No such file or directory\n", cmd);
+		return (NULL);
+	}
+	full_path = search_command_in_path(cmd, path_env);
+	free(path_env);
+	if (!full_path)
+		return (check_absolute_path(cmd));
+	return (full_path);
+}
 /**
  * @brief Search for a command in the directories listed in the PATH environment
  * variable.

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_and_exit_handler.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 20:51:30 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/16 22:40:07 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/25 10:29:37 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,23 +23,11 @@ void	write_error_atomic(const char *msg)
 	free(full_msg);
 }
 
-static char	*conditioner(int error, char *message, char *full_msg)
+//this is just a joke, its a aux for the conditioner function, which is a joke
+//for something that its a condition
+static char	*shampoo(int error, char *message, char *full_msg)
 {
-	if (error == -4)
-	{
-		full_msg = ft_strjoin("minishell: ", message);
-		full_msg = ft_strjoin2(full_msg, ": No such file or directory\n", 1);
-		write(STDERR_FILENO, full_msg, ft_strlen(full_msg));
-		mshell()->exit_status = 126;
-	}
-	else if (error == -5)
-	{
-		full_msg = ft_strjoin("minishell: ", message);
-		full_msg = ft_strjoin2(full_msg, ": not a regular file\n", 1);
-		write(STDERR_FILENO, full_msg, ft_strlen(full_msg));
-		mshell()->exit_status = 126;
-	}
-	else if (error == 126)
+	if (error == 126)
 	{
 		full_msg = ft_strjoin("minishell: ", message);
 		full_msg = ft_strjoin2(full_msg, ": Permission denied\n", 1);
@@ -62,6 +50,26 @@ static char	*conditioner(int error, char *message, char *full_msg)
 		mshell()->exit_status = 127;
 		free(message);
 	}
+	return (full_msg);
+}
+
+static char	*conditioner(int error, char *message, char *full_msg)
+{
+	if (error == -4)
+	{
+		full_msg = ft_strjoin("minishell: ", message);
+		full_msg = ft_strjoin2(full_msg, ": No such file or directory\n", 1);
+		write(STDERR_FILENO, full_msg, ft_strlen(full_msg));
+		mshell()->exit_status = 126;
+	}
+	else if (error == -5)
+	{
+		full_msg = ft_strjoin("minishell: ", message);
+		full_msg = ft_strjoin2(full_msg, ": not a regular file\n", 1);
+		write(STDERR_FILENO, full_msg, ft_strlen(full_msg));
+		mshell()->exit_status = 126;
+	}
+	full_msg = shampoo(error, message, full_msg);
 	return (full_msg);
 }
 

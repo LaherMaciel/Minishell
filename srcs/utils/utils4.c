@@ -6,7 +6,7 @@
 /*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 19:28:44 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/24 20:01:48 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/25 09:39:11 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,25 @@ void	exp_loop(int i, char **input)
 			mshell()->expt = add_to_export(input[i]);
 	}
 	mshell()->expt = export_sorter();
+}
+
+int	high_priority(void)
+{
+	int	i;
+	int	index;
+	int	highest;
+
+	i = -1;
+	highest = INT_MIN;
+	while (mshell()->input[++i])
+	{
+		if (mshell()->input_v[i] > highest)
+		{
+			highest = mshell()->input_v[i];
+			index = i;
+		}
+	}
+	return (index);
 }
 /* 
 void	print_input(int flag, size_t i)

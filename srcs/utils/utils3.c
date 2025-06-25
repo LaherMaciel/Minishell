@@ -6,48 +6,19 @@
 /*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/22 19:02:32 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/24 19:50:07 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/25 09:39:20 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-int	high_priority(void)
+static void	aux_rm_idex(int index, int *quoted)
 {
 	int	i;
-	int	index;
-	int	highest;
-
-	i = -1;
-	highest = INT_MIN;
-	while (mshell()->input[++i])
-	{
-		if (mshell()->input_v[i] > highest)
-		{
-			highest = mshell()->input_v[i];
-			index = i;
-		}
-	}
-	return (index);
-}
-
-void	rm_index(int index)
-{
-	int		i;
-	int		j;
-	int		*quoted;
-	char	**array;
+	int	j;
 
 	i = -1;
 	j = 0;
-	array = mshell()->input;
-	if (mshell()->input_v)
-		free(mshell()->input_v);
-	mshell()->input_v = ft_calloc(ft_arraylen(mshell()->input) + 1,
-		sizeof(int));
-	quoted = mshell()->quoted;
-	mshell()->quoted = ft_calloc(ft_arraylen(mshell()->input) + 1,
-		sizeof(int));
 	while (mshell()->input[++i])
 	{
 		if (i != index)
@@ -58,6 +29,22 @@ void	rm_index(int index)
 			j++;
 		}
 	}
+}
+
+void	rm_index(int index)
+{
+	int		*quoted;
+	char	**array;
+
+	array = mshell()->input;
+	if (mshell()->input_v)
+		free(mshell()->input_v);
+	mshell()->input_v = ft_calloc(ft_arraylen(mshell()->input) + 1,
+		sizeof(int));
+	quoted = mshell()->quoted;
+	mshell()->quoted = ft_calloc(ft_arraylen(mshell()->input) + 1,
+		sizeof(int));
+	aux_rm_idex(index, quoted);
 	if (quoted)
 		free(quoted);
 	array = ft_rm_from_array(array, ft_arraylen(mshell()->input), index);

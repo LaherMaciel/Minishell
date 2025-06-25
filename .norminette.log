@@ -1,5 +1,4 @@
-main.c: Error!
-Error: WRONG_SCOPE_COMMENT  (line:  76, col:   5):	[95mComment is invalid in this scope[0m
+main.c: OK!
 signals.c: OK!
 special_chars.c: OK!
 built_ins.c: OK!
@@ -16,88 +15,29 @@ command_executions_aux.c: OK!
 heredoc.c: OK!
 pipes.c: OK!
 redirections.c: OK!
+aux_split_list.c: OK!
 ft_lstutils.c: OK!
 ft_lstutils2.c: Error!
-Error: TOO_FEW_TAB          (line:  84, col:  61):	Missing tabs for indent level
-Error: TOO_MANY_INSTR       (line:  84, col:  61):	Too many instructions on a single line
-Error: LINE_TOO_LONG        (line:  84, col:  82):	[94mline too long[0m
-Error: TERNARY_FBIDDEN      (line: 105, col:  50):	Ternaries are forbidden
-Error: TERNARY_FBIDDEN      (line: 106, col:  46):	Ternaries are forbidden
-Error: TERNARY_FBIDDEN      (line: 107, col:  42):	Ternaries are forbidden
-Error: SPACE_AFTER_KW       (line: 123, col:   9):	Missing space after keyword
-Error: EMPTY_LINE_FUNCTION  (line: 125, col:   1):	Empty line in function
-Error: EMPTY_LINE_FUNCTION  (line: 129, col:   1):	Empty line in function
-Error: EMPTY_LINE_FUNCTION  (line: 140, col:   1):	Empty line in function
+Error: TOO_MANY_TAB         (line:  84, col:   1):	Extra tabs for indent level
 ft_split_aux.c: OK!
 ft_split_minishell.c: OK!
-ft_split_shell_lst.c: Error!
-Error: LINE_TOO_LONG        (line:  15, col:  82):	[94mline too long[0m
-Error: SPC_BEFORE_NL        (line:  15, col:  82):	Space before newline
-Error: SPACE_REPLACE_TAB    (line:  18, col:  15):	Found space when expecting tab
-Error: LINE_TOO_LONG        (line:  41, col:  82):	[94mline too long[0m
-Error: TOO_MANY_LINES       (line:  47, col:   1):	Function has more than 25 lines
-Error: LINE_TOO_LONG        (line:  78, col:  82):	[94mline too long[0m
-Error: LINE_TOO_LONG        (line:  87, col:  86):	[94mline too long[0m
-Error: WRONG_SCOPE_VAR      (line:  95, col:   1):	Variable declared in incorrect scope
-Error: SPACE_REPLACE_TAB    (line:  95, col:  31):	Found space when expecting tab
-Error: DECL_ASSIGN_LINE     (line:  95, col:  38):	Declaration and assignation on a single line
-Error: LINE_TOO_LONG        (line:  95, col:  82):	[94mline too long[0m
-Error: TOO_FEW_TAB          (line: 108, col:  13):	Missing tabs for indent level
-Error: LINE_TOO_LONG        (line: 109, col:  85):	[94mline too long[0m
-Error: LINE_TOO_LONG        (line: 111, col:  82):	[94mline too long[0m
-Error: TOO_MANY_LINES       (line: 118, col:   1):	Function has more than 25 lines
-Error: MIXED_SPACE_TAB      (line: 134, col:   9):	[93mMixed spaces and tabs[0m
-Error: TOO_MANY_LINES       (line: 151, col:   1):	Function has more than 25 lines
+ft_split_shell_lst.c: OK!
 ft_strjoin3.c: OK!
 ft_substr2.c: OK!
 its_what.c: OK!
 parser.c: Error!
-Error: NO_SPC_AFR_PAR       (line:  17, col:  27):	[94mExtra space after parenthesis (brace/bracket)[0m
-Error: TOO_FEW_TAB          (line:  17, col:  29):	Missing tabs for indent level
-Error: TOO_FEW_TAB          (line:  18, col:  39):	Missing tabs for indent level
-Error: TOO_MANY_INSTR       (line:  18, col:  39):	Too many instructions on a single line
-Error: EXP_NEWLINE          (line:  18, col:  56):	Expected newline after control structure
-Error: TOO_FEW_TAB          (line:  19, col:  39):	Missing tabs for indent level
-Error: TOO_MANY_INSTR       (line:  19, col:  39):	Too many instructions on a single line
-Error: EXP_NEWLINE          (line:  19, col:  56):	Expected newline after control structure
-Error: EOL_OPERATOR         (line:  21, col:  63):	Logic operator at the end of line
-Error: MIXED_SPACE_TAB      (line:  22, col:   9):	[93mMixed spaces and tabs[0m
-Error: TOO_MANY_TAB         (line:  22, col:  13):	Extra tabs for indent level
-Error: NO_SPC_AFR_PAR       (line:  22, col:  62):	[94mExtra space after parenthesis (brace/bracket)[0m
-Error: TOO_FEW_TAB          (line:  22, col:  64):	Missing tabs for indent level
-Error: TOO_MANY_TAB         (line:  48, col:   1):	Extra tabs for indent level
-Error: TOO_MANY_TAB         (line:  77, col:   1):	Extra tabs for indent level
+Error: TOO_MANY_TAB         (line:  50, col:   1):	Extra tabs for indent level
+Error: TOO_MANY_TAB         (line:  79, col:   1):	Extra tabs for indent level
 split_out_quotes.c: OK!
 get_path.c: OK!
-get_path_copy.c: Error!
-Error: TOO_MANY_LINES       (line:  51, col:   1):	Function has more than 25 lines
-Error: SPACE_BEFORE_FUNC    (line:  60, col:  12):	[94mspace before function name[0m
-Error: SPACE_REPLACE_TAB    (line:  62, col:  11):	Found space when expecting tab
-Error: SPACE_REPLACE_TAB    (line:  63, col:   9):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  63, col:  10):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  64, col:   9):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  64, col:  10):	Misaligned variable declaration
-Error: SPACE_REPLACE_TAB    (line:  65, col:   8):	Found space when expecting tab
-Error: MISALIGNED_VAR_DECL  (line:  65, col:   9):	Misaligned variable declaration
-Error: NO_SPC_BFR_OPR       (line:  81, col:  19):	[94mextra space before operator[0m
-Error: WRONG_SCOPE_COMMENT  (line:  81, col:  21):	[95mComment is invalid in this scope[0m
-Error: WRONG_SCOPE_COMMENT  (line:  81, col:  21):	[95mComment is invalid in this scope[0m
-Error: NO_SPC_BFR_OPR       (line:  85, col:  19):	[94mextra space before operator[0m
-Error: WRONG_SCOPE_COMMENT  (line:  85, col:  21):	[95mComment is invalid in this scope[0m
-Error: WRONG_SCOPE_COMMENT  (line:  85, col:  21):	[95mComment is invalid in this scope[0m
-Error: TOO_MANY_LINES       (line:  89, col:   1):	Function has more than 25 lines
-Error: SPACE_BEFORE_FUNC    (line: 119, col:   5):	[94mspace before function name[0m
-Error: LINE_TOO_LONG        (line: 128, col:  82):	[94mline too long[0m
+get_path_copy.c: OK!
 prompt.c: OK!
-error_and_exit_handler.c: Error!
-Error: TOO_MANY_LINES       (line:  66, col:   1):	Function has more than 25 lines
+error_and_exit_handler.c: OK!
 utils.c: OK!
 utils2.c: OK!
 utils3.c: Error!
-Error: TOO_MANY_TAB         (line:  57, col:   1):	Extra tabs for indent level
-Error: TOO_MANY_LINES       (line:  65, col:   1):	Function has more than 25 lines
-utils4.c: Error!
-Error: TOO_MANY_LINES       (line: 113, col:   1):	Function has more than 25 lines
+Error: TOO_MANY_TAB         (line:  28, col:   1):	Extra tabs for indent level
+utils4.c: OK!
 utils5.c: OK!
 ft_append_to_array.c: OK!
 ft_append_to_array2.c: OK!

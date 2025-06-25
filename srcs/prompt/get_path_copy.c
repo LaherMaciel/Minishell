@@ -6,30 +6,14 @@
 /*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 14:19:52 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/24 20:00:23 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/25 11:07:37 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-/**
- * @brief Check if a file exists and has execution permissions
- * 
- * @param path Path to the file to check
- * @return int 0 if executable, -1 if doesn't exist, 126 if no permission
- */
-static int	check_executable(const char *cmd, int flag)
+static int	aux_check_executable(const char *cmd, struct stat stat_buf)
 {
-	struct stat	stat_buf;
-
-	if (access(cmd, F_OK) != 0)
-	{
-		if (flag)
-			mshell()->exit_status = -6;
-		else
-			mshell()->exit_status = 127;
-		return (-6);
-	}
 	if (stat(cmd, &stat_buf) != 0)
 		return (-1);
 	if (S_ISDIR(stat_buf.st_mode))
@@ -51,22 +35,32 @@ static int	check_executable(const char *cmd, int flag)
 }
 
 /**
- * @brief Search for a command in PATH directories
+ * @brief Check if a file exists and has execution permissions
  * 
- * @param cmd Command to search for
- * @param path_env PATH environment variable value
- * @return char* Full path if found and executable, NULL otherwise
+ * @param path Path to the file to check
+ * @return int 0 if executable, -1 if doesn't exist, 126 if no permission
  */
-static char	*search_command_in_path(char *cmd, char *path_env)
+static int	check_executable(const char *cmd, int flag)
+{
+	struct stat	stat_buf;
+
+	if (access(cmd, F_OK) != 0)
+	{
+		if (flag)
+			mshell()->exit_status = -6;
+		else
+			mshell()->exit_status = 127;
+		return (-6);
+	}
+	return (aux_check_executable(cmd, stat_buf));
+}
+
+static char	*aux_search(char **paths, char *cmd)
 {
 	size_t	i;
-	char	**paths;
 	char	*full_path;
 	int		exec_status;
 
-	paths = ft_split(path_env, ':');
-	if (!paths)
-		return (NULL);
 	i = -1;
 	while (paths[++i])
 	{
@@ -85,6 +79,25 @@ static char	*search_command_in_path(char *cmd, char *path_env)
 			break ;
 	}
 	ft_free_array(paths, 0);
+	return (full_path);
+}
+
+/**
+ * @brief Search for a command in PATH directories
+ * 
+ * @param cmd Command to search for
+ * @param path_env PATH environment variable value
+ * @return char* Full path if found and executable, NULL otherwise
+ */
+char	*search_command_in_path(char *cmd, char *path_env)
+{
+	char	**paths;
+	char	*full_path;
+
+	paths = ft_split(path_env, ':');
+	if (!paths)
+		return (NULL);
+	full_path = aux_search(paths, cmd);
 	return (full_path);
 }
 
@@ -108,30 +121,4 @@ char	*check_absolute_path(char *cmd)
 		else
 			return (NULL);
 	}
-}
-
-/**
- * @brief Get full path to command with permission checking
- * 
- * @param cmd Command to locate
- * @return char* Full path if found and executable, NULL otherwise
- */
-char	*get_command_path(char *cmd)
-{
-	char	*path_env;
-	char	*full_path;
-
-	path_env = get_value("PATH");
-	if (!path_env)
-	{
-		mshell()->exit_status = 127;
-		ft_fdprintf(STDERR_FILENO,
-			"minishell: %s: No such file or directory\n", cmd);
-		return (NULL);
-	}
-	full_path = search_command_in_path(cmd, path_env);
-	free(path_env);
-	if (!full_path)
-		return (check_absolute_path(cmd));
-	return (full_path);
 }

@@ -6,7 +6,7 @@
 /*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:07:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/24 19:50:07 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/25 08:11:40 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,6 @@ int	main(int argv, char **argc, char **env)
 	(void)argv;
 	(void)argc;
 	init_shell(env);
-	/* if (!isatty(STDIN_FILENO))
-	{
-		char *line = display_prompt(NULL);
-		if (line)
-			free(line);
-	}
-	else
-		receive_input(); */
 	receive_input();
 	free_mshell();
 	return (0);

@@ -73,6 +73,8 @@ typedef struct s_parsing
 //prompt
 char		*display_prompt(char *line);
 char		*get_command_path(char *cmd);
+char		*search_command_in_path(char *cmd, char *path_env);
+char		*check_absolute_path(char *cmd);
 
 //commands executions
 char		*execute_commands(char *line);
@@ -169,6 +171,10 @@ void		aux_token(char **content, char *input, t_parsing *counts);
 void		list_to_mshell(t_pars_lst *lst, size_t i);
 void		print_pars_node(t_pars_lst *node, int index);
 void		print_pars_list(t_pars_lst *lst);
+void		add_operator(t_pars_lst **lst, char *type, t_parsing *counts);
+int			dollar_sign_lst(char **cur, char *input, t_parsing *counts);
+t_parsing	*process_token_lst(t_pars_lst **lst,
+	t_pars_lst **new_node, char *input, t_parsing *counts);
 
 //main
 t_mshell	*mshell(void);
