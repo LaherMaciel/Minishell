@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:53:37 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/24 19:38:11 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/27 17:59:35 by lawences         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	handle_input_redirection(char *input)
 {
 	if (!input)
 	{
-		ft_fdprintf(STDERR_FILENO, "minishell: ",
+		ft_fdprintf(STDERR_FILENO, "minishell: "
 			"syntax error near unexpected token `newline'\n");
 		mshell()->exit_status = 2;
 		return (mshell()->exit_status);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_executions.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/24 19:36:46 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/27 18:38:40 by lawences         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,10 @@ char	*execute_commands(char *line)
 		return (line);
 	}
 	parser(line);
+	ft_printf("input:\n%t\n", mshell()->input);
+	//check redirects
+	/* if (!ok)
+		return (line); */
 	ex_cmnd_loop(0, aux);
 	reset_fds();
 	wait_for_childs();

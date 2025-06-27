@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_path_copy.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 14:19:52 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/25 16:39:05 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/27 17:22:33 by lawences         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 static int	aux_check_executable(const char *cmd, struct stat stat_buf)
 {
-	if (stat(cmd, &stat_buf) != 0)
-		return (-1);
 	if (S_ISDIR(stat_buf.st_mode))
 	{
 		mshell()->exit_status = -4;
@@ -52,6 +50,8 @@ static int	check_executable(const char *cmd, int flag)
 			mshell()->exit_status = 127;
 		return (-6);
 	}
+	if (stat(cmd, &stat_buf) != 0)
+		return (-1);
 	return (aux_check_executable(cmd, stat_buf));
 }
 

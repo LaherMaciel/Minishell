@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error_and_exit_handler.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 20:51:30 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/25 16:39:39 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/27 18:14:29 by lawences         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ static char	*shampoo(int error, char *message, char *full_msg)
 		full_msg = ft_strjoin("minishell: ", message);
 		full_msg = ft_strjoin2(full_msg, ": Permission denied\n", 1);
 		write(STDERR_FILENO, full_msg, ft_strlen(full_msg));
-		free(message);
 	}
 	else if (error == -6)
 	{
@@ -40,7 +39,6 @@ static char	*shampoo(int error, char *message, char *full_msg)
 		full_msg = ft_strjoin2(full_msg, ": No such file or directory\n", 1);
 		write(STDERR_FILENO, full_msg, ft_strlen(full_msg));
 		mshell()->exit_status = 127;
-		free(message);
 	}
 	else if (error == 127)
 	{
@@ -48,7 +46,6 @@ static char	*shampoo(int error, char *message, char *full_msg)
 		full_msg = ft_strjoin2(full_msg, ": command not found\n", 1);
 		write(STDERR_FILENO, full_msg, ft_strlen(full_msg));
 		mshell()->exit_status = 127;
-		free(message);
 	}
 	return (full_msg);
 }
@@ -129,5 +126,7 @@ void	handle_error_and_exit(int error, char *message)
 		full_msg = aux_error_exit(error, message, full_msg);
 	if (full_msg)
 		free(full_msg);
+	if (message)
+		free(message);
 	clean_exit(mshell()->exit_status);
 }

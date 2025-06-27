@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:10:31 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/25 15:35:23 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/27 18:05:13 by lawences         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,13 @@ void	set_inputvalue(int index)
 		free(mshell()->input_v);
 	mshell()->input_v = ft_calloc(ft_arraylen(mshell()->input) + 1,
 		sizeof(int));
+	if (!mshell()->input_v)
+		return ;
 	quoted = mshell()->quoted;
 	mshell()->quoted = ft_calloc(ft_arraylen(mshell()->input) + 1,
 		sizeof(int));
+	if (!mshell()->quoted)
+		return ;
 	j = 0;
 	while (++i < (int) ft_arraylen(mshell()->input) + 1)
 	{
