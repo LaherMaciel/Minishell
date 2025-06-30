@@ -3,39 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:53:37 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/27 17:59:35 by lawences         ###   ########.fr       */
+/*   Updated: 2025/06/30 19:10:47 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
-
-/* static int	handle_heredoc(char *input)
-{
-	char	*line;
-	char	**new_input;
-
-	line = NULL;
-	(void)input;
-	ft_fdprintf(mshell()->outfile, "handle_heredoc\n");
-	while (ft_strcmp(line, input) != 0)
-	{
-		line = readline("heredoc> ");
-		if (!line)
-		{
-			ft_fdprintf(STDERR_FILENO, "Minishell: ",
-				"syntax error near unexpected token `newline'\n");
-			mshell()->exit_status = 2;
-			return (mshell()->exit_status);
-		}
-		new_input = ft_append_to_array2(new_input,
-			ft_arraylen(new_input), line, 1);
-		free(line);
-	}
-	return (0);
-} */
 
 static int	handle_input_redirection(char *input)
 {
