@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 11:16:25 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/24 19:50:07 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/30 18:16:02 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,16 @@ void	free_resources(void)
 	free(mshell()->input_v);
 	free(mshell()->quoted);
 	free_child_pids();
+}
+
+char	*free_if_fail(char **env, char **args, char *cmd_path)
+{
+	if (cmd_path)
+		free(cmd_path);
+	cmd_path = ft_strdup(args[0]);
+	ft_free_array(env, 0);
+	ft_free_array(args, 0);
+	return (cmd_path);
 }
 
 void	reset_fds(void)

@@ -74,7 +74,7 @@ typedef struct s_parsing
 char		*display_prompt(char *line);
 char		*get_command_path(char *cmd);
 char		*search_command_in_path(char *cmd, char *path_env);
-char		*check_absolute_path(char *cmd);
+int			check_executable(const char *cmd, int flag);
 
 //commands executions
 char		*execute_commands(char *line);
@@ -143,6 +143,7 @@ void		clean_exit(int exit_status);
 void		clean_resource(void);
 void		print_input(int flag, size_t i);
 void		clean_trash(void);
+char		*free_if_fail(char **env, char **args, char *cmd_path);
 
 //parser
 void		parser(char *input);

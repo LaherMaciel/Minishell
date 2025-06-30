@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_executions.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/27 18:38:40 by lawences         ###   ########.fr       */
+/*   Updated: 2025/06/30 18:21:20 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,7 @@ void	execute_simple_command(char **args, int infile, int outfile)
 	cmd_path = get_command_path(args[0]);
 	if (!cmd_path)
 	{
-		cmd_path = ft_strdup(args[0]);
-		ft_free_array(args, 0);
+		cmd_path = free_if_fail(NULL, args, cmd_path);
 		handle_error_and_exit(mshell()->exit_status, cmd_path);
 	}
 	if (infile != STDIN_FILENO)
@@ -48,7 +47,10 @@ void	execute_simple_command(char **args, int infile, int outfile)
 	signal(SIGINT, SIG_DFL);
 	env = default_env();
 	execve(cmd_path, args, env);
-	handle_error_and_exit(-1, "Execution failed");
+	cmd_path = free_if_fail(env, args, cmd_path);
+	if (errno == 8)
+		handle_error_and_exit(126, cmd_path);
+	handle_error_and_exit(-1, cmd_path);
 }
 
 void	run_command(char **args, int infile, int outfile)
@@ -134,10 +136,6 @@ char	*execute_commands(char *line)
 		return (line);
 	}
 	parser(line);
-	ft_printf("input:\n%t\n", mshell()->input);
-	//check redirects
-	/* if (!ok)
-		return (line); */
 	ex_cmnd_loop(0, aux);
 	reset_fds();
 	wait_for_childs();

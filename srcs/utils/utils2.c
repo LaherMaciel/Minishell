@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:59:35 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/27 18:04:47 by lawences         ###   ########.fr       */
+/*   Updated: 2025/06/30 18:33:46 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+void	write_error_atomic(const char *msg)
+{
+	char	*full_msg;
+
+	full_msg = ft_strjoin("minishell: ", msg);
+	if (!full_msg)
+		return ;
+	write(STDERR_FILENO, full_msg, ft_strlen(full_msg));
+	free(full_msg);
+}
 
 void	clear_input(char **aux)
 {

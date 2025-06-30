@@ -6,11 +6,75 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 14:19:52 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/25 16:48:58 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/30 18:36:28 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
+
+static char	*aux_search(char **paths, char *cmd)
+{
+	size_t	i;
+	char	*full_path;
+	int		exec_status;
+
+	i = -1;
+	while (paths[++i])
+	{
+		full_path = ft_strjoin(paths[i], "/");
+		if (!full_path)
+			break ;
+		full_path = ft_strjoin2(full_path, cmd, 1);
+		if (!full_path)
+			break ;
+		exec_status = check_executable(full_path, 0);
+		if (exec_status == 0)
+			break ;
+		free(full_path);
+		full_path = NULL;
+		if (exec_status == 126)
+			break ;
+	}
+	ft_free_array(paths, 0);
+	return (full_path);
+}
+
+/**
+ * @brief Search for a command in PATH directories
+ * 
+ * @param cmd Command to search for
+ * @param path_env PATH environment variable value
+ * @return char* Full path if found and executable, NULL otherwise
+ */
+char	*search_command_in_path(char *cmd, char *path_env)
+{
+	char	**paths;
+	char	*full_path;
+
+	paths = ft_split(path_env, ':');
+	if (!paths)
+		return (NULL);
+	full_path = aux_search(paths, cmd);
+	return (full_path);
+}
+
+char	*check_absolute_path(char *cmd)
+{
+	int		exec_status;
+
+	if (ft_strchr(cmd, '/'))
+	{
+		exec_status = check_executable(cmd, 1);
+		if (exec_status == 0)
+			return (ft_strdup(cmd));
+		return (NULL);
+	}
+	else
+	{
+		mshell()->exit_status = 127;
+		return (NULL);
+	}
+}
 
 /**
  * @brief Get full path to command with permission checking
@@ -33,46 +97,6 @@ char	*get_command_path(char *cmd)
 	return (full_path);
 }
 
-/**
- * @brief Search for a command in the directories listed in the PATH environment
- * variable.
- *
- * This function splits the PATH environment variable into individual
- * directories, constructs the full path for the command, and checks if the
- * command is executable.
- *
- * @param char *cmd - The command to search for.
- * @param char *path_env - The PATH environment variable.
- *
- * @return char* - The full path to the command if found, otherwise NULL.
- *//* 
-static char	*search_command_in_path(char *cmd, char *path_env)
-{
-	size_t	i;
-	char	**paths;
-	char	*full_path;
-
-	paths = ft_split(path_env, ':');
-	if (!paths)
-		return (NULL);
-	i = -1;
-	while (paths[++i])
-	{
-		full_path = ft_strjoin(paths[i], "/");
-		if (!full_path)
-			break ;
-		full_path = ft_strjoin2(full_path, cmd, 1);
-		if (!full_path)
-			break ;
-		if (access(full_path, X_OK) == 0)
-			break ;
-		free(full_path);
-		full_path = NULL;
-	}
-	ft_free_array(paths, 0);
-	return (full_path);
-} */
-
 char	*check_input_type(char *cmd)
 {
 	struct stat	stat_buf;
@@ -85,38 +109,3 @@ char	*check_input_type(char *cmd)
 		return (ft_strdup(cmd));
 	return (NULL);
 }
-
-/**
- * @brief Resolve the full path of a command by checking the PATH environment
- * variable.
- *
- * This function retrieves the PATH environment variable and searches for the
- * command in the directories listed in PATH. If the command is not found and
- * the flag is set, it prints an error message.
- *
- * @param char *cmd - The command to resolve.
- * @param int flag - A flag to determine whether to print an error message if
- * the command is not found.
- *
- * @return char* - The full path to the command if found, otherwise NULL.
- *//* 
-char	*get_command_path(char *cmd)
-{
-	char		*path_env;
-	char		*full_path;
-
-	if (access(cmd, X_OK) == 0)
-		return (check_input_type(cmd));
-	path_env = get_value("PATH");
-	if (!path_env)
-	{
-		mshell()->exit_status = -6;
-		return (NULL);
-	}
-	full_path = search_command_in_path(cmd, path_env);
-	if (!full_path)
-		mshell()->exit_status = 127;
-	free(path_env);
-	return (full_path);
-}
- */
