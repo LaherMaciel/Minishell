@@ -77,7 +77,7 @@ char		*search_command_in_path(char *cmd, char *path_env);
 int			check_executable(const char *cmd, int flag);
 
 //commands executions
-char		*execute_commands(char *line);
+void		execute_commands(char *line);
 int			redirection_operators_handler(int index);
 int			pipe_handler(int index);
 void		exit_status(char *line);

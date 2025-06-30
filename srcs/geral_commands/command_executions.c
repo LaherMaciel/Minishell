@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/30 18:21:20 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/30 19:01:58 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void	ex_cmnd_loop(int index, char **aux)
 	}
 }
 
-char	*execute_commands(char *line)
+void	execute_commands(char *line)
 {
 	char		**aux;
 
@@ -133,12 +133,11 @@ char	*execute_commands(char *line)
 	{
 		exit_status(line);
 		free(line);
-		return (line);
+		return ;
 	}
 	parser(line);
 	ex_cmnd_loop(0, aux);
 	reset_fds();
 	wait_for_childs();
 	free_resources();
-	return (line);
 }

@@ -115,70 +115,9 @@ char	*display_prompt(char *line)
 			free(line);
 			continue ;
 		}
-		line = execute_commands(line);
-		if (!line)
-			return (NULL);
-	}
-	return (line);
-}
-/* 
-char	*get_input_line(int interactive)
-{
-	char	*line;
-	size_t	len;
-	ssize_t	read;
-
-	len = 0;
-	if (interactive)
-	{
-		line = readline("minishell> ");
-		if (line && *line)
-			add_history(line);
-	}
-	else
-	{
-		read = getline(&line, &len, stdin);
-		if (read == -1)
-		{
+		execute_commands(line);
+		if (line)
 			free(line);
-			return (NULL);
-		}
-		if (line[read - 1] == '\n')
-			line[read - 1] = '\0';
 	}
 	return (line);
 }
-
-char	*display_prompt(char *line)
-{
-	int	interactive;
-
-	interactive = isatty(STDIN_FILENO);
-	while (1)
-	{
-		line = get_input_line(interactive);
-		if (!line)
-		{
-			if (interactive)
-				write(1, "exit\n", 5);
-			return (NULL);
-		}
-		if (line[0] == '\0')
-		{
-			free(line);
-			if (!interactive)
-				return (NULL);
-			continue ;
-		}
-		line = quotes_handler(line);
-		if (!line)
-			return (NULL);
-		line = execute_commands(line);
-		if (!line)
-			return (NULL);
-		if (!interactive)
-			return (line);
-	}
-	return (line);
-}
- */
