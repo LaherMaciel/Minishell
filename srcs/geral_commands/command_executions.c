@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/30 19:01:58 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/30 20:43:51 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,11 @@ void	execute_commands(char *line)
 		return ;
 	}
 	parser(line);
+	if (check_bad_specials())
+	{
+		free_resources();
+		return ;
+	}
 	ex_cmnd_loop(0, aux);
 	reset_fds();
 	wait_for_childs();

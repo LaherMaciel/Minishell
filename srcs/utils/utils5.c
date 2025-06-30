@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils5.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 15:56:08 by lawences          #+#    #+#             */
-/*   Updated: 2025/06/16 20:35:43 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/30 20:44:27 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,49 @@ void	clean_trash(void)
 	if (mshell()->outfile != STDOUT_FILENO)
 		close(mshell()->outfile);
 	free_mshell();
+}
+
+static int	aux_check(int i)
+{
+	if (ft_strcmp(mshell()->input[i], "<<") == 0
+		|| ft_strcmp(mshell()->input[i], ">>") == 0
+		|| ft_strcmp(mshell()->input[i], ">") == 0)
+	{
+		if (ft_strcmp(mshell()->input[i + 1], ">") == 0
+			|| ft_strcmp(mshell()->input[i + 1], "<") == 0
+			|| ft_strcmp(mshell()->input[i + 1], ">>") == 0
+			|| ft_strcmp(mshell()->input[i + 1], "<<") == 0)
+		{
+			ft_printf("minishell: syntax error near unexpected token `%s'\n",
+				mshell()->input[i + 1]);
+			mshell()->exit_status = 2;
+			return (1);
+		}
+	}
+	return (0);
+}
+
+int	check_bad_specials(void)
+{
+	int	i;
+
+	i = -1;
+	while (mshell()->input[++i])
+	{
+		if (ft_strcmp(mshell()->input[i], "<<") == 0
+			|| ft_strcmp(mshell()->input[i], ">>") == 0
+			|| ft_strcmp(mshell()->input[i], "<") == 0)
+		{
+			if (ft_strcmp(mshell()->input[i + 1], "|") == 0)
+			{
+				ft_printf("minishell: syntax error"
+					"near unexpected token `%s'\n", mshell()->input[i + 1]);
+				mshell()->exit_status = 2;
+				return (1);
+			}
+		}
+		if (aux_check(i))
+			return (1);
+	}
+	return (0);
 }

@@ -144,6 +144,7 @@ void		clean_resource(void);
 void		print_input(int flag, size_t i);
 void		clean_trash(void);
 char		*free_if_fail(char **env, char **args, char *cmd_path);
+int			check_bad_specials(void);
 
 //parser
 void		parser(char *input);
