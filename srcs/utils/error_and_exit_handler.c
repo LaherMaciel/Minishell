@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 20:51:30 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/30 18:33:38 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/30 19:29:28 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ static char	*shampoo(int error, char *message, char *full_msg)
 	}
 	else if (error == 127)
 	{
-		full_msg = ft_strjoin("minishell: ", message);
-		full_msg = ft_strjoin2(full_msg, ": command not found\n", 1);
+		full_msg = ft_strjoin(message, ": command not found\n");
 		write(STDERR_FILENO, full_msg, ft_strlen(full_msg));
 		mshell()->exit_status = 127;
 	}
