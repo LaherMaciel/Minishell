@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/16 11:10:31 by karocha-          #+#    #+#             */
-/*   Updated: 2025/06/30 18:59:54 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/30 19:07:47 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,5 @@ void	parser(char *input)
 	if (!mshell()->input_v)
 		mshell()->exit_status = 1;
 	mshell()->exit_status = 0;
+	free(input);
 }

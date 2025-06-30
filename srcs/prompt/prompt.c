@@ -116,8 +116,6 @@ char	*display_prompt(char *line)
 			continue ;
 		}
 		execute_commands(line);
-		if (line)
-			free(line);
 	}
 	return (line);
 }
