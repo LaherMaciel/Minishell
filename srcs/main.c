@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:07:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/25 08:11:40 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/06/30 19:56:59 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,31 +70,23 @@ static void	receive_input(void)
 //update_shlvl();
 int	main(int argv, char **argc, char **env)
 {
+	char	*line;
+
 	(void)argv;
 	(void)argc;
+	line = NULL;
 	init_shell(env);
-	receive_input();
+	if (isatty(STDIN_FILENO))
+		receive_input();
+	else
+	{
+		line = get_next_line(STDIN_FILENO);
+		while (line)
+		{
+			execute_commands(line);
+			line = get_next_line(STDIN_FILENO);
+		}
+	}
 	free_mshell();
 	return (0);
 }
-/*
-1 | 2|3 | 4   | 5 | 6
-ls -a|grep mini | wc -l | cat >> test.txt
-ls -a | grep mini | cat >> test.txt
-cat test.txt
-ls | wc -l
-clear
-pwd
-cd ..
-cd Minishell
-env
-export
-export a=1
-export
-env
-unset a
-export 
-env
-echo $PATH
-echo 1231234$USER=2
-*/

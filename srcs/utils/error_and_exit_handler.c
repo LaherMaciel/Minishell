@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/05 20:51:30 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/30 19:29:28 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/30 19:54:04 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,47 +86,6 @@ static char	*aux_error_exit(int error, char *message, char *full_msg)
 	return (full_msg);
 }
 
-/**
- * @brief Handle errors and exit the program.
- *
- * This function prints an error message based on the error code and exits the
- * program with the appropriate status.
- *
- * @param int error - The error code.
- * @param char *message - The error message to print.
- *//* 
-void	handle_error_and_exit(int error, char *message)
-{
-	char	*full_msg;
-
-	full_msg = NULL;
-	if (mshell()->heredoc)
-		exit(mshell()->exit_status);
-	if (error == -1)
-	{
-		full_msg = ft_strjoin(message, ": ");
-		full_msg = ft_strjoin2(full_msg, strerror(errno), 1);
-		full_msg = ft_strjoin2(full_msg, "\n", 1);
-		write(STDERR_FILENO, full_msg, ft_strlen(full_msg));
-	}
-	else if (error == -3)
-	{
-		full_msg = ft_strjoin("minishell: ", strerror(errno));
-		full_msg = ft_strjoin2(full_msg, ": ", 1);
-		full_msg = ft_strjoin2(full_msg, message, 1);
-		full_msg = ft_strjoin2(full_msg, "\n", 1);
-		write(STDERR_FILENO, full_msg, ft_strlen(full_msg));
-	}
-	else
-		full_msg = aux_error_exit(error, message, full_msg);
-	if (full_msg)
-		free(full_msg);
-	if (message)
-		free(message);
-	clean_exit(mshell()->exit_status);
-}
- */
-
 void	errno_erros(char *full_msg, char *message)
 {
 	if (errno == EACCES)
@@ -155,6 +114,15 @@ void	errno_erros(char *full_msg, char *message)
 	free(full_msg);
 }
 
+/**
+ * @brief Handle errors and exit the program.
+ *
+ * This function prints an error message based on the error code and exits the
+ * program with the appropriate status.
+ *
+ * @param int error - The error code.
+ * @param char *message - The error message to print.
+ */
 void	handle_error_and_exit(int error, char *message)
 {
 	char	*full_msg;
