@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 15:21:52 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/25 16:53:05 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/07/03 18:03:15 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,20 @@ static char	*return_to_oldpwd(char *path)
 
 static char	*check_and_change(char *path)
 {
+	char	*full_msg;
+
+	full_msg = NULL;
 	if (!path)
 		no_path(path);
 	else if (ft_strcmp(path, "-") == 0)
 		path = return_to_oldpwd(path);
 	else if (chdir(path))
 	{
-		perror("minishell: cd");
+		full_msg = ft_strjoin("minishell: cd: ", path);
+		perror(full_msg);
+		free(full_msg);
 		mshell()->exit_status = 1;
+		free(path);
 		return (NULL);
 	}
 	return (path);
@@ -77,6 +83,8 @@ char	*change_directory(char *path)
 	new_pwd = NULL;
 	old_pwd = NULL;
 	path = check_and_change(path);
+	if (!path)
+		return (NULL);
 	old_pwd = ft_strjoin2("OLDPWD=", get_value("PWD"), 2);
 	add_to_env(old_pwd);
 	add_to_export(old_pwd);
