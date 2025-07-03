@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 15:21:52 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/07/03 18:24:16 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/07/03 18:29:27 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 static void	no_path(char *path)
 {
+	char	*full_msg;
+
+	full_msg = NULL;
 	if (!check_var_name("HOME"))
 	{
 		ft_fdprintf(STDERR_FILENO, "minishell: cd: HOME not set\n");
@@ -25,7 +28,10 @@ static void	no_path(char *path)
 		return ;
 	if (chdir(path))
 	{
-		perror("minishell: cd");
+		full_msg = ft_strjoin("minishell: cd: ", path);
+		perror(full_msg);
+		free(full_msg);
+		free(path);
 		mshell()->exit_status = 1;
 		return ;
 	}
