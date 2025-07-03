@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 15:21:52 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/07/03 18:03:15 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/07/03 18:24:16 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ static void	no_path(char *path)
 
 static char	*return_to_oldpwd(char *path)
 {
+	char	*full_msg;
+
+	full_msg = NULL;
 	if (ft_strcmp(path, "-") == 0)
 	{
 		free(path);
@@ -46,7 +49,10 @@ static char	*return_to_oldpwd(char *path)
 		}
 		if (chdir(path))
 		{
-			perror("minishell: cd");
+			full_msg = ft_strjoin("minishell: cd: ", path);
+			perror(full_msg);
+			free(full_msg);
+			free(path);
 			mshell()->exit_status = 1;
 			return (NULL);
 		}
@@ -62,7 +68,11 @@ static char	*check_and_change(char *path)
 	if (!path)
 		no_path(path);
 	else if (ft_strcmp(path, "-") == 0)
+	{
 		path = return_to_oldpwd(path);
+		if (path)
+			ft_printf("%s\n", path);
+	}
 	else if (chdir(path))
 	{
 		full_msg = ft_strjoin("minishell: cd: ", path);

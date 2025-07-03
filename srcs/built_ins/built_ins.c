@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_ins.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:32 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/16 18:44:14 by lawences         ###   ########.fr       */
+/*   Updated: 2025/07/03 18:12:13 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,13 @@ int	builtin_pwd(void)
 	mshell()->exit_status = errno;
 	if (path == NULL)
 	{
-		perror("minishell: pwd");
-		return (1);
+		path = get_value("PWD");
+		if (path == NULL)
+		{
+			perror("minishell: pwd");
+			mshell()->exit_status = 1;
+			return (1);
+		}
 	}
 	ft_fdprintf(mshell()->outfile, "%s\n", path);
 	free(path);
