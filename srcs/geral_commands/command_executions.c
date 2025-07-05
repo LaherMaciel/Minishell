@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_executions.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/30 20:43:51 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/07/05 21:24:05 by lawences         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,13 @@
  * @param infile - The input file descriptor.
  * @param outfile - The output file descriptor.
  */
-void	execute_simple_command(char **args, int infile, int outfile)
+void	execute_simple_command(char **args)
 {
 	char	*cmd_path;
 	char	**env;
+	int	status;
 
+	status = 0;
 	if (!args || !args[0])
 	{
 		mshell()->exit_status = 127;
@@ -40,10 +42,6 @@ void	execute_simple_command(char **args, int infile, int outfile)
 		cmd_path = free_if_fail(NULL, args, cmd_path);
 		handle_error_and_exit(mshell()->exit_status, cmd_path);
 	}
-	if (infile != STDIN_FILENO)
-		close(infile);
-	if (outfile != STDOUT_FILENO)
-		close(outfile);
 	signal(SIGINT, SIG_DFL);
 	env = default_env();
 	execve(cmd_path, args, env);
@@ -61,22 +59,24 @@ void	run_command(char **args, int infile, int outfile)
 	{
 		if (builtins(args))
 			return ;
-		else
-			handle_error_and_exit(1, "Built-in command failed");
+		handle_error_and_exit(1, "Built-in command failed");
 	}
 	pid = create_child_process();
 	if (pid == 0)
 	{
-		if (infile != STDERR_FILENO && dup2(infile, STDIN_FILENO) < 0)
+		if (infile != STDIN_FILENO)
 		{
-			if (errno == 9 && infile == -1)
-				handle_error_and_exit(0, "dup2 failed for input_fd");
-			else
+			if (dup2(infile, STDIN_FILENO) < 0)
 				handle_error_and_exit(-1, "dup2 failed for input_fd");
+			close(infile);
 		}
-		if (outfile != STDOUT_FILENO && dup2(outfile, STDOUT_FILENO) < 0)
-			handle_error_and_exit(-1, "dup2 failed for output_fd");
-		execute_simple_command(args, infile, outfile);
+		if (outfile != STDOUT_FILENO)
+		{
+			if (dup2(outfile, STDOUT_FILENO) < 0)
+				handle_error_and_exit(-1, "dup2 failed for output_fd");
+			close(outfile);
+		}
+		execute_simple_command(args);
 	}
 	else if (pid > 0)
 		add_child_pid(pid);

@@ -127,12 +127,14 @@ run: $(NAME)
 
 #--trace-children=yes
 val: $(NAME)
-	valgrind --track-fds=yes --show-leak-kinds=all ./$(NAME)
+	valgrind --track-fds=yes --suppressions=suppress_readline.supp --show-leak-kinds=all ./$(NAME)
 
 val_full: $(NAME)
-	valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME)
+	valgrind --track-fds=yes --trace-children=yes --suppressions=suppress_readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME)
 
 val_full_errocommand: $(NAME)
-	valgrind --track-fds=yes --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME)
+	valgrind --track-fds=yes --suppressions=suppress_readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME)
 
 .PHONY: all clean fclean re
+
+#ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | cat

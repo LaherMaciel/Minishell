@@ -71,7 +71,7 @@ typedef struct s_parsing
 }			t_parsing;
 
 //prompt
-char		*display_prompt(char *line);
+char		*display_prompt(void);
 char		*get_command_path(char *cmd);
 char		*search_command_in_path(char *cmd, char *path_env);
 int			check_executable(const char *cmd, int flag);
@@ -82,7 +82,7 @@ int			redirection_operators_handler(int index);
 int			pipe_handler(int index);
 void		exit_status(char *line);
 void		run_command(char **args, int infile, int outfile);
-void		execute_simple_command(char **args, int infile, int outfile);
+void		execute_simple_command(char **args);
 void		add_child_pid(pid_t pid);
 void		free_child_pids(void);
 int			handle_heredoc(char *delimiter, int fd[2]);

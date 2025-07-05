@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42lisboa.com    +#+  +:+       +#+        */
+/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 09:26:31 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/24 19:50:07 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/07/05 21:35:02 by lawences         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,29 +15,26 @@
 /**
  * 
  */
-static void	child_purgatory(int pipefd[2], char **aux)
+static void	child_purgatory(int infile, int outfile, char **aux)
 {
-	if (mshell()->outfile != STDOUT_FILENO && mshell()->redirected == 1)
-		close(pipefd[1]);
-	else
-		mshell()->outfile = pipefd[1];
-	if (mshell()->infile != STDIN_FILENO
-		&& dup2(mshell()->infile, STDIN_FILENO) < 0)
+	if (infile != STDIN_FILENO)
 	{
-		if (errno == 9 && mshell()->infile == -1)
-			handle_error_and_exit(0, "dup2 failed for input_fd");
-		else
+		if (dup2(infile, STDIN_FILENO) < 0)
 			handle_error_and_exit(-1, "dup2 failed for input_fd");
+		close(infile);
 	}
-	if (mshell()->outfile != STDOUT_FILENO && dup2(mshell()->outfile,
-			STDOUT_FILENO) < 0)
-		handle_error_and_exit(-1, "dup2 failed for output_fd");
+	if (outfile != STDOUT_FILENO)
+	{
+		if (dup2(outfile, STDOUT_FILENO) < 0)
+			handle_error_and_exit(-1, "dup2 failed for output_fd");
+		close(outfile);
+	}
 	if (builtins(aux))
 	{
 		ft_free_array(aux, 0);
 		clean_exit(mshell()->exit_status);
 	}
-	execute_simple_command(aux, mshell()->infile, mshell()->outfile);
+	execute_simple_command(aux);
 }
 
 void	purgatory(pid_t pid, int pipefd[2])
@@ -74,7 +71,11 @@ void	piper(char **aux)
 			close(mshell()->outfile);
 			mshell()->outfile = pipefd[1];
 		}
-		child_purgatory(pipefd, aux);
+		if (mshell()->outfile != STDOUT_FILENO && mshell()->redirected == 1)
+			close(pipefd[1]);
+		else
+			mshell()->outfile = pipefd[1];
+		child_purgatory(mshell()->infile, mshell()->outfile, aux);
 	}
 	else
 		purgatory(pid, pipefd);
@@ -113,6 +114,12 @@ int	pipe_handler(int index)
 
 	if (ft_strcmp(mshell()->input[index], "|") == 0)
 	{
+		if (index == 0 && mshell()->redirected)
+		{
+			rm_index(index);
+			aux_ex_cmnd_loop(index, NULL);
+			return (0);
+		}
 		aux = pipe_dupped_arr(index);
 		if (!aux || !aux[0])
 		{
