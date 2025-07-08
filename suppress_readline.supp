@@ -4,3 +4,26 @@
 		...
 		obj:*/libreadline.so.*
 }
+
+{
+	ignore_readline_leaks
+	Memcheck:Leak
+	...
+	obj:*/libreadline.so.*
+	obj:*/libhistory.so.*
+}
+
+{
+	ls_memory_leaks
+	Memcheck:Leak
+	...
+	obj:/usr/bin/ls
+}
+
+{
+	ignore_common_libs
+	Memcheck:Leak
+	obj:/lib*/libc-*.so
+	obj:/lib*/ld-*.so
+	obj:*/libdl-*.so
+}

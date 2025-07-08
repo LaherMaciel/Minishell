@@ -48,6 +48,7 @@ typedef struct s_mshell
 	char		**input;
 	int			*input_v;
 	int			redirected;
+	int			store_fd[5];
 	int			pid;
 	int			status;
 	int			infile;
@@ -145,6 +146,7 @@ void		print_input(int flag, size_t i);
 void		clean_trash(void);
 char		*free_if_fail(char **env, char **args, char *cmd_path);
 int			check_bad_specials(void);
+void		store_fds(int fd);
 
 //parser
 void		parser(char *input);

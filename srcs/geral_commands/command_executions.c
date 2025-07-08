@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_executions.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/07/05 21:24:05 by lawences         ###   ########.fr       */
+/*   Updated: 2025/07/08 12:49:55 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,7 @@ void	execute_simple_command(char **args)
 {
 	char	*cmd_path;
 	char	**env;
-	int	status;
 
-	status = 0;
 	if (!args || !args[0])
 	{
 		mshell()->exit_status = 127;

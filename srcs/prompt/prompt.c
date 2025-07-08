@@ -92,8 +92,8 @@ static int	get_input(char **line, char *prompt)
  */
 char	*display_prompt(void)
 {
-	int	ret;
-	char *line;
+	int		ret;
+	char	*line;
 
 	line = NULL;
 	signal(SIGINT, sigint_handler);

@@ -126,14 +126,32 @@ run: $(NAME)
 	./$(NAME)
 
 #--trace-children=yes
+DEFAULT_SUPP := $(shell find /usr -path "*/valgrind/default.supp" 2>/dev/null | head -1)
+
+VALGRIND_BASE_FLAGS = --track-fds=yes \
+                      --leak-check=full \
+                      --show-leak-kinds=all \
+                      --errors-for-leak-kinds=all
+
+VALGRIND_FLAGS = $(VALGRIND_BASE_FLAGS) \
+                 --suppressions=suppress_readline.supp \
+
+ifneq ($(DEFAULT_SUPP),)
+VALGRIND_FLAGS += --suppressions=$(DEFAULT_SUPP)
+endif
+
+VALGRIND_FULL_FLAGS = $(VALGRIND_FLAGS) \
+                      --trace-children=yes \
+                      --track-origins=yes
+
 val: $(NAME)
-	valgrind --track-fds=yes --suppressions=suppress_readline.supp --show-leak-kinds=all ./$(NAME)
+	valgrind $(VALGRIND_FLAGS) ./$(NAME)
 
 val_full: $(NAME)
-	valgrind --track-fds=yes --trace-children=yes --suppressions=suppress_readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME)
+	valgrind $(VALGRIND_FULL_FLAGS) ./$(NAME)
 
 val_full_errocommand: $(NAME)
-	valgrind --track-fds=yes --suppressions=suppress_readline.supp --leak-check=full --show-leak-kinds=all --track-origins=yes -s ./$(NAME)
+	valgrind $(VALGRIND_FLAGS) --trace-children=yes --track-origins=yes ./$(NAME)
 
 .PHONY: all clean fclean re
 

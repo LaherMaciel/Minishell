@@ -3,30 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 09:26:31 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/07/05 21:35:02 by lawences         ###   ########.fr       */
+/*   Updated: 2025/07/08 15:51:08 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-/**
- * 
- */
+/* if (read(infile, 0, 0) < 0)
+			handle_error_and_exit(-1, "pipe read failed for input_fd"); */
 static void	child_purgatory(int infile, int outfile, char **aux)
 {
 	if (infile != STDIN_FILENO)
 	{
 		if (dup2(infile, STDIN_FILENO) < 0)
-			handle_error_and_exit(-1, "dup2 failed for input_fd");
+			handle_error_and_exit(-1, "pipe dup2 failed for input_fd");
 		close(infile);
 	}
 	if (outfile != STDOUT_FILENO)
 	{
 		if (dup2(outfile, STDOUT_FILENO) < 0)
-			handle_error_and_exit(-1, "dup2 failed for output_fd");
+			handle_error_and_exit(-1, "pipe dup2 failed for output_fd");
 		close(outfile);
 	}
 	if (builtins(aux))
@@ -39,15 +38,29 @@ static void	child_purgatory(int infile, int outfile, char **aux)
 
 void	purgatory(pid_t pid, int pipefd[2])
 {
+	int	i;
+
+	i = 0;
 	close(pipefd[1]);
 	add_child_pid(pid);
 	if (mshell()->outfile != STDOUT_FILENO)
-	{
 		close(mshell()->outfile);
-		mshell()->outfile = STDOUT_FILENO;
-	}
+	mshell()->outfile = STDOUT_FILENO;
 	if (mshell()->infile != STDIN_FILENO)
-		close(mshell()->infile);
+	{
+		while (mshell()->store_fd[i] && i < 4)
+			i++;
+		if (i == 4)
+		{
+			if (mshell()->store_fd[0] != STDIN_FILENO)
+				close(mshell()->store_fd[0]);
+			mshell()->store_fd[0] = mshell()->store_fd[1];
+			mshell()->store_fd[1] = mshell()->store_fd[2];
+			mshell()->store_fd[2] = mshell()->store_fd[3];
+			mshell()->store_fd[3] = mshell()->store_fd[4];
+		}
+		mshell()->store_fd[i] = mshell()->infile;
+	}
 	mshell()->infile = pipefd[0];
 }
 

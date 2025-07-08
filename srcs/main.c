@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:07:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/07/05 19:34:16 by lawences         ###   ########.fr       */
+/*   Updated: 2025/07/08 15:51:59 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_mshell	*mshell(void)
 	return (&mshell);
 }
 
-void	init_shell(char **env)
+void	init_shell(char **env, int i)
 {
 	mshell()->input = NULL;
 	mshell()->input_v = 0;
@@ -34,6 +34,8 @@ void	init_shell(char **env)
 	mshell()->infile = STDIN_FILENO;
 	mshell()->outfile = STDOUT_FILENO;
 	mshell()->exit_status = 0;
+	while (i < 5)
+		mshell()->store_fd[i++] = 0;
 	mshell()->env = ft_calloc(sizeof(t_export), 1);
 	if (!mshell()->env)
 		exit(EXIT_FAILURE);
@@ -54,7 +56,6 @@ void	init_shell(char **env)
 	}
 }
 
-//update_shlvl();
 int	main(int argv, char **argc, char **env)
 {
 	char	*line;
@@ -62,7 +63,7 @@ int	main(int argv, char **argc, char **env)
 	(void)argv;
 	(void)argc;
 	line = NULL;
-	init_shell(env);
+	init_shell(env, 0);
 	if (isatty(STDIN_FILENO))
 		display_prompt();
 	else
