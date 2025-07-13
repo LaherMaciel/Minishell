@@ -44,6 +44,7 @@ static int	check_quotes(char *str)
 char	*quotes_handler(char *line)
 {
 	char	*aux;
+	char	*tmp;
 
 	while (check_quotes(line) != 0)
 	{
@@ -56,8 +57,13 @@ char	*quotes_handler(char *line)
 			free(line);
 			return (NULL);
 		}
-		line = ft_strjoin2(line, "\n", 1);
-		line = ft_strjoin2(line, aux, 3);
+		tmp = line;
+		line = ft_strjoin2(line, "\n", 0);
+		free(tmp);
+		tmp = line;
+		line = ft_strjoin2(line, aux, 0);
+		free(tmp);
+		free(aux);
 		if (!line)
 			return (NULL);
 	}
@@ -90,14 +96,10 @@ static int	get_input(char **line, char *prompt)
  * @param char **env
  * @return char *line
  */
-char	*display_prompt(void)
+char	*display_prompt(char *line)
 {
-	int		ret;
-	char	*line;
+	int	ret;
 
-	line = NULL;
-	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		ret = get_input(&line, "minishell> ");

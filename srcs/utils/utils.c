@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 11:16:25 by karocha-          #+#    #+#             */
-/*   Updated: 2025/07/08 13:48:43 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/07/13 15:46:18 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,25 @@ char	*free_if_fail(char **env, char **args, char *cmd_path)
 	ft_free_array(env, 0);
 	ft_free_array(args, 0);
 	return (cmd_path);
+}
+
+void	reset_fds(void)
+{
+	ft_printf_shell(BLUE"Resetting fds\n"DEFAULT_COLOR);
+	if (mshell()->infile != STDIN_FILENO)
+	{
+		ft_printf_shell(BLUE"Closing infile: %i\n"DEFAULT_COLOR,
+			mshell()->infile);
+		close(mshell()->infile);
+	}
+	if (mshell()->outfile != STDOUT_FILENO)
+	{
+		ft_printf_shell(BLUE"Closing outfile: %i\n"DEFAULT_COLOR,
+			mshell()->outfile);
+		close(mshell()->outfile);
+	}
+	mshell()->infile = STDIN_FILENO;
+	mshell()->outfile = STDOUT_FILENO;
 }
 
 t_export	*update_var(t_export *env, char **splitted)

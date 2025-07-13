@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/07/08 12:49:55 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/07/13 19:19:40 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
  * @param infile - The input file descriptor.
  * @param outfile - The output file descriptor.
  */
-void	execute_simple_command(char **args)
+void	execute_simple_command(char **args, int infile, int outfile)
 {
 	char	*cmd_path;
 	char	**env;
@@ -40,6 +40,10 @@ void	execute_simple_command(char **args)
 		cmd_path = free_if_fail(NULL, args, cmd_path);
 		handle_error_and_exit(mshell()->exit_status, cmd_path);
 	}
+	if (infile != STDIN_FILENO)
+		close(infile);
+	if (outfile != STDOUT_FILENO)
+		close(outfile);
 	signal(SIGINT, SIG_DFL);
 	env = default_env();
 	execve(cmd_path, args, env);
@@ -57,24 +61,25 @@ void	run_command(char **args, int infile, int outfile)
 	{
 		if (builtins(args))
 			return ;
-		handle_error_and_exit(1, "Built-in command failed");
+		else
+			handle_error_and_exit(1, "Built-in command failed");
 	}
 	pid = create_child_process();
 	if (pid == 0)
 	{
-		if (infile != STDIN_FILENO)
+		/* ft_printf_shell(GREEN"run_command\n"DEFAULT_COLOR"current infile: %i\n"
+			"current outfile: %i "GREEN"LINKED TO "DEFAULT_COLOR"infile: %i\n\n",
+			infile, outfile, mshell()->infile); */
+		if (infile != STDERR_FILENO && dup2(infile, STDIN_FILENO) < 0)
 		{
-			if (dup2(infile, STDIN_FILENO) < 0)
+			if (errno == 9 && infile == -1)
+				handle_error_and_exit(0, "dup2 failed for input_fd");
+			else
 				handle_error_and_exit(-1, "dup2 failed for input_fd");
-			close(infile);
 		}
-		if (outfile != STDOUT_FILENO)
-		{
-			if (dup2(outfile, STDOUT_FILENO) < 0)
-				handle_error_and_exit(-1, "dup2 failed for output_fd");
-			close(outfile);
-		}
-		execute_simple_command(args);
+		if (outfile != STDOUT_FILENO && dup2(outfile, STDOUT_FILENO) < 0)
+			handle_error_and_exit(-1, "dup2 failed for output_fd");
+		execute_simple_command(args, infile, outfile);
 	}
 	else if (pid > 0)
 		add_child_pid(pid);

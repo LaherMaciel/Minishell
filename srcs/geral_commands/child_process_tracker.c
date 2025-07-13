@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_process_tracker.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 13:37:12 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/07/05 19:32:21 by lawences         ###   ########.fr       */
+/*   Updated: 2025/06/23 10:02:17 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	add_child_pid(pid_t pid)
 		return ;
 	}
 	new_pid->pid = pid;
-	mshell()->pid = pid;
 	new_pid->next = NULL;
 	if (!mshell()->child_pids)
 		mshell()->child_pids = new_pid;

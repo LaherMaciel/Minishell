@@ -6,61 +6,61 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 09:26:31 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/07/08 15:51:08 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/07/13 19:19:16 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-/* if (read(infile, 0, 0) < 0)
-			handle_error_and_exit(-1, "pipe read failed for input_fd"); */
-static void	child_purgatory(int infile, int outfile, char **aux)
+/**
+ * 
+ */
+static void	child_purgatory(int pipefd[2], char **aux)
 {
-	if (infile != STDIN_FILENO)
+	if (mshell()->outfile != STDOUT_FILENO && mshell()->redirected == 1)
+		close(pipefd[1]);
+	else
+		mshell()->outfile = pipefd[1];
+	if (mshell()->infile != STDIN_FILENO)
 	{
-		if (dup2(infile, STDIN_FILENO) < 0)
+		/* ft_printf_shell(YELLOW"Closing child_purgatory infile:"
+			" %i\n"DEFAULT_COLOR, mshell()->infile); */
+		if (dup2(mshell()->infile, STDIN_FILENO) < 0)
 			handle_error_and_exit(-1, "pipe dup2 failed for input_fd");
-		close(infile);
+		close(mshell()->infile);
 	}
-	if (outfile != STDOUT_FILENO)
+	if (mshell()->outfile != STDOUT_FILENO)
 	{
-		if (dup2(outfile, STDOUT_FILENO) < 0)
+		/* ft_printf_shell(YELLOW"Closing child_purgatory outfile: "
+			"%i\n"DEFAULT_COLOR, mshell()->outfile); */
+		if (dup2(mshell()->outfile, STDOUT_FILENO) < 0)
 			handle_error_and_exit(-1, "pipe dup2 failed for output_fd");
-		close(outfile);
+		close(mshell()->outfile);
 	}
 	if (builtins(aux))
 	{
 		ft_free_array(aux, 0);
 		clean_exit(mshell()->exit_status);
 	}
-	execute_simple_command(aux);
+	execute_simple_command(aux, mshell()->infile, mshell()->outfile);
 }
 
 void	purgatory(pid_t pid, int pipefd[2])
 {
-	int	i;
-
-	i = 0;
+	/* ft_printf_shell(RED"PURGATORY\n"ORANGE"current infile: %i\n"
+		YELLOW"new infile: %i\n"ORANGE"current outfile: %i\n"DEFAULT_COLOR,
+		mshell()->infile, pipefd[0], mshell()->outfile);
+	ft_printf_shell(RED"Closing purgatory pipefd[1]: "
+		"%i\n"DEFAULT_COLOR, pipefd[1]); */
 	close(pipefd[1]);
 	add_child_pid(pid);
 	if (mshell()->outfile != STDOUT_FILENO)
-		close(mshell()->outfile);
-	mshell()->outfile = STDOUT_FILENO;
-	if (mshell()->infile != STDIN_FILENO)
 	{
-		while (mshell()->store_fd[i] && i < 4)
-			i++;
-		if (i == 4)
-		{
-			if (mshell()->store_fd[0] != STDIN_FILENO)
-				close(mshell()->store_fd[0]);
-			mshell()->store_fd[0] = mshell()->store_fd[1];
-			mshell()->store_fd[1] = mshell()->store_fd[2];
-			mshell()->store_fd[2] = mshell()->store_fd[3];
-			mshell()->store_fd[3] = mshell()->store_fd[4];
-		}
-		mshell()->store_fd[i] = mshell()->infile;
+		close(mshell()->outfile);
+		mshell()->outfile = STDOUT_FILENO;
 	}
+	if (mshell()->infile != STDIN_FILENO)
+		close(mshell()->infile);
 	mshell()->infile = pipefd[0];
 }
 
@@ -78,17 +78,17 @@ void	piper(char **aux)
 	pid = create_child_process();
 	if (pid == 0)
 	{
+		/* ft_printf_shell(BLUE"child_purgatory\n"GRAY"current infile: %i\ncurrent"
+			" outfile: %i\n"CYAN"new_oufile: %i "GREEN"LINKED TO "YELLOW"infile"
+			": %i\n\nclosing child_purgatory pipefd[0]: %i\n"DEFAULT_COLOR,
+			mshell()->infile, mshell()->outfile, pipefd[1], pipefd[0], pipefd[0]); */
 		close(pipefd[0]);
 		if (mshell()->outfile != STDOUT_FILENO && mshell()->redirected == 0)
 		{
 			close(mshell()->outfile);
 			mshell()->outfile = pipefd[1];
 		}
-		if (mshell()->outfile != STDOUT_FILENO && mshell()->redirected == 1)
-			close(pipefd[1]);
-		else
-			mshell()->outfile = pipefd[1];
-		child_purgatory(mshell()->infile, mshell()->outfile, aux);
+		child_purgatory(pipefd, aux);
 	}
 	else
 		purgatory(pid, pipefd);
@@ -127,12 +127,6 @@ int	pipe_handler(int index)
 
 	if (ft_strcmp(mshell()->input[index], "|") == 0)
 	{
-		if (index == 0 && mshell()->redirected)
-		{
-			rm_index(index);
-			aux_ex_cmnd_loop(index, NULL);
-			return (0);
-		}
 		aux = pipe_dupped_arr(index);
 		if (!aux || !aux[0])
 		{

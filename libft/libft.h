@@ -29,6 +29,27 @@
  *   on another project
 */
 
+// COLOR CODES
+# define CLEAR "\033c"
+# define RED        "\033[1;31m"
+# define GREEN      "\033[1;32m"
+# define YELLOW     "\033[1;33m"
+# define BLUE       "\033[1;34m"
+# define MAGENTA    "\033[1;35m"
+# define CYAN       "\033[1;36m"
+# define WHITE      "\033[1;37m"
+# define GRAY       "\033[1;90m"
+# define ORANGE     "\033[38;5;208m"
+# define PURPLE     "\033[38;5;129m"
+# define PINK       "\033[38;5;205m"
+# define LIME       "\033[38;5;154m"
+# define TEAL       "\033[38;5;30m"
+# define LAVENDER   "\033[38;5;183m"
+# define GOLD       "\033[38;5;220m"
+# define MAROON     "\033[38;5;88m"
+# define DEFAULT_COLOR "\033[0m"
+# define BOLTED_DEFAULT_COLOR "\033[1;0m"
+
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif
@@ -114,5 +135,25 @@ char		**ft_append_to_array2(char **array, size_t arraylen,
 				char *str, int flag);
 void		*ft_realloc(void *ptr, size_t size);
 int			ft_isspace(int c);
+
+char		*ft_putchar_shell(int c);
+char		*ft_putstr_shell(char *str);
+char		*ft_putnbr_shell(long long int number, char *result);
+char		*ft_putnbr_u_shell(unsigned long long int number, char *result);
+char		*ft_puthex_shell(unsigned int number, char variable, char *result);
+char		*ft_putptr_shell(unsigned long long ptr, char *result);
+char		*ft_format_shell(va_list args, const char variable);
+int			ft_printf_shell(const char *str, ...);
+int			ft_div_num_base_shell(long int number, int base);
+char		*ft_putchar_shell(int c);
+
+// FD_PRINTF
+char		*ft_fdputstr_shell(int fd, char *s);
+char		*ft_fdputchr_shell(int fd, char s);
+char		*ft_fdputnbr_shell(int fd, double nbr, char *base, double size);
+char		*fdputpoint_shell(int fd, unsigned long long nbr, char *base,
+				unsigned long long size);
+int			ft_fdprintf_shell(int fd, const char *format, ...);
+
 
 #endif

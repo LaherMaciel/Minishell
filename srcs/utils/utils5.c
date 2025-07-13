@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/16 15:56:08 by lawences          #+#    #+#             */
-/*   Updated: 2025/07/08 13:50:36 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/30 20:44:27 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,10 @@ void	clean_exit(int exit_status)
 		current = current->next;
 	}
 	clean_resource();
-	reset_fds();
+	if (mshell()->infile != STDIN_FILENO)
+		close(mshell()->infile);
+	if (mshell()->outfile != STDOUT_FILENO)
+		close(mshell()->outfile);
 	free_mshell();
 	exit(exit_status);
 }

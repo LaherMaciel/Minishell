@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:07:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/07/08 15:51:59 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/06/30 19:56:59 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,14 @@ t_mshell	*mshell(void)
 	return (&mshell);
 }
 
-void	init_shell(char **env, int i)
+void	init_shell(char **env)
 {
 	mshell()->input = NULL;
 	mshell()->input_v = 0;
 	mshell()->redirected = 0;
-	mshell()->pid = 0;
 	mshell()->infile = STDIN_FILENO;
 	mshell()->outfile = STDOUT_FILENO;
 	mshell()->exit_status = 0;
-	while (i < 5)
-		mshell()->store_fd[i++] = 0;
 	mshell()->env = ft_calloc(sizeof(t_export), 1);
 	if (!mshell()->env)
 		exit(EXIT_FAILURE);
@@ -56,6 +53,21 @@ void	init_shell(char **env, int i)
 	}
 }
 
+static void	receive_input(void)
+{
+	char	*line;
+
+	while (1)
+	{
+		signal(SIGINT, sigint_handler);
+		signal(SIGQUIT, SIG_IGN);
+		line = display_prompt(NULL);
+		if (!line)
+			break ;
+	}
+}
+
+//update_shlvl();
 int	main(int argv, char **argc, char **env)
 {
 	char	*line;
@@ -63,9 +75,9 @@ int	main(int argv, char **argc, char **env)
 	(void)argv;
 	(void)argc;
 	line = NULL;
-	init_shell(env, 0);
+	init_shell(env);
 	if (isatty(STDIN_FILENO))
-		display_prompt();
+		receive_input();
 	else
 	{
 		line = get_next_line(STDIN_FILENO);
