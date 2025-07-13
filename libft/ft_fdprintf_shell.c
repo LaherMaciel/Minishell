@@ -28,7 +28,7 @@ int	ft_fdprintf_shell(int fd, const char *format, ...)
 		if (format[i] == '%')
 		{
 			result = ft_strjoin2(result,
-				ft_format_shell(args, format[i + 1]), 3);
+					ft_format_shell(args, format[i + 1]), 3);
 			i++;
 		}
 		else

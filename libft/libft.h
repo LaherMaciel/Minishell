@@ -155,5 +155,4 @@ char		*fdputpoint_shell(int fd, unsigned long long nbr, char *base,
 				unsigned long long size);
 int			ft_fdprintf_shell(int fd, const char *format, ...);
 
-
 #endif

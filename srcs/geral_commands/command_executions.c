@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/07/13 20:19:59 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/07/13 20:29:23 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,9 +67,6 @@ void	run_command(char **args, int infile, int outfile)
 	pid = create_child_process();
 	if (pid == 0)
 	{
-		/* ft_printf_shell(GREEN"run_command\n"DEFAULT_COLOR"current infile: %i\n"
-			"current outfile: %i "GREEN"LINKED TO "DEFAULT_COLOR"infile: %i\n\n",
-			infile, outfile, mshell()->infile); */
 		if (infile != STDERR_FILENO && dup2(infile, STDIN_FILENO) < 0)
 		{
 			if (errno == 9 && infile == -1)

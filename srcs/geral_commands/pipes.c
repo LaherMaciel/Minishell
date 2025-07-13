@@ -6,16 +6,13 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 09:26:31 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/07/13 19:19:16 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/07/13 20:28:46 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-/**
- * 
- */
-static void	child_purgatory(int pipefd[2], char **aux)
+static void	child_handling(int pipefd[2], char **aux)
 {
 	if (mshell()->outfile != STDOUT_FILENO && mshell()->redirected == 1)
 		close(pipefd[1]);
@@ -23,16 +20,12 @@ static void	child_purgatory(int pipefd[2], char **aux)
 		mshell()->outfile = pipefd[1];
 	if (mshell()->infile != STDIN_FILENO)
 	{
-		/* ft_printf_shell(YELLOW"Closing child_purgatory infile:"
-			" %i\n"DEFAULT_COLOR, mshell()->infile); */
 		if (dup2(mshell()->infile, STDIN_FILENO) < 0)
 			handle_error_and_exit(-1, "pipe dup2 failed for input_fd");
 		close(mshell()->infile);
 	}
 	if (mshell()->outfile != STDOUT_FILENO)
 	{
-		/* ft_printf_shell(YELLOW"Closing child_purgatory outfile: "
-			"%i\n"DEFAULT_COLOR, mshell()->outfile); */
 		if (dup2(mshell()->outfile, STDOUT_FILENO) < 0)
 			handle_error_and_exit(-1, "pipe dup2 failed for output_fd");
 		close(mshell()->outfile);
@@ -45,13 +38,8 @@ static void	child_purgatory(int pipefd[2], char **aux)
 	execute_simple_command(aux, mshell()->infile, mshell()->outfile);
 }
 
-void	purgatory(pid_t pid, int pipefd[2])
+void	parent_handling(pid_t pid, int pipefd[2])
 {
-	/* ft_printf_shell(RED"PURGATORY\n"ORANGE"current infile: %i\n"
-		YELLOW"new infile: %i\n"ORANGE"current outfile: %i\n"DEFAULT_COLOR,
-		mshell()->infile, pipefd[0], mshell()->outfile);
-	ft_printf_shell(RED"Closing purgatory pipefd[1]: "
-		"%i\n"DEFAULT_COLOR, pipefd[1]); */
 	close(pipefd[1]);
 	add_child_pid(pid);
 	if (mshell()->outfile != STDOUT_FILENO)
@@ -78,20 +66,16 @@ void	piper(char **aux)
 	pid = create_child_process();
 	if (pid == 0)
 	{
-		/* ft_printf_shell(BLUE"child_purgatory\n"GRAY"current infile: %i\ncurrent"
-			" outfile: %i\n"CYAN"new_oufile: %i "GREEN"LINKED TO "YELLOW"infile"
-			": %i\n\nclosing child_purgatory pipefd[0]: %i\n"DEFAULT_COLOR,
-			mshell()->infile, mshell()->outfile, pipefd[1], pipefd[0], pipefd[0]); */
 		close(pipefd[0]);
 		if (mshell()->outfile != STDOUT_FILENO && mshell()->redirected == 0)
 		{
 			close(mshell()->outfile);
 			mshell()->outfile = pipefd[1];
 		}
-		child_purgatory(pipefd, aux);
+		child_handling(pipefd, aux);
 	}
 	else
-		purgatory(pid, pipefd);
+		parent_handling(pid, pipefd);
 	mshell()->redirected = 0;
 }
 

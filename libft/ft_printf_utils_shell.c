@@ -67,4 +67,3 @@ char	*ft_putnbr_u_shell(unsigned long long int number, char *result)
 		result = ft_putchar_shell('0');
 	return (result);
 }
-
