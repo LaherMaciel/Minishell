@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 11:16:25 by karocha-          #+#    #+#             */
-/*   Updated: 2025/07/13 15:46:18 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/07/13 20:14:15 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,17 @@ char	*free_if_fail(char **env, char **args, char *cmd_path)
 
 void	reset_fds(void)
 {
-	ft_printf_shell(BLUE"Resetting fds\n"DEFAULT_COLOR);
+	/* ft_printf_shell(BLUE"Resetting fds\n"DEFAULT_COLOR); */
 	if (mshell()->infile != STDIN_FILENO)
 	{
-		ft_printf_shell(BLUE"Closing infile: %i\n"DEFAULT_COLOR,
-			mshell()->infile);
+		/* ft_printf_shell(BLUE"Closing infile: %i\n"DEFAULT_COLOR,
+			mshell()->infile); */
 		close(mshell()->infile);
 	}
 	if (mshell()->outfile != STDOUT_FILENO)
 	{
-		ft_printf_shell(BLUE"Closing outfile: %i\n"DEFAULT_COLOR,
-			mshell()->outfile);
+		/* ft_printf_shell(BLUE"Closing outfile: %i\n"DEFAULT_COLOR,
+			mshell()->outfile); */
 		close(mshell()->outfile);
 	}
 	mshell()->infile = STDIN_FILENO;

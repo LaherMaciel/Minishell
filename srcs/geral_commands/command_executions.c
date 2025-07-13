@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/07/13 19:19:40 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/07/13 20:19:59 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,7 @@ static void	wait_for_childs(void)
 
 void	ex_cmnd_loop(int index, char **aux)
 {
-	int	count;
-
-	count = -1;
-	while (mshell()->input[0] && ++count < 20)
+	while (mshell()->input[0])
 	{
 		index = high_priority();
 		if (is_redirect(mshell()->input[index]))
