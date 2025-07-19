@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_aux.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 13:21:08 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/25 15:52:48 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/07/19 18:12:53 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,33 @@ char	**default_env(void)
 	{
 		env[i] = ft_strjoin(mshell()->env->var_name[i], "=");
 		env[i] = ft_strjoin2(env[i], mshell()->env->value[i], 1);
+	}
+	return (env);
+}
+
+t_export	*adder(t_export *env, char *var_name, char *var_value, int flag)
+{
+	if (((var_value == NULL && flag) || ft_strlen(var_value) == 1))
+	{
+		if (ft_strlen(var_value) == 1)
+		{
+			var_value = NULL;
+			env->value = ft_append_to_array(env->value,
+				ft_arraylen(env->var_name) - 1, var_value, 1);
+		}
+		env->var_name = ft_append_to_array(env->var_name,
+			ft_arraylen(env->var_name), var_name, 1);
+		if (!env->var_name)
+			ft_free_export(env);
+	}
+	else
+	{
+		env->var_name = ft_append_to_array(env->var_name,
+			ft_arraylen(env->var_name), var_name, 1);
+		if (!env->var_name)
+			ft_free_export(env);
+		env->value = ft_append_to_array(env->value,
+			ft_arraylen(env->var_name) - 1, var_value, 1);
 	}
 	return (env);
 }

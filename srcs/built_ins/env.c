@@ -3,16 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 22:25:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/25 15:51:31 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/07/19 18:16:30 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
 t_export	*add_to_env(char *str)
+{
+	t_export	*env;
+	char		*var_name;
+	char		*var_value;
+
+	env = mshell()->env;
+	if (!env || !str)
+		return (NULL);
+	var_value = ft_strnstr(str, "=", ft_strlen(str));
+	if (!var_value)
+		var_name = ft_strdup(str);
+	else if (ft_strlen(var_value) == 1)
+		var_name = ft_substr(str, 0, ft_strlen(str) - 1);
+	else
+	{
+		var_value = ft_strdup(var_value + 1);
+		var_name = ft_substr(str, 0, ft_strlen(str) - ft_strlen(var_value) - 1);
+	}
+	if (update_var(env, var_name, var_value))
+		return (env);
+	env = adder(env, var_name, var_value, 0);
+	return (env);
+}
+/* t_export	*add_to_env(char *str)
 {
 	t_export	*env;
 	char		**splitted;
@@ -36,7 +60,7 @@ t_export	*add_to_env(char *str)
 		ft_free_export(env);
 	free(splitted);
 	return (env);
-}
+} */
 
 void	ft_env(char **input)
 {

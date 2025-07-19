@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/11 11:16:25 by karocha-          #+#    #+#             */
-/*   Updated: 2025/07/13 20:27:40 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/07/19 17:23:19 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,18 @@ char	*free_if_fail(char **env, char **args, char *cmd_path)
 	return (cmd_path);
 }
 
-t_export	*update_var(t_export *env, char **splitted)
+t_export	*update_var(t_export *env, char *var_name, char *var_value)
 {
 	int	i;
 
 	i = 0;
 	while (env->var_name && env->var_name[i])
 	{
-		if (ft_strcmp(env->var_name[i], splitted[0]) == 0)
+		if (ft_strcmp(env->var_name[i], var_name) == 0)
 		{
 			free(env->value[i]);
-			env->value[i] = ft_strdup(splitted[1]);
-			ft_free_array(splitted, 0);
+			env->value[i] = ft_strdup(var_value);
+			free(var_value);
 			return (env);
 		}
 		i++;

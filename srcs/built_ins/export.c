@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 20:17:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/25 17:29:58 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/07/19 18:10:49 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,26 +100,25 @@ t_export	*export_sorter(void)
 t_export	*add_to_export(char *str)
 {
 	t_export	*expt;
-	char		**splitted;
+	char		*var_name;
+	char		*var_value;
 
 	expt = mshell()->expt;
 	if (!expt || !str)
 		return (NULL);
-	splitted = ft_split(str, '=');
-	if (!splitted || !splitted[0])
-		return (ft_free_array(splitted, 0));
-	if (update_var(expt, splitted))
-		return (expt);
-	expt->var_name = ft_append_to_array(expt->var_name,
-			ft_arraylen(expt->var_name), splitted[0], 1);
-	if (!expt->var_name)
-		ft_free_export(expt);
+	var_value = ft_strnstr(str, "=", ft_strlen(str));
+	if (!var_value)
+		var_name = ft_strdup(str);
+	else if (ft_strlen(var_value) == 1)
+		var_name = ft_substr(str, 0, ft_strlen(str) - 1);
 	else
-		expt->value = ft_append_to_array(expt->value,
-				ft_arraylen(expt->var_name) - 1, splitted[1], 1);
-	if (!expt->value)
-		ft_free_export(expt);
-	free(splitted);
+	{
+		var_value = ft_strdup(var_value + 1);
+		var_name = ft_substr(str, 0, ft_strlen(str) - ft_strlen(var_value) - 1);
+	}
+	if (update_var(expt, var_name, var_value))
+		return (expt);
+	expt = adder(expt, var_name, var_value, 0);
 	return (expt);
 }
 

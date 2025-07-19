@@ -112,6 +112,7 @@ void		builtin_exit(char **input);
 void		update_shlvl(void);
 int			check_var_name(char *var_name);
 void		start_no_env(void);
+t_export	*adder(t_export *env, char *var_name, char *var_value, int flag);
 
 //signals
 void		sigint_handler(int sig);
@@ -121,7 +122,7 @@ void		sig_heredoc(int sig);
 int			create_child_process(void);
 void		handle_error_and_exit(int error, char *message);
 void		handle_error_and_exit(int error, char *message);
-t_export	*update_var(t_export *env, char **splitted);
+t_export	*update_var(t_export *env, char *var_name, char *var_value);
 int			high_priority(void);
 void		rm_index(int index);
 void		rm_indexs(int index1, int index2);
