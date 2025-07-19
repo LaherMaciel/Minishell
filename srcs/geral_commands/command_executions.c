@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_executions.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/07/13 20:29:23 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/07/19 21:08:06 by lawences         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,13 +57,8 @@ void	run_command(char **args, int infile, int outfile)
 {
 	pid_t	pid;
 
-	if (is_builtin(args[0]))
-	{
-		if (builtins(args))
-			return ;
-		else
-			handle_error_and_exit(1, "Built-in command failed");
-	}
+	if (builtins(args))
+		return ;
 	pid = create_child_process();
 	if (pid == 0)
 	{
@@ -79,30 +74,30 @@ void	run_command(char **args, int infile, int outfile)
 		execute_simple_command(args, infile, outfile);
 	}
 	else if (pid > 0)
-		add_child_pid(pid);
-}
-
-static void	wait_for_childs(void)
-{
-	t_child_pid	*current;
-	int			status;
-
-	current = mshell()->child_pids;
-	status = 0;
-	while (current)
 	{
-		waitpid(current->pid, &status, 0);
-		if (WIFEXITED(status))
-			mshell()->exit_status = WEXITSTATUS(status);
-		else if (WIFSIGNALED(status))
-			mshell()->exit_status = 128 + WTERMSIG(status);
-		current = current->next;
-		mshell()->num_children--;
+		update_(args[0]);
+		add_child_pid(pid);
 	}
 }
 
-void	ex_cmnd_loop(int index, char **aux)
+void	aux_ex_cmnd_loop(int index)
 {
+	char	**aux;
+
+	aux = dupped_arr(index);
+	if (aux)
+	{
+		run_command(aux,
+			mshell()->infile, mshell()->outfile);
+		ft_free_array(aux, 0);
+	}
+}
+
+void	ex_cmnd_loop(void)
+{
+	int	index;
+
+	index = 0;
 	while (mshell()->input[0])
 	{
 		index = high_priority();
@@ -117,15 +112,12 @@ void	ex_cmnd_loop(int index, char **aux)
 				break ;
 		}
 		else
-			aux_ex_cmnd_loop(index, aux);
+			aux_ex_cmnd_loop(index);
 	}
 }
 
 void	execute_commands(char *line)
 {
-	char		**aux;
-
-	aux = NULL;
 	if (ft_strncmp(line, "$?", 2) == 0)
 	{
 		exit_status(line);
@@ -138,7 +130,7 @@ void	execute_commands(char *line)
 		free_resources();
 		return ;
 	}
-	ex_cmnd_loop(0, aux);
+	ex_cmnd_loop();
 	reset_fds();
 	wait_for_childs();
 	free_resources();

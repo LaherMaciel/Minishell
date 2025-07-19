@@ -3,69 +3,96 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/11 11:16:25 by karocha-          #+#    #+#             */
-/*   Updated: 2025/07/19 17:23:19 by karocha-         ###   ########.fr       */
+/*   Created: 2025/05/19 16:59:35 by karocha-          #+#    #+#             */
+/*   Updated: 2025/07/19 20:20:04 by lawences         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../minishell.h"
 
-/**
- * @brief Create a child process using fork().
- *
- * This function forks the current process and returns the child's PID. If fork
- * fails, it exits with an error message.
- *
- * @return int - The PID of the child process.
- */
-int	create_child_process(void)
-{
-	pid_t	pid;
-
-	pid = fork();
-	if (pid < 0)
-	{
-		mshell()->exit_status = 1;
-		handle_error_and_exit(-1, "Fork failed");
-	}
-	return (pid);
-}
-
-void	free_resources(void)
-{
-	ft_free_array(mshell()->input, 0);
-	free(mshell()->input_v);
-	free(mshell()->quoted);
-	free_child_pids();
-}
-
-char	*free_if_fail(char **env, char **args, char *cmd_path)
-{
-	if (cmd_path)
-		free(cmd_path);
-	cmd_path = ft_strdup(args[0]);
-	ft_free_array(env, 0);
-	ft_free_array(args, 0);
-	return (cmd_path);
-}
-
-t_export	*update_var(t_export *env, char *var_name, char *var_value)
+static void	dup_loop(char **aux)
 {
 	int	i;
+	int	j;
 
 	i = 0;
-	while (env->var_name && env->var_name[i])
+	while (aux[i])
 	{
-		if (ft_strcmp(env->var_name[i], var_name) == 0)
+		j = -1;
+		while (mshell()->input[++j])
 		{
-			free(env->value[i]);
-			env->value[i] = ft_strdup(var_value);
-			free(var_value);
-			return (env);
+			if (ft_strcmp(aux[i], mshell()->input[j]) == 0)
+			{
+				mshell()->input = ft_rm_from_array(mshell()->input, 0, j);
+				break ;
+			}
 		}
 		i++;
 	}
-	return (NULL);
+}
+
+char	**dupped_arr(int index)
+{
+	char	**aux;
+
+	aux = NULL;
+	if (!mshell()->input || index < 0
+		|| index >= (int) ft_arraylen(mshell()->input))
+		return (NULL);
+	index--;
+	while (mshell()->input[++index])
+		if (its_what(index) == 1 || its_what(index) == 2)
+			aux = ft_append_to_array2(aux, 0, mshell()->input[index], 1);
+	if (!aux)
+		return (NULL);
+	dup_loop(aux);
+	set_inputvalue(index);
+	return (aux);
+}
+
+static int	aux_check(int i)
+{
+	if (ft_strcmp(mshell()->input[i], "<<") == 0
+		|| ft_strcmp(mshell()->input[i], ">>") == 0
+		|| ft_strcmp(mshell()->input[i], ">") == 0)
+	{
+		if (ft_strcmp(mshell()->input[i + 1], ">") == 0
+			|| ft_strcmp(mshell()->input[i + 1], "<") == 0
+			|| ft_strcmp(mshell()->input[i + 1], ">>") == 0
+			|| ft_strcmp(mshell()->input[i + 1], "<<") == 0)
+		{
+			ft_printf("minishell: syntax error near unexpected token `%s'\n",
+				mshell()->input[i + 1]);
+			mshell()->exit_status = 2;
+			return (1);
+		}
+	}
+	return (0);
+}
+
+int	check_bad_specials(void)
+{
+	int	i;
+
+	i = -1;
+	while (mshell()->input[++i])
+	{
+		if (ft_strcmp(mshell()->input[i], "<<") == 0
+			|| ft_strcmp(mshell()->input[i], ">>") == 0
+			|| ft_strcmp(mshell()->input[i], "<") == 0)
+		{
+			if (ft_strcmp(mshell()->input[i + 1], "|") == 0)
+			{
+				ft_printf("minishell: syntax error"
+					"near unexpected token `%s'\n", mshell()->input[i + 1]);
+				mshell()->exit_status = 2;
+				return (1);
+			}
+		}
+		if (aux_check(i))
+			return (1);
+	}
+	return (0);
 }

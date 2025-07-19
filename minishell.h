@@ -86,7 +86,9 @@ void		execute_simple_command(char **args, int infile, int outfile);
 void		add_child_pid(pid_t pid);
 void		free_child_pids(void);
 int			handle_heredoc(char *delimiter, int fd[2]);
-void		aux_ex_cmnd_loop(int index, char **aux);
+void		aux_ex_cmnd_loop(int index);
+void		update_(char *command);
+void		wait_for_childs(void);
 
 //BUILT-INS
 int			builtin_cd(char *input);
@@ -99,7 +101,7 @@ t_export	*init_export(char **env);
 void		ft_export(char **input);
 t_export	*export_sorter(void);
 t_export	*add_to_export(char *str);
-void		*ft_free_export(t_export *expt);
+void		*ft_free_export_env(t_export *expt);
 void		ft_unset(char **input, int index);
 char		**default_env(void);
 t_export	*init_env(char **env);
@@ -143,7 +145,6 @@ void		reset_infile(int fd);
 void		clean_exit(int exit_status);
 void		clean_resource(void);
 void		print_input(int flag, size_t i);
-void		clean_trash(void);
 char		*free_if_fail(char **env, char **args, char *cmd_path);
 int			check_bad_specials(void);
 

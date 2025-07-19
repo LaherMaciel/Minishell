@@ -20,7 +20,7 @@ ft_strrchr.c ft_strtrim.c ft_substr.c ft_tolower.c ft_toupper.c ft_lstnew.c\
 ft_lstadd_front.c ft_lstsize.c ft_lstlast.c ft_lstadd_back.c ft_lstdelone.c\
 ft_lstclear.c ft_lstiter.c ft_lstmap.c ft_printf.c ft_printf_utils.c ft_printf_utils2.c\
 ft_fdprintf.c ft_fdprintf_utils.c get_next_line_bonus.c get_next_line_utils_bonus.c\
-ft_free_strstr.c ft_strjoin2.c ft_split2.c ft_substr2.c ft_strcmp.c\
+ft_strjoin2.c ft_split2.c ft_substr2.c ft_strcmp.c\
 ft_free_array.c ft_arraylen.c ft_append_to_array.c ft_swap.c ft_rm_from_array.c\
 ft_strcpy.c ft_append_to_array2.c ft_realloc.c ft_isspace.c ft_fdprintf_shell.c\
 ft_fdprintf_utils_shell.c ft_printf_shell.c ft_printf_utils_shell.c\

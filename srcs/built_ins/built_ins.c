@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   built_ins.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:32 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/07/03 18:12:13 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/07/19 21:08:16 by lawences         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,29 +33,58 @@ int	builtin_pwd(void)
 	return (0);
 }
 
+/*
+	if (input[1] != NULL && ft_strcmp(input[1], "-n") == 0)
+	{
+		while (input)
+		{
+			
+		}
+		n_flag = true;
+		i++;
+	}
+*/
 int	builtin_echo(char **input)
 {
 	bool	n_flag;
 	int		i;
+	int		j;
 
 	n_flag = false;
 	i = 1;
-	if (input[1] != NULL && ft_strcmp(input[1], "-n") == 0)
+	while (input[i] != NULL && ft_strncmp(input[i], "-n", 2) == 0)
 	{
+		j = 0;
+		while (input[i][j] == 'n')
+			j++;
 		n_flag = true;
 		i++;
 	}
 	while (input[i])
 	{
-		ft_fdprintf(mshell()->outfile, "%s", input[i]);
-		if (input[i + 1] != NULL)
+		ft_fdprintf(mshell()->outfile, "%s", input[i] + j);
+		if (input[++i] != NULL)
 			ft_fdprintf(mshell()->outfile, " ");
-		i++;
+		j = 0;
 	}
 	if (!n_flag)
 		ft_fdprintf(mshell()->outfile, "\n");
 	mshell()->exit_status = 0;
 	return (0);
+}
+
+void	update_(char *command)
+{
+	char	**update_;
+
+	update_ = ft_calloc(3, sizeof(char *));
+	update_[0] = ft_strdup("export");
+	update_[1] = get_command_path(command);
+	if (!update_[1])
+		update_[1] = ft_strjoin2("_=", command, 0);
+	else
+		update_[1] = ft_strjoin2("_=", update_[1], 2);
+	ft_export(update_);
 }
 
 int	builtins(char **input)
@@ -76,5 +105,6 @@ int	builtins(char **input)
 		builtin_exit(input);
 	else
 		return (0);
+	update_(input[0]);
 	return (1);
 }

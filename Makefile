@@ -1,16 +1,15 @@
 NAME = minishell
 
-GCOMMANDS_C = command_executions.c redirections.c pipes.c child_process_tracker.c heredoc.c\
-			command_executions_aux.c
+GCOMMANDS_C = command_executions.c redirections.c pipes.c child_process_tracker.c heredoc.c
 
 PROMPT_C = prompt.c get_path.c check_executable.c\
 
-BUILTINS_C =  built_ins.c export.c unset.c env.c env_aux.c exit.c exit_aux.c cd.c\
+BUILTINS_C =  built_ins.c export.c unset.c env.c env_aux.c exit.c exit_aux.c cd.c env_export_aux.c\
 
-UTILS_C = error_and_exit_handler.c utils.c utils2.c utils3.c utils4.c utils5.c\
+UTILS_C = error_and_exit_handler.c utils.c cleans.c frees.c gets.c remove_indexs.c\
 
 PARSER_C = parser.c split_out_quotes.c ft_strjoin3.c its_what.c\
-			ft_lstutils.c ft_lstutils2.c ft_split_aux.c ft_split_shell_lst.c aux_split_list.c
+			ft_lstutils.c ft_lstutils2.c ft_split_aux.c ft_split_shell_lst.c ft_split_aux2.c
 
 
 LIBFT_DIRECTORY = libft/
@@ -141,8 +140,8 @@ VALGRIND_FLAGS += --suppressions=$(DEFAULT_SUPP)
 endif
 
 VALGRIND_FULL_FLAGS = $(VALGRIND_FLAGS) \
-                      --trace-children=yes \
-                      --track-origins=yes
+                      --track-origins=yes \
+                      #--trace-children=yes
 
 val: $(NAME)
 	valgrind $(VALGRIND_FLAGS) ./$(NAME)
@@ -154,5 +153,3 @@ val_full_errocommand: $(NAME)
 	valgrind $(VALGRIND_FLAGS) --trace-children=yes --track-origins=yes ./$(NAME)
 
 .PHONY: all clean fclean re
-
-#ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | ls | cat

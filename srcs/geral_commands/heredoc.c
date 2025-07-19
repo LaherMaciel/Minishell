@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: karocha- <karocha-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/04 19:23:50 by karocha-          #+#    #+#             */
-/*   Updated: 2025/07/19 15:38:11 by karocha-         ###   ########.fr       */
+/*   Updated: 2025/07/19 21:09:01 by lawences         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,9 @@ static void	exec_heredoc(char *delimiter, int fd[2])
 			free(line);
 			break ;
 		}
-		/*parser(line);
-		ft_fdprintf(fd[1], "%a\n", mshell()->input);
-		free_resources();*/
 		write(fd[1], line, ft_strlen(line));
 		write(fd[1], "\n", 1);
-		free(line); 
+		free(line);
 	}
 	close(fd[1]);
 	clean_exit(0);

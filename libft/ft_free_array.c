@@ -12,18 +12,18 @@
 
 #include "libft.h"
 
-void	*ft_free_array(char **strstr, size_t len)
+void	*ft_free_array(char **array, size_t len)
 {
 	size_t	i;
 
 	i = 0;
-	if (strstr)
+	if (array)
 	{
 		if (len <= 0)
-			len = ft_arraylen(strstr);
+			len = ft_arraylen(array);
 		while (i <= len)
-			free(strstr[i++]);
-		free(strstr);
+			free(array[i++]);
+		free(array);
 	}
 	return (NULL);
 }

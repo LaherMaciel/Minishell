@@ -100,6 +100,8 @@ char	*display_prompt(char *line)
 {
 	int	ret;
 
+	signal(SIGINT, sigint_handler);
+	signal(SIGQUIT, SIG_IGN);
 	while (1)
 	{
 		ret = get_input(&line, "minishell> ");
