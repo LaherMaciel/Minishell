@@ -1,25 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_realloc.c                                       :+:      :+:    :+:   */
+/*   ft_realloc_and_clear.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/23 12:38:04 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/05/23 12:39:56 by lahermaciel      ###   ########.fr       */
+/*   Created: 2025/07/21 14:48:11 by marvin            #+#    #+#             */
+/*   Updated: 2025/07/21 14:48:14 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/**
- * @brief Reallocate memory with safety checks
- * 
- * @param ptr Pointer to existing memory block
- * @param size New size to allocate
- * @return void* Pointer to reallocated memory, or NULL on failure
- */
-void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
+void	*ft_realloc_and_clear(void *ptr, size_t old_size, size_t new_size)
 {
 	void	*new_ptr;
 
@@ -29,7 +22,7 @@ void	*ft_realloc(void *ptr, size_t old_size, size_t new_size)
 			free(ptr);
 		return (NULL);
 	}
-	new_ptr = malloc(new_size);
+	new_ptr = ft_calloc(1, new_size);
 	if (!new_ptr)
 		return (NULL);
 	if (ptr)

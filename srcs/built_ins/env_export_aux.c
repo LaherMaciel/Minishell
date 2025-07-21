@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_export_aux.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 18:40:42 by lawences          #+#    #+#             */
-/*   Updated: 2025/07/19 20:21:59 by lawences         ###   ########.fr       */
+/*   Updated: 2025/07/21 18:43:02 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ t_export	*update_var(t_export *env, char *name, char *value)
 			else
 				env->value[i] = ft_strdup(value);
 			free(value);
+			free(name);
 			return (env);
 		}
 		i++;
@@ -37,25 +38,22 @@ t_export	*update_var(t_export *env, char *name, char *value)
 
 t_export	*adder(t_export *env, char *name, char *value, int flag)
 {
-	if (((value == NULL && flag) || ft_strlen(value) == 1))
-	{
-		if (value)
-			free(value);
-		value = NULL;
-		env->value = ft_append_to_array(env->value,
-				ft_arraylen(env->var_name) - 1, value, 1);
-	}
-	else
-	{
-		env->value = ft_append_to_array(env->value,
-				ft_arraylen(env->var_name) - 1, value, 1);
-	}
+	size_t	len;
+
+	(void)flag;
+	len = ft_arraylen(env->var_name);
+	env->var_name = ft_realloc_and_clear(env->var_name, sizeof(char *)
+			* (len + 1), sizeof(char *) * (len + 2));
+	if (!env->var_name)
+		return (ft_free_export_env(env));
+	env->value = ft_realloc_and_clear(env->value, sizeof(char *)
+			* (len + 1), sizeof(char *) * (len + 2));
 	if (!env->value)
 		return (ft_free_export_env(env));
-	env->var_name = ft_append_to_array(env->var_name,
-			ft_arraylen(env->var_name) - 1, name, 1);
-	if (!env->var_name)
-		ft_free_export_env(env);
+	env->var_name[len] = name;
+	env->var_name[len + 1] = NULL;
+	env->value[len] = value;
+	env->value[len + 1] = NULL;
 	return (env);
 }
 

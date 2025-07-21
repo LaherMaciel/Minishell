@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 22:25:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/07/19 20:12:57 by lawences         ###   ########.fr       */
+/*   Updated: 2025/07/21 18:43:02 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ t_export	*add_to_env(char *str)
 	t_export	*env;
 	char		*name;
 	char		*value;
+	char		*temp_value;
 
 	env = mshell()->env;
 	if (!env || !str)
@@ -28,7 +29,9 @@ t_export	*add_to_env(char *str)
 		name = ft_substr(str, 0, ft_strlen(str) - 1);
 	else
 	{
+		temp_value = value;
 		value = ft_strdup(value + 1);
+		free(temp_value);
 		name = ft_substr(str, 0, ft_strlen(str) - ft_strlen(value) - 1);
 	}
 	if (update_var(env, name, value))

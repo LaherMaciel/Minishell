@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/07 20:17:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/07/19 19:46:55 by lawences         ###   ########.fr       */
+/*   Updated: 2025/07/21 14:25:49 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,6 +129,7 @@ t_export	*add_to_export(char *str)
 	t_export	*expt;
 	char		*name;
 	char		*value;
+	char		*temp_value;
 
 	expt = mshell()->expt;
 	if (!expt || !str)
@@ -140,10 +141,12 @@ t_export	*add_to_export(char *str)
 		name = ft_substr(str, 0, ft_strlen(str) - 1);
 	else
 	{
+		temp_value = value;
 		value = ft_strdup(value + 1);
+		free(temp_value);
 		name = ft_substr(str, 0, ft_strlen(str) - ft_strlen(value) - 1);
 	}
-	if (update_var(expt, name, value))
+	if (update_var(mshell()->expt, name, value))
 		return (expt);
 	expt = adder(expt, name, value, 0);
 	return (expt);

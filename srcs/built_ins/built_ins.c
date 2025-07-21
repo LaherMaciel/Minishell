@@ -85,6 +85,7 @@ void	update_(char *command)
 	else
 		update_[1] = ft_strjoin2("_=", update_[1], 2);
 	ft_export(update_);
+	ft_free_array(update_, 0);
 }
 
 int	builtins(char **input)

@@ -132,7 +132,8 @@ char		**ft_rm_from_array(char **array, size_t arraylen, size_t index);
 char		*ft_strcpy(char *dest, char *src);
 char		**ft_append_to_array2(char **array, size_t arraylen,
 				char *str, int flag);
-void		*ft_realloc(void *ptr, size_t size);
+void		*ft_realloc(void *ptr, size_t old_size, size_t new_size);
+void		*ft_realloc_and_clear(void *ptr, size_t old_size, size_t new_size);
 int			ft_isspace(int c);
 
 char		*ft_putchar_shell(int c);
