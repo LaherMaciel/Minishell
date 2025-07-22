@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_executions.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/07/19 21:08:06 by lawences         ###   ########.fr       */
+/*   Updated: 2025/07/21 18:43:02 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	execute_simple_command(char **args, int infile, int outfile)
 	if (!args || !args[0])
 	{
 		mshell()->exit_status = 127;
-		exit(127);
+		clean_exit(127);
 	}
 	cmd_path = get_command_path(args[0]);
 	if (!cmd_path)

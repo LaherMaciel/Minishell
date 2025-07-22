@@ -30,5 +30,5 @@ void	sig_heredoc(int sig)
 	i = -1;
 	while (++i < FOPEN_MAX)
 		close(i);
-	exit(0);
+	clean_exit(0);
 }

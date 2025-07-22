@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_aux.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 14:42:36 by lawences          #+#    #+#             */
-/*   Updated: 2025/06/23 12:12:33 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/07/22 18:25:42 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,22 @@ char	**add_current(char **res, char **cur, int *k)
 
 void	aux_token(char **content, char *input, t_parsing *counts)
 {
+	char	*str;
+
+	str = NULL;
 	if ((counts->quote == 0 || counts->quote == 2)
-		&& input[counts->i + 1] == '?')
+		&& ft_strncmp("$?", input + counts->i, 2) == 0)
 	{
 		*content = ft_strjoin2(*content, ft_itoa(mshell()->exit_status), 3);
 		counts->i += 2;
+	}
+	if ((counts->quote == 0 || counts->quote == 2)
+		&& ft_strncmp("$_", input + counts->i, 2) == 0)
+	{
+		str = get_value("_");
+		*content = ft_strjoin2(*content, str, 1);
+		counts->i += 2;
+		free(str);
 	}
 }
 

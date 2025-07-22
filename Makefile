@@ -1,6 +1,6 @@
 NAME = minishell
 
-GCOMMANDS_C = command_executions.c redirections.c pipes.c child_process_tracker.c heredoc.c
+GCOMMANDS_C = command_executions.c redirections.c pipes.c child_process_tracker.c heredoc.c heredoc_utils.c heredoc_expand.c
 
 PROMPT_C = prompt.c get_path.c check_executable.c\
 
@@ -83,8 +83,10 @@ $(OBJECTS_DIRECTORY):
 	@mkdir -p $(OBJECTS_DIRECTORY)$(PARSER_DIRECTORY)
 	@echo "[" "$(GREEN)OK$(RESET)" "] | Objects ready!"
 
-$(OBJECTS_DIRECTORY)%.o : $(SRCS_DIRECTORY)%.c
+$(OBJECTS_DIRECTORY)%.o: $(SRCS_DIRECTORY)%.c $(HEADERS)
+	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $(INCLUDES) $< -o $@
+
 
 $(LIBFT):
 	@echo "[" "$(YELLOW)..$(RESET)" "] | Compiling libft..."

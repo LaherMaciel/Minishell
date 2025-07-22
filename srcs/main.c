@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:07:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/07/19 20:13:52 by lawences         ###   ########.fr       */
+/*   Updated: 2025/07/22 16:47:54 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
+#include <readline/readline.h>
+#include <readline/history.h>
 
 t_mshell	*mshell(void)
 {
@@ -29,7 +31,7 @@ void	init_shell(char **env)
 	mshell()->exit_status = 0;
 	mshell()->env = ft_calloc(sizeof(t_export), 1);
 	if (!mshell()->env)
-		exit(EXIT_FAILURE);
+		clean_exit(EXIT_FAILURE);
 	mshell()->expt = ft_calloc(sizeof(t_export), 1);
 	if (!mshell()->expt)
 		handle_error_and_exit(-2, "Failed to create export struct");
