@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:53:37 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/30 19:10:47 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/07/22 22:37:03 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	handle_output_redirection(char *input)
 	{
 		mshell()->outfile = STDOUT_FILENO;
 		ft_fdprintf(STDERR_FILENO, "minishell: %s: %s\n",
-			strerror(errno), input);
+			input, strerror(errno));
 		mshell()->exit_status = errno;
 		return (1);
 	}
@@ -73,8 +73,8 @@ static int	handle_append_redirection(char *input)
 	if (mshell()->outfile < 0)
 	{
 		mshell()->outfile = STDOUT_FILENO;
-		ft_fdprintf(STDERR_FILENO, "minishell: %s: ",
-			"%s\n", strerror(errno), input);
+		ft_fdprintf(STDERR_FILENO, "minishell: %s: %s\n",
+			input, strerror(errno));
 		mshell()->exit_status = errno;
 		return (1);
 	}

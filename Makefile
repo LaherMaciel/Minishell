@@ -4,7 +4,7 @@ GCOMMANDS_C = command_executions.c redirections.c pipes.c child_process_tracker.
 
 PROMPT_C = prompt.c get_path.c check_executable.c\
 
-BUILTINS_C =  built_ins.c export.c unset.c env.c env_aux.c exit.c exit_aux.c cd.c env_export_aux.c\
+BUILTINS_C =  built_ins.c built_ins_helpers.c export.c unset.c env.c env_aux.c exit.c exit_aux.c cd.c env_export_aux.c\
 
 UTILS_C = error_and_exit_handler.c utils.c cleans.c frees.c gets.c remove_indexs.c\
 

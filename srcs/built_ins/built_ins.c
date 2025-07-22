@@ -6,7 +6,7 @@
 /*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/25 16:05:32 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/07/19 21:08:16 by lawences         ###   ########.fr       */
+/*   Updated: 2025/07/19 21:08:16 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,28 +37,9 @@ int	builtin_echo(char **input)
 {
 	bool	n_flag;
 	int		i;
-	int		j;
 
-	n_flag = false;
-	i = 1;
-	while (input[i] && input[i][0] == '-' && input[i][1] == 'n')
-	{
-		j = 1;
-		while (input[i][j] == 'n')
-			j++;
-		if (input[i][j] == '\0')
-			n_flag = true;
-		else
-			break ;
-		i++;
-	}
-	while (input[i])
-	{
-		ft_fdprintf(mshell()->outfile, "%s", input[i]);
-		if (input[i + 1])
-			ft_fdprintf(mshell()->outfile, " ");
-		i++;
-	}
+	n_flag = echo_parse_n_flag(input, &i);
+	echo_print_args(input, i);
 	if (n_flag == false)
 		ft_fdprintf(mshell()->outfile, "\n");
 	mshell()->exit_status = 0;
@@ -82,22 +63,10 @@ void	update_(char *command)
 
 int	builtins(char **input)
 {
-	if (ft_strncmp(input[0], "cd", 0) == 0)
-		input[1] = change_directory(input[1]);
-	else if (ft_strncmp(input[0], "pwd", 0) == 0)
-		builtin_pwd();
-	else if (ft_strcmp(input[0], "echo") == 0)
-		builtin_echo(input);
-	else if (ft_strcmp(input[0], "env") == 0)
-		ft_env(input);
-	else if (ft_strcmp(input[0], "export") == 0)
-		ft_export(input);
-	else if (ft_strcmp(input[0], "unset") == 0)
-		ft_unset(input, 1);
-	else if (ft_strcmp(input[0], "exit") == 0)
-		builtin_exit(input);
-	else
-		return (0);
-	update_(input[0]);
-	return (1);
+	int	ret;
+
+	ret = builtins_dispatch(input);
+	if (ret)
+		update_(input[0]);
+	return (ret);
 }

@@ -115,6 +115,7 @@ void		update_shlvl(void);
 int			check_var_name(char *var_name);
 void		start_no_env(void);
 t_export	*adder(t_export *env, char *var_name, char *var_value, int flag);
+int			builtins_dispatch(char **input);
 
 //signals
 void		sigint_handler(int sig);
@@ -182,7 +183,9 @@ t_parsing	*process_token_lst(t_pars_lst **lst,
 
 //main
 t_mshell	*mshell(void);
-void	free_mshell(void);
-void	clean_exit(int status);
+void		free_mshell(void);
+void		clean_exit(int status);
+bool		echo_parse_n_flag(char **input, int *i);
+void		echo_print_args(char **input, int i);
 
 #endif

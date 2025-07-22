@@ -6,7 +6,7 @@
 /*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 09:26:31 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/07/13 20:28:46 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/07/22 22:29:39 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,19 @@ static void	child_handling(int pipefd[2], char **aux)
 	{
 		if (dup2(mshell()->infile, STDIN_FILENO) < 0)
 			handle_error_and_exit(-1, "pipe dup2 failed for input_fd");
-		close(mshell()->infile);
 	}
 	if (mshell()->outfile != STDOUT_FILENO)
 	{
 		if (dup2(mshell()->outfile, STDOUT_FILENO) < 0)
 			handle_error_and_exit(-1, "pipe dup2 failed for output_fd");
-		close(mshell()->outfile);
 	}
 	if (builtins(aux))
 	{
 		ft_free_array(aux, 0);
 		clean_exit(mshell()->exit_status);
 	}
+	close(mshell()->infile);
+	close(mshell()->outfile);
 	execute_simple_command(aux, mshell()->infile, mshell()->outfile);
 }
 
