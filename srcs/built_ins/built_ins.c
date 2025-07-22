@@ -33,17 +33,6 @@ int	builtin_pwd(void)
 	return (0);
 }
 
-/*
-	if (input[1] != NULL && ft_strcmp(input[1], "-n") == 0)
-	{
-		while (input)
-		{
-			
-		}
-		n_flag = true;
-		i++;
-	}
-*/
 int	builtin_echo(char **input)
 {
 	bool	n_flag;
@@ -52,22 +41,25 @@ int	builtin_echo(char **input)
 
 	n_flag = false;
 	i = 1;
-	while (input[i] != NULL && ft_strncmp(input[i], "-n", 2) == 0)
+	while (input[i] && input[i][0] == '-' && input[i][1] == 'n')
 	{
-		j = 0;
+		j = 1;
 		while (input[i][j] == 'n')
 			j++;
-		n_flag = true;
+		if (input[i][j] == '\0')
+			n_flag = true;
+		else
+			break ;
 		i++;
 	}
 	while (input[i])
 	{
-		ft_fdprintf(mshell()->outfile, "%s", input[i] + j);
-		if (input[++i] != NULL)
+		ft_fdprintf(mshell()->outfile, "%s", input[i]);
+		if (input[i + 1])
 			ft_fdprintf(mshell()->outfile, " ");
-		j = 0;
+		i++;
 	}
-	if (!n_flag)
+	if (n_flag == false)
 		ft_fdprintf(mshell()->outfile, "\n");
 	mshell()->exit_status = 0;
 	return (0);

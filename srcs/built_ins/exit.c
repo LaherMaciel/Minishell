@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 13:16:26 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/16 17:15:42 by lawences         ###   ########.fr       */
+/*   Updated: 2025/07/22 18:50:36 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,24 +60,31 @@ static void	builtin_ex_aux(char **input)
 
 void	builtin_exit(char **input)
 {
+	int status;
+
 	ft_printf("exit\n");
-	if (input[1])
+	if (!input[1])
 	{
-		if (!is_valid_exit_code(input[1]))
-		{
-			ft_fdprintf(STDERR_FILENO, "minishell: exit: %s: numeric"
-				" argument required\n", input[1]);
-			ft_free_array(input, 0);
-			clean_exit(2);
-		}
-		if (ft_arraylen(input) > 2)
-		{
-			ft_fdprintf(STDERR_FILENO, "minishell: exit: too many arguments\n");
-			mshell()->exit_status = 1;
-			return ;
-		}
-		builtin_ex_aux(input);
+		status = mshell()->exit_status;
+		ft_free_array(input, 0);
+		clean_exit(status);
 	}
+	if (!is_valid_exit_code(input[1]))
+	{
+		ft_fdprintf(STDERR_FILENO, "minishell: exit: %s: numeric" 
+				" argument required\n", input[1]);
+		ft_free_array(input, 0);
+		clean_exit(2);
+	}
+	if (input[2])
+	{
+		ft_fdprintf(STDERR_FILENO, "minishell: exit: too many arguments\n");
+		mshell()->exit_status = 1;
+		ft_free_array(input, 0);
+		return ;
+	}
+	builtin_ex_aux(input);
+	status = mshell()->exit_status;
 	ft_free_array(input, 0);
-	clean_exit(mshell()->exit_status);
+	clean_exit(status);
 }
