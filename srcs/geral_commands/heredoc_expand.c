@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc_expand.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/07/22 17:43:18 by marvin            #+#    #+#             */
-/*   Updated: 2025/07/22 17:43:21 by marvin           ###   ########.fr       */
+/*   Created: 2025/07/22 17:43:18 by lahermaciel       #+#    #+#             */
+/*   Updated: 2025/07/23 13:53:43 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
