@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/12 22:25:54 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/07/21 18:43:02 by marvin           ###   ########.fr       */
+/*   Updated: 2025/07/25 18:38:19 by lawences         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,6 @@ void	ft_env(char **input)
 			i++;
 		}
 	}
-	else
-		ft_fdprintf(mshell()->outfile, "\ninput: %t\n", input);
 	mshell()->exit_status = 0;
 }
 

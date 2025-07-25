@@ -1,6 +1,6 @@
 NAME = minishell
 
-GCOMMANDS_C = command_executions.c redirections.c pipes.c child_process_tracker.c heredoc.c heredoc_utils.c heredoc_expand.c
+GCOMMANDS_C = command_executions.c redirections.c pipes.c child_process_tracker.c heredoc.c heredoc_expand.c
 
 PROMPT_C = prompt.c get_path.c check_executable.c\
 

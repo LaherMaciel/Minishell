@@ -85,10 +85,13 @@ void		run_command(char **args, int infile, int outfile);
 void		execute_simple_command(char **args, int infile, int outfile);
 void		add_child_pid(pid_t pid);
 void		free_child_pids(void);
-int			handle_heredoc(char *delimiter, int fd[2]);
+int			handle_heredoc(char *delimiter, int fd[2], int is_quoted);
 void		aux_ex_cmnd_loop(int index);
 void		update_(char *command);
 void		wait_for_childs(void);
+char		*expand_heredoc_vars(const char *line);
+int			check_delimiter(char *delimiter);
+
 
 //BUILT-INS
 int			builtin_cd(char *input);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirections.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/14 18:53:37 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/07/22 22:37:03 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/07/25 17:14:37 by lawences         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,8 @@ int	redirection_operators_handler(int index)
 
 	value = 0;
 	if (ft_strcmp(mshell()->input[index], "<<") == 0)
-		value = handle_heredoc(mshell()->input[index + 1], fd);
+		value = handle_heredoc(mshell()->input[index + 1], fd,
+				mshell()->quoted[index + 1]);
 	else if (ft_strcmp(mshell()->input[index], "<") == 0)
 		value = handle_input_redirection(mshell()->input[index + 1]);
 	else if (ft_strcmp(mshell()->input[index], ">>") == 0)

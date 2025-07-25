@@ -6,7 +6,7 @@
 /*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:59:35 by karocha-          #+#    #+#             */
-/*   Updated: 2025/07/19 20:20:04 by lawences         ###   ########.fr       */
+/*   Updated: 2025/07/25 18:59:53 by lawences         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ int	check_bad_specials(void)
 		{
 			if (ft_strcmp(mshell()->input[i + 1], "|") == 0)
 			{
-				ft_printf("minishell: syntax error"
+				ft_printf("minishell: syntax error "
 					"near unexpected token `%s'\n", mshell()->input[i + 1]);
 				mshell()->exit_status = 2;
 				return (1);
