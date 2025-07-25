@@ -80,8 +80,8 @@ int	check_bad_specials(void)
 	while (mshell()->input[++i])
 	{
 		if ((ft_strcmp(mshell()->input[i], "<<") == 0
-			|| ft_strcmp(mshell()->input[i], ">>") == 0
-			|| ft_strcmp(mshell()->input[i], "<") == 0)
+				|| ft_strcmp(mshell()->input[i], ">>") == 0
+				|| ft_strcmp(mshell()->input[i], "<") == 0)
 			&& mshell()->quoted[i])
 		{
 			if (ft_strcmp(mshell()->input[i + 1], "|") == 0

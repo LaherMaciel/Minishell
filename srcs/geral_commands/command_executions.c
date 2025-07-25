@@ -44,8 +44,6 @@ void	execute_simple_command(char **args, int infile, int outfile)
 		close(infile);
 	if (outfile != STDOUT_FILENO)
 		close(outfile);
-	signal(SIGINT, SIG_DFL);
-	signal(SIGQUIT, SIG_DFL);
 	env = default_env();
 	execve(cmd_path, args, env);
 	cmd_path = free_if_fail(env, args, cmd_path);

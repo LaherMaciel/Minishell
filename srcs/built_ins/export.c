@@ -41,21 +41,22 @@ t_export	*export_sorter(void)
 	return (expt);
 }
 
-void	exp_loop(int i, char **input)
+void	exp_loop(int i, char **input, char	*aux)
 {
-	char	*aux;
-
 	if (!input || !input[1] || !input[1][0])
 		return ;
-	if (!ft_isalpha(input[1][0]) && input[1][0] != '_')
+	if (!is_valid_identifier(input[1]))
 	{
-		ft_fdprintf(mshell()->outfile, "export: `%s': not a valid identifier\n",
-			input[1]);
-		mshell()->exit_status = 1;
+		export_error(input[1]);
 		return ;
 	}
 	while (input[++i])
 	{
+		if (!is_valid_identifier(input[i]))
+		{
+			export_error(input[i]);
+			return ;
+		}
 		aux = ft_strnstr(input[i], "=", ft_strlen(input[i]));
 		if (aux && aux[0] == '=')
 		{
@@ -91,7 +92,7 @@ void	ft_export(char **input)
 		}
 	}
 	else
-		exp_loop(++i, input);
+		exp_loop(++i, input, "");
 	mshell()->exit_status = 0;
 }
 
@@ -129,22 +130,21 @@ t_export	*add_to_export(char *str)
 	t_export	*expt;
 	char		*name;
 	char		*value;
-	char		*temp_value;
+	char		*equal_sign;
 
 	expt = mshell()->expt;
 	if (!expt || !str)
 		return (NULL);
-	value = ft_strdup(ft_strnstr(str, "=", ft_strlen(str)));
-	if (!value)
+	equal_sign = ft_strchr(str, '=');
+	if (!equal_sign)
+	{
 		name = ft_strdup(str);
-	else if (ft_strlen(value) == 1)
-		name = ft_substr(str, 0, ft_strlen(str) - 1);
+		value = NULL;
+	}
 	else
 	{
-		temp_value = value;
-		value = ft_strdup(value + 1);
-		free(temp_value);
-		name = ft_substr(str, 0, ft_strlen(str) - ft_strlen(value) - 1);
+		name = ft_substr(str, 0, equal_sign - str);
+		value = ft_strdup(equal_sign + 1);
 	}
 	if (update_var(mshell()->expt, name, value))
 		return (expt);

@@ -23,8 +23,8 @@ t_export	*update_var(t_export *env, char *name, char *value)
 		{
 			if (env->value[i])
 				free(env->value[i]);
-			if (ft_strlen(value) == 1)
-				env->value[i] = NULL;
+			if (value[0] == '\0')
+				env->value[i] = ft_strdup("");
 			else
 				env->value[i] = ft_strdup(value);
 			free(value);

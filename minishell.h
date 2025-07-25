@@ -92,7 +92,6 @@ void		wait_for_childs(void);
 char		*expand_heredoc_vars(const char *line);
 int			check_delimiter(char *delimiter);
 
-
 //BUILT-INS
 int			builtin_cd(char *input);
 int			builtin_pwd(void);
@@ -119,6 +118,8 @@ int			check_var_name(char *var_name);
 void		start_no_env(void);
 t_export	*adder(t_export *env, char *var_name, char *var_value, int flag);
 int			builtins_dispatch(char **input);
+int			is_valid_identifier(const char *str);
+void		export_error(const char *str);
 
 //signals
 void		sigint_handler(int sig);
@@ -139,7 +140,7 @@ char		**pipe_dupped_arr(int index);
 int			word_size(char *str);
 char		*get_varname(char *value);
 char		*get_varname2(char *var_name);
-void		exp_loop(int i, char **input);
+void		exp_loop(int i, char **input, char *aux);
 bool		is_valid_exit_code(const char *str);
 int			normalize_exit_status(int status);
 int			ft_safe_atoi(char *str, bool *overflow);

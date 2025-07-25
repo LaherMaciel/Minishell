@@ -17,22 +17,21 @@ t_export	*add_to_env(char *str)
 	t_export	*env;
 	char		*name;
 	char		*value;
-	char		*temp_value;
+	char		*equal_sign;
 
 	env = mshell()->env;
 	if (!env || !str)
 		return (NULL);
-	value = ft_strdup(ft_strnstr(str, "=", ft_strlen(str)));
-	if (!value)
+	equal_sign = ft_strchr(str, '=');
+	if (!equal_sign)
+	{
 		name = ft_strdup(str);
-	else if (ft_strlen(value) == 1)
-		name = ft_substr(str, 0, ft_strlen(str) - 1);
+		value = NULL;
+	}
 	else
 	{
-		temp_value = value;
-		value = ft_strdup(value + 1);
-		free(temp_value);
-		name = ft_substr(str, 0, ft_strlen(str) - ft_strlen(value) - 1);
+		name = ft_substr(str, 0, equal_sign - str);
+		value = ft_strdup(equal_sign + 1);
 	}
 	if (update_var(env, name, value))
 		return (env);
@@ -49,7 +48,8 @@ void	ft_env(char **input)
 	{
 		while (mshell()->env->var_name[i])
 		{
-			if (mshell()->env->value[i] != NULL)
+			if (mshell()->env->value[i] != NULL
+				&& mshell()->env->value[i][0] != '\0')
 				ft_fdprintf(mshell()->outfile, "%s=%s\n",
 					mshell()->env->var_name[i],
 					mshell()->env->value[i]);
