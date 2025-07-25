@@ -6,7 +6,7 @@
 /*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:59:35 by karocha-          #+#    #+#             */
-/*   Updated: 2025/07/25 18:59:53 by lawences         ###   ########.fr       */
+/*   Updated: 2025/07/25 21:05:19 by lawences         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,11 +79,13 @@ int	check_bad_specials(void)
 	i = -1;
 	while (mshell()->input[++i])
 	{
-		if (ft_strcmp(mshell()->input[i], "<<") == 0
+		if ((ft_strcmp(mshell()->input[i], "<<") == 0
 			|| ft_strcmp(mshell()->input[i], ">>") == 0
 			|| ft_strcmp(mshell()->input[i], "<") == 0)
+			&& mshell()->quoted[i])
 		{
-			if (ft_strcmp(mshell()->input[i + 1], "|") == 0)
+			if (ft_strcmp(mshell()->input[i + 1], "|") == 0
+				&& mshell()->quoted[i])
 			{
 				ft_printf("minishell: syntax error "
 					"near unexpected token `%s'\n", mshell()->input[i + 1]);
