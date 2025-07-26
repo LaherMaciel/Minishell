@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_path.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/14 14:19:52 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/06/30 18:36:28 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/07/26 16:59:51 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ char	*get_command_path(char *cmd)
 	char	*path_env;
 	char	*full_path;
 
+	if (!cmd)
+		return (NULL);
 	path_env = get_value("PATH");
 	if (!path_env)
 		return (check_absolute_path(cmd));

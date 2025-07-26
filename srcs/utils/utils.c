@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 16:59:35 by karocha-          #+#    #+#             */
-/*   Updated: 2025/07/25 21:05:19 by lawences         ###   ########.fr       */
+/*   Updated: 2025/07/26 17:05:51 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,20 +72,46 @@ static int	aux_check(int i)
 	return (0);
 }
 
+static int	pipe_err(void)
+{
+	int	i;
+
+	if (!mshell()->input || !mshell()->input[0])
+		return (1);
+	i = ft_arraylen(mshell()->input);
+	if (ft_strcmp(mshell()->input[0], "|") == 0 && !mshell()->quoted[0])
+	{
+		ft_fdprintf(STDERR_FILENO, "minishell: "
+			"syntax error near unexpected token `|'\n");
+		mshell()->exit_status = 2;
+		return (1);
+	}
+	if (ft_strcmp(mshell()->input[i - 1], "|") == 0 && !mshell()->quoted[i - 1])
+	{
+		ft_fdprintf(STDERR_FILENO, "minishell: "
+			"can't handle open pipes\n");
+		mshell()->exit_status = 2;
+		return (1);
+	}
+	return (0);
+}
+
 int	check_bad_specials(void)
 {
 	int	i;
 
 	i = -1;
+	if (pipe_err())
+		return (1);
 	while (mshell()->input[++i])
 	{
 		if ((ft_strcmp(mshell()->input[i], "<<") == 0
 				|| ft_strcmp(mshell()->input[i], ">>") == 0
 				|| ft_strcmp(mshell()->input[i], "<") == 0)
-			&& mshell()->quoted[i])
+			&& !mshell()->quoted[i])
 		{
 			if (ft_strcmp(mshell()->input[i + 1], "|") == 0
-				&& mshell()->quoted[i])
+				&& !mshell()->quoted[i + 1])
 			{
 				ft_printf("minishell: syntax error "
 					"near unexpected token `%s'\n", mshell()->input[i + 1]);

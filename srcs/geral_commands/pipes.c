@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/23 09:26:31 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/07/22 22:29:39 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/07/26 14:24:50 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,15 @@ static void	child_handling(int pipefd[2], char **aux)
 		if (dup2(mshell()->outfile, STDOUT_FILENO) < 0)
 			handle_error_and_exit(-1, "pipe dup2 failed for output_fd");
 	}
-	if (builtins(aux))
+	if (aux && builtins(aux))
 	{
 		ft_free_array(aux, 0);
 		clean_exit(mshell()->exit_status);
 	}
-	close(mshell()->infile);
-	close(mshell()->outfile);
+	if (mshell()->infile != STDIN_FILENO)
+		close(mshell()->infile);
+	if (mshell()->outfile != STDOUT_FILENO)
+		close(mshell()->outfile);
 	execute_simple_command(aux, mshell()->infile, mshell()->outfile);
 }
 
@@ -85,19 +87,14 @@ char	**pipe_dupped_arr(int index)
 	int		i;
 
 	aux = NULL;
-	if (index <= 0)
-	{
-		ft_fdprintf(STDERR_FILENO, "minishell: "
-			"syntax error near unexpected token `|'\n");
-		return (NULL);
-	}
 	if (!mshell()->input || index >= (int) ft_arraylen(mshell()->input))
 		return (NULL);
 	rm_index(index);
+	if (index == 0)
+		return (NULL);
 	i = -1;
 	while (++i < index)
-		if (mshell()->input_v[i] == 1
-			|| mshell()->input_v[i] == 2)
+		if (mshell()->input_v[i] == 1 || mshell()->input_v[i] == 2)
 			aux = ft_append_to_array2(aux, 0, mshell()->input[i], 1);
 	if (!aux)
 		return (NULL);
@@ -112,11 +109,6 @@ int	pipe_handler(int index)
 	if (ft_strcmp(mshell()->input[index], "|") == 0)
 	{
 		aux = pipe_dupped_arr(index);
-		if (!aux || !aux[0])
-		{
-			mshell()->exit_status = 2;
-			return (1);
-		}
 		piper(aux);
 		ft_free_array(aux, 0);
 	}

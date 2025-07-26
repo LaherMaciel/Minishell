@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   gets.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 19:28:44 by karocha-          #+#    #+#             */
-/*   Updated: 2025/07/21 18:43:02 by marvin           ###   ########.fr       */
+/*   Updated: 2025/07/26 17:07:01 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ char	*get_value(char *var_name)
 	while (env->var_name && env->var_name[i])
 	{
 		if (ft_strncmp(env->var_name[i], var_name,
-				word_size(var_name)) == 0)
+				word_size(var_name)) == 0
+			&& ft_strcmp(env->value[i], "") != 0)
 			return (ft_strdup(env->value[i]));
 		i++;
 	}
@@ -89,7 +90,8 @@ int	get_value2(char *var_name)
 	while (env->var_name && env->var_name[i])
 	{
 		if (ft_strncmp(env->var_name[i], var_name,
-				ft_strlen(env->var_name[i])) == 0)
+				ft_strlen(env->var_name[i])) == 0
+			&& ft_strcmp(env->value[i], "") != 0)
 			return (1);
 		i++;
 	}

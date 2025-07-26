@@ -51,6 +51,8 @@ void	update_(char *command)
 	char	**update_;
 	int		exit_code;
 
+	if (!command)
+		command = NULL;
 	exit_code = mshell()->exit_status;
 	update_ = ft_calloc(3, sizeof(char *));
 	update_[0] = ft_strdup("export");
@@ -61,7 +63,12 @@ void	update_(char *command)
 	if (!update_[1])
 		update_[1] = ft_strjoin2("_=", command, 0);
 	else
-		update_[1] = ft_strjoin2("_=", update_[1], 2);
+	{
+		if (update_[1])
+			update_[1] = ft_strjoin2("_=", update_[1], 2);
+		else
+			update_[1] = ft_strjoin2("_=", update_[1], 0);
+	}
 	ft_export(update_);
 	ft_free_array(update_, 0);
 	mshell()->exit_status = exit_code;

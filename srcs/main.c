@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:07:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/07/26 12:25:56 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/07/26 12:35:17 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	main(int argv, char **argc, char **env)
 	line = NULL;
 	init_shell(env);
 	if (isatty(STDIN_FILENO))
-		display_prompt();
+		display_prompt(line);
 	else
 	{
 		line = get_next_line(STDIN_FILENO);

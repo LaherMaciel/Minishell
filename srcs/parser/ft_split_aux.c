@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split_aux.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
+/*   By: karocha- <karocha-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/19 14:42:36 by lawences          #+#    #+#             */
-/*   Updated: 2025/07/26 10:50:13 by lahermaciel      ###   ########.fr       */
+/*   Updated: 2025/07/26 17:06:43 by karocha-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	aux_token(char **content, char *input, t_parsing *counts)
 		counts->i += 2;
 	}
 	if ((counts->quote == 0 || counts->quote == 2)
-		&& ft_strncmp("$_", input + counts->i, 2) == 0)
+		&& ft_strcmp("$_", input + counts->i) == 0)
 	{
 		str = get_value("_");
 		*content = ft_strjoin2(*content, str, 1);
@@ -64,7 +64,8 @@ int	word_size(char *str)
 	int	i;
 
 	i = 0;
-	while (str[i] && (ft_isalpha(str[i]) || ft_isdigit(str[i])))
+	while (str[i] && (ft_isalpha(str[i]) || ft_isdigit(str[i])
+			|| str[i] == '_'))
 		i++;
 	return (i);
 }
