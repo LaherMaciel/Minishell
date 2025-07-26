@@ -49,23 +49,45 @@ int	builtin_echo(char **input)
 void	update_(char *command)
 {
 	char	**update_;
+	int		exit_code;
 
+	exit_code = mshell()->exit_status;
 	update_ = ft_calloc(3, sizeof(char *));
 	update_[0] = ft_strdup("export");
-	update_[1] = get_command_path(command);
+	if (is_builtin(command))
+		update_[1] = ft_strdup(command);
+	else
+		update_[1] = get_command_path(command);
 	if (!update_[1])
 		update_[1] = ft_strjoin2("_=", command, 0);
 	else
 		update_[1] = ft_strjoin2("_=", update_[1], 2);
 	ft_export(update_);
 	ft_free_array(update_, 0);
+	mshell()->exit_status = exit_code;
 }
 
 int	builtins(char **input)
 {
 	int	ret;
 
-	ret = builtins_dispatch(input);
+	ret = 1;
+	if (ft_strncmp(input[0], "cd", 0) == 0)
+		input[1] = change_directory(input[1]);
+	else if (ft_strncmp(input[0], "pwd", 0) == 0)
+		builtin_pwd();
+	else if (ft_strcmp(input[0], "echo") == 0)
+		builtin_echo(input);
+	else if (ft_strcmp(input[0], "env") == 0)
+		ft_env(input);
+	else if (ft_strcmp(input[0], "export") == 0)
+		ft_export(input);
+	else if (ft_strcmp(input[0], "unset") == 0)
+		ft_unset(input, 1);
+	else if (ft_strcmp(input[0], "exit") == 0)
+		builtin_exit(input);
+	else
+		ret = 0;
 	if (ret)
 		update_(input[0]);
 	return (ret);

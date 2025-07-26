@@ -87,10 +87,8 @@ void		add_child_pid(pid_t pid);
 void		free_child_pids(void);
 int			handle_heredoc(char *delimiter, int fd[2], int is_quoted);
 void		aux_ex_cmnd_loop(int index);
-void		update_(char *command);
-void		wait_for_childs(void);
 char		*expand_heredoc_vars(const char *line);
-int			check_delimiter(char *delimiter);
+void		wait_for_childs(void);
 
 //BUILT-INS
 int			builtin_cd(char *input);
@@ -116,10 +114,12 @@ void		builtin_exit(char **input);
 void		update_shlvl(void);
 int			check_var_name(char *var_name);
 void		start_no_env(void);
-t_export	*adder(t_export *env, char *var_name, char *var_value, int flag);
-int			builtins_dispatch(char **input);
+void		update_(char *command);
+bool		echo_parse_n_flag(char **input, int *i);
+void		echo_print_args(char **input, int i);
 int			is_valid_identifier(const char *str);
 void		export_error(const char *str);
+t_export	*adder(t_export *env, char *name, char *value, int flag);
 
 //signals
 void		sigint_handler(int sig);
@@ -129,7 +129,7 @@ void		sig_heredoc(int sig);
 int			create_child_process(void);
 void		handle_error_and_exit(int error, char *message);
 void		handle_error_and_exit(int error, char *message);
-t_export	*update_var(t_export *env, char *var_name, char *var_value);
+t_export	*update_var(t_export *env, char *name, char *value);
 int			high_priority(void);
 void		rm_index(int index);
 void		rm_indexs(int index1, int index2);
@@ -140,7 +140,7 @@ char		**pipe_dupped_arr(int index);
 int			word_size(char *str);
 char		*get_varname(char *value);
 char		*get_varname2(char *var_name);
-void		exp_loop(int i, char **input, char *aux);
+void		exp_loop(int i, char **input, char	*aux);
 bool		is_valid_exit_code(const char *str);
 int			normalize_exit_status(int status);
 int			ft_safe_atoi(char *str, bool *overflow);
@@ -150,6 +150,7 @@ void		reset_infile(int fd);
 void		clean_exit(int exit_status);
 void		clean_resource(void);
 void		print_input(int flag, size_t i);
+void		clean_trash(void);
 char		*free_if_fail(char **env, char **args, char *cmd_path);
 int			check_bad_specials(void);
 
@@ -188,8 +189,5 @@ t_parsing	*process_token_lst(t_pars_lst **lst,
 //main
 t_mshell	*mshell(void);
 void		free_mshell(void);
-void		clean_exit(int status);
-bool		echo_parse_n_flag(char **input, int *i);
-void		echo_print_args(char **input, int i);
 
 #endif

@@ -4,12 +4,12 @@ GCOMMANDS_C = command_executions.c redirections.c pipes.c child_process_tracker.
 
 PROMPT_C = prompt.c get_path.c check_executable.c\
 
-BUILTINS_C =  built_ins.c built_ins_helpers.c export.c unset.c env.c env_aux.c exit.c exit_aux.c cd.c env_export_aux.c export_aux.c\
+BUILTINS_C =  built_ins.c built_ins_helpers.c export.c export_aux.c env_export_aux.c unset.c env.c env_aux.c exit.c exit_aux.c cd.c\
 
-UTILS_C = error_and_exit_handler.c utils.c cleans.c frees.c gets.c remove_indexs.c\
+UTILS_C = error_and_exit_handler.c utils.c gets.c frees.c cleans.c remove_indexs.c\
 
 PARSER_C = parser.c split_out_quotes.c ft_strjoin3.c its_what.c\
-			ft_lstutils.c ft_lstutils2.c ft_split_aux.c ft_split_shell_lst.c ft_split_aux2.c
+			ft_lstutils.c ft_lstutils2.c ft_split_aux.c ft_split_shell_lst.c aux_split_list.c
 
 
 LIBFT_DIRECTORY = libft/
@@ -49,11 +49,10 @@ OBJECTS_DIRECTORY = objects/
 OBJECTS = $(addprefix $(OBJECTS_DIRECTORY), $(OBJECT_LIST))
 
 CC = cc
-READLINE_CFLAGS = $(shell pkg-config --cflags readline)
-CFLAGS = -g -Wall -Werror -Wextra $(READLINE_CFLAGS) #-fsanitize=address
+CFLAGS = -g -Wall -Werror -Wextra #-fsanitize=address
 
 LIBS = -L$(LIBFT_DIRECTORY) -lft -lreadline -ltermcap
-INCLUDES = -I./srcs -I./libft/
+INCLUDES = -I./srcs -I./libft/ -I/usr/include/readline
 
 
 # COLORS
@@ -83,10 +82,8 @@ $(OBJECTS_DIRECTORY):
 	@mkdir -p $(OBJECTS_DIRECTORY)$(PARSER_DIRECTORY)
 	@echo "[" "$(GREEN)OK$(RESET)" "] | Objects ready!"
 
-$(OBJECTS_DIRECTORY)%.o: $(SRCS_DIRECTORY)%.c $(HEADERS)
-	@mkdir -p $(dir $@)
+$(OBJECTS_DIRECTORY)%.o : $(SRCS_DIRECTORY)%.c
 	@$(CC) $(CFLAGS) -c $(INCLUDES) $< -o $@
-
 
 $(LIBFT):
 	@echo "[" "$(YELLOW)..$(RESET)" "] | Compiling libft..."
@@ -143,8 +140,8 @@ VALGRIND_FLAGS += --suppressions=$(DEFAULT_SUPP)
 endif
 
 VALGRIND_FULL_FLAGS = $(VALGRIND_FLAGS) \
-                      --track-origins=yes \
-                      #--trace-children=yes
+                      --trace-children=yes \
+                      --track-origins=yes
 
 val: $(NAME)
 	valgrind $(VALGRIND_FLAGS) ./$(NAME)

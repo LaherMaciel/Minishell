@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/23 15:07:03 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/07/22 16:47:54 by marvin           ###   ########.fr       */
+/*   Updated: 2025/07/26 12:25:56 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../minishell.h"
-#include <readline/readline.h>
-#include <readline/history.h>
 
 t_mshell	*mshell(void)
 {
@@ -58,7 +56,7 @@ int	main(int argv, char **argc, char **env)
 	line = NULL;
 	init_shell(env);
 	if (isatty(STDIN_FILENO))
-		display_prompt(NULL);
+		display_prompt();
 	else
 	{
 		line = get_next_line(STDIN_FILENO);

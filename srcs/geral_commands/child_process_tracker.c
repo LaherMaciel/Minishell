@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_process_tracker.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lawences <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/26 13:37:12 by lahermaciel       #+#    #+#             */
-/*   Updated: 2025/07/19 20:11:41 by lawences         ###   ########.fr       */
+/*   Updated: 2025/07/26 11:56:06 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
