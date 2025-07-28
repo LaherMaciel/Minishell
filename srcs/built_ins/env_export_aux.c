@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_export_aux.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lahermaciel <lahermaciel@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/19 18:40:42 by lawences          #+#    #+#             */
-/*   Updated: 2025/07/21 18:43:02 by marvin           ###   ########.fr       */
+/*   Updated: 2025/07/28 14:28:02 by lahermaciel      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ t_export	*update_var(t_export *env, char *name, char *value)
 			else
 				env->value[i] = ft_strdup(value);
 			free(value);
+			free(name);
+			return (env);
+		}
+		if (ft_strcmp(env->var_name[i], name) == 0 && value == NULL)
+		{
 			free(name);
 			return (env);
 		}

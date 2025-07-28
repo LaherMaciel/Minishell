@@ -1,4 +1,4 @@
-ERR 1: utils. L6-7 wasnt there
+ERROR 1: FILE utils.c: Needed to add line L6-7
 static int	pipe_err(void)
 {
 	int	i;
@@ -23,7 +23,7 @@ static int	pipe_err(void)
 	return (0);
 }
 
-ERR 2: protection to a "" 
+ERROR 2: FILE gets.c: if of line 38 need protection to a "" (empty string)
 char	*get_value(char *var_name)
 {
 	t_export	*env;
@@ -44,7 +44,7 @@ char	*get_value(char *var_name)
 	return (NULL);
 }
 
-ERR 3 missing str[i == '_']
+ERROR 3: FILE ft_split_aux.c: missing str[i] == '_' in the while loop line 53/54
 int	word_size(char *str)
 {
 	int	i;
@@ -56,7 +56,7 @@ int	word_size(char *str)
 	return (i);
 }
 
-ERR 4 L72, use strcmp not strNcmp
+ERROR 4: FILE ft_split_aux.c: Line 71/72, Needed strcmp not strNcmp
 void	aux_token(char **content, char *input, t_parsing *counts)
 {
 	char	*str;
@@ -76,4 +76,34 @@ void	aux_token(char **content, char *input, t_parsing *counts)
 		counts->i += 2;
 		free(str);
 	}
+}
+
+ERROR 5: File env_export_aux.c: Needed to add line 101 to 105
+t_export	*update_var(t_export *env, char *name, char *value)
+{
+	int	i;
+
+	i = 0;
+	while (env->var_name && env->var_name[i])
+	{
+		if (ft_strcmp(env->var_name[i], name) == 0 && value != NULL)
+		{
+			if (env->value[i])
+				free(env->value[i]);
+			if (value[0] == '\0')
+				env->value[i] = ft_strdup("");
+			else
+				env->value[i] = ft_strdup(value);
+			free(value);
+			free(name);
+			return (env);
+		}
+		if (ft_strcmp(env->var_name[i], name) == 0 && value == NULL)
+		{
+			free(name);
+			return (env);
+		}
+		i++;
+	}
+	return (NULL);
 }
