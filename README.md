@@ -2,7 +2,6 @@
 
 [![42](https://img.shields.io/badge/42-Project-blue)](https://42.fr)
 [![C](https://img.shields.io/badge/Language-C-0052CC?style=flat&logo=c)](https://en.wikipedia.org/wiki/C_(programming_language))
-[![License](https://img.shields.io/badge/License-MIT-green.svg)](https://opensource.org/licenses/MIT)
 [![Code Style](https://img.shields.io/badge/Code%20Style-42%20Norminette-blue)](https://github.com/42School/norminette)
 
 A minimal shell implementation in C that replicates core functionality of bash, built as part of the 42 curriculum.
@@ -16,8 +15,6 @@ A minimal shell implementation in C that replicates core functionality of bash, 
 - [Supported Features](#-supported-features)
 - [Testing](#-testing)
 - [Project Structure](#-project-structure)
-- [Contributing](#-contributing)
-- [License](#-license)
 
 ## ✨ Features
 
@@ -217,23 +214,12 @@ The project follows a modular architecture:
 - Some edge cases in quote handling
 - File descriptor management could be optimized
 
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## 👨‍💻 Author
 
-**Your Name**
-- GitHub: [@yourusername](https://github.com/yourusername)
-- 42 Profile: [@your42username](https://profile.intra.42.fr/users/your42username)
+**Laher Maciel**
+- GitHub: [@LaherMaciel](https://github.com/LaherMaciel)
+- 42 Profile: [@lawences](https://profile-v3.intra.42.fr/users/lawences)
 
 ## 🙏 Acknowledgments
 
