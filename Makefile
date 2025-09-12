@@ -152,4 +152,43 @@ val_full: $(NAME)
 val_full_errocommand: $(NAME)
 	valgrind $(VALGRIND_FLAGS) --trace-children=yes --track-origins=yes ./$(NAME)
 
-.PHONY: all clean fclean re
+# Professional targets
+all: $(NAME)
+
+test: $(NAME)
+	@echo "[" "$(YELLOW)..$(RESET)" "] | Running test suite..."
+	@./test_minishell.sh
+	@echo "[" "$(GREEN)OK$(RESET)" "] | Tests completed!"
+
+demo: $(NAME)
+	@echo "[" "$(YELLOW)..$(RESET)" "] | Running demo..."
+	@./demo.sh
+	@echo "[" "$(GREEN)OK$(RESET)" "] | Demo completed!"
+
+install: $(NAME)
+	@echo "[" "$(YELLOW)..$(RESET)" "] | Installing minishell..."
+	@sudo cp $(NAME) /usr/local/bin/
+	@echo "[" "$(GREEN)OK$(RESET)" "] | Minishell installed to /usr/local/bin/"
+
+uninstall:
+	@echo "[" "$(YELLOW)..$(RESET)" "] | Uninstalling minishell..."
+	@sudo rm -f /usr/local/bin/$(NAME)
+	@echo "[" "$(GREEN)OK$(RESET)" "] | Minishell uninstalled!"
+
+help:
+	@echo "Available targets:"
+	@echo "  all        - Build the project (default)"
+	@echo "  clean      - Remove object files"
+	@echo "  fclean     - Remove all generated files"
+	@echo "  re         - Rebuild the project"
+	@echo "  run        - Build and run minishell"
+	@echo "  test       - Run the test suite"
+	@echo "  demo       - Run the demo script"
+	@echo "  val        - Run with valgrind"
+	@echo "  val_full   - Run with full valgrind analysis"
+	@echo "  norm       - Check code style with norminette"
+	@echo "  install    - Install minishell to system"
+	@echo "  uninstall  - Remove minishell from system"
+	@echo "  help       - Show this help message"
+
+.PHONY: all clean fclean re test demo install uninstall help

@@ -1,0 +1,69 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libreadline-dev valgrind
+    
+    - name: Build project
+      run: make
+    
+    - name: Run tests
+      run: make test
+    
+    - name: Run demo
+      run: make demo
+    
+    - name: Check for memory leaks
+      run: |
+        echo "Testing memory leaks with valgrind..."
+        echo "echo 'test'" | valgrind --leak-check=full --show-leak-kinds=all --track-fds=yes --suppressions=suppress_readline.supp ./minishell > valgrind_output.txt 2>&1 || true
+        if grep -q "definitely lost: 0 bytes" valgrind_output.txt; then
+          echo "✅ No memory leaks detected"
+        else
+          echo "❌ Memory leaks detected"
+          cat valgrind_output.txt
+          exit 1
+        fi
+    
+    - name: Check code style
+      run: |
+        if command -v norminette &> /dev/null; then
+          make norm
+        else
+          echo "Norminette not available, skipping style check"
+        fi
+
+  security:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libreadline-dev
+    
+    - name: Build with security flags
+      run: |
+        make fclean
+        make CFLAGS="-g -Wall -Werror -Wextra -Wpedantic -Wformat=2 -Wformat-security -Wstack-protector -fstack-protector-strong -Wstrict-overflow -fPIE -D_FORTIFY_SOURCE=2"
+    
+    - name: Run security tests
+      run: |
+        echo "Running security-focused tests..."
+        ./test_minishell.sh error

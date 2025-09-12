@@ -1,0 +1,51 @@
+# Compiled binaries
+minishell
+*.o
+*.a
+
+# Object files directory
+objects/
+
+# IDE and editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Project specific files
+en.subject.pdf
+minishell_evalsheet.pdf
+minishell_evalsheet.txt
+subject.txt
+WhatsApp*.jpg
+
+# Test files
+test_file.txt
+test_file2.txt
+test_dir/
+test.txt
+test2.txt
+test3.txt
+test4.txt
+
+# Temporary files
+*.tmp
+*.temp
+/tmp/
+
+# Valgrind output
+valgrind-*
+
+# Backup files
+*.bak
+*.backup
