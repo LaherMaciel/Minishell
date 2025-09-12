@@ -221,6 +221,10 @@ The project follows a modular architecture:
 - GitHub: [@LaherMaciel](https://github.com/LaherMaciel)
 - 42 Profile: [@lawences](https://profile-v3.intra.42.fr/users/lawences)
 
+**Kayki Rocha**
+- GitHub: [@UnderOfAll](https://github.com/UnderOfAll)
+- 42 Profile: [@karocha-](https://profile-v3.intra.42.fr/users/karocha-)
+
 ## 🙏 Acknowledgments
 
 - 42 School for the project requirements
@@ -230,5 +234,5 @@ The project follows a modular architecture:
 ---
 
 <div align="center">
-  <strong>Made with ❤️ at 42 School</strong>
+  <strong>Made at 42 Lisbon School</strong>
 </div>
