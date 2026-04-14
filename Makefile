@@ -49,7 +49,7 @@ OBJECTS_DIRECTORY = objects/
 OBJECTS = $(addprefix $(OBJECTS_DIRECTORY), $(OBJECT_LIST))
 
 CC = cc
-CFLAGS = -g -Wall -Werror -Wextra #-fsanitize=address
+CFLAGS = -Wall -Werror -Wextra #-fsanitize=address
 
 LIBS = -L$(LIBFT_DIRECTORY) -lft -lreadline -ltermcap
 INCLUDES = -I./srcs -I./libft/ -I/usr/include/readline
@@ -100,7 +100,6 @@ fclean: clean
 	@echo "[" "$(YELLOW)..$(RESET)" "] | Removing binary files...$(RESET)"
 	@rm -rf $(NAME)
 	@make -sC $(LIBFT_DIRECTORY) fclean > /dev/null 2>&1
-	@rm -rf $(MLX)
 	@rm -rf .norminette.log
 	@echo "[" "$(GREEN)OK$(RESET)" "] | Binary file removed."
 
