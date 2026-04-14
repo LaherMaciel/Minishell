@@ -1,238 +1,79 @@
-# 🐚 Minishell
+# minishell
 
 [![42](https://img.shields.io/badge/42-Project-blue)](https://42.fr)
-[![C](https://img.shields.io/badge/Language-C-0052CC?style=flat&logo=c)](https://en.wikipedia.org/wiki/C_(programming_language))
-[![Code Style](https://img.shields.io/badge/Code%20Style-42%20Norminette-blue)](https://github.com/42School/norminette)
+[![C](https://img.shields.io/badge/Language-C-green)](https://en.wikipedia.org/wiki/C_(programming_language))
 
-A minimal shell implementation in C that replicates core functionality of bash, built as part of the 42 curriculum.
+> A minimal shell implementation replicating core bash behaviour.
 
-## 📋 Table of Contents
+## Overview
 
-- [Features](#-features)
-- [Installation](#-installation)
-- [Usage](#-usage)
-- [Built-in Commands](#-built-in-commands)
-- [Supported Features](#-supported-features)
-- [Testing](#-testing)
-- [Project Structure](#-project-structure)
+`minishell` is a 42 School Rank 3 project, built in collaboration. The goal is to implement a functional interactive shell in C, supporting pipes, redirections, environment variables, signals, and a set of built-in commands.
 
-## ✨ Features
-
-- **Interactive Shell**: Full interactive mode with prompt and command history
-- **Built-in Commands**: Complete implementation of essential shell commands
-- **Environment Variables**: Full support for environment variable expansion
-- **Redirections**: Input/output redirection with `<`, `>`, `>>`, and heredoc `<<`
-- **Pipes**: Command chaining with `|` operator
-- **Signal Handling**: Proper handling of Ctrl+C, Ctrl+D, and Ctrl+\\
-- **Quote Handling**: Support for single and double quotes with proper expansion
-- **Memory Management**: Careful memory allocation and cleanup
-- **Error Handling**: Comprehensive error messages and status codes
-
-## 🚀 Installation
-
-### Prerequisites
-
-- GCC compiler
-- Make
-- Readline library
-- Valgrind (for testing)
-
-### Build Instructions
+## Usage
 
 ```bash
-# Clone the repository
-git clone https://github.com/yourusername/minishell.git
-cd minishell
-
-# Compile the project
 make
-
-# Run the shell
 ./minishell
 ```
 
-### Dependencies
+## Built-in commands
 
-On Ubuntu/Debian:
-```bash
-sudo apt-get install libreadline-dev valgrind
-```
+| Command | Description |
+|---------|-------------|
+| `echo` | Print to stdout (`-n` flag supported) |
+| `cd` | Change directory |
+| `pwd` | Print working directory |
+| `export` | Set environment variable |
+| `unset` | Unset environment variable |
+| `env` | Print environment |
+| `exit` | Exit the shell |
 
-On macOS:
-```bash
-brew install readline valgrind
-```
+## Supported features
 
-## 💻 Usage
+- Pipes: `cmd1 | cmd2 | cmd3`
+- Redirections: `<`, `>`, `>>`, `<<` (heredoc)
+- Environment variable expansion: `$VAR`, `$?`
+- Single and double quotes with correct expansion rules
+- Signal handling: `Ctrl+C`, `Ctrl+D`, `Ctrl+\`
+- Command history via readline
 
-### Interactive Mode
-```bash
-./minishell
-minishell$ echo "Hello, World!"
-Hello, World!
-minishell$ ls -la
-total 24
-drwxr-xr-x  5 user  user  160 Dec 15 10:30 .
-drwxr-xr-x  3 user  user   96 Dec 15 10:29 ..
--rw-r--r--  1 user  user 1234 Dec 15 10:30 README.md
-minishell$ exit
-```
-
-### Non-Interactive Mode
-```bash
-echo "ls -la" | ./minishell
-```
-
-## 🔧 Built-in Commands
-
-| Command | Description | Example |
-|---------|-------------|---------|
-| `echo` | Print text to stdout | `echo "Hello World"` |
-| `cd` | Change directory | `cd /home/user` |
-| `pwd` | Print working directory | `pwd` |
-| `export` | Set environment variable | `export VAR=value` |
-| `unset` | Unset environment variable | `unset VAR` |
-| `env` | Print environment variables | `env` |
-| `exit` | Exit the shell | `exit 0` |
-
-## 🎯 Supported Features
-
-### Redirections
-```bash
-# Output redirection
-echo "Hello" > file.txt
-
-# Append redirection
-echo "World" >> file.txt
-
-# Input redirection
-cat < file.txt
-
-# Heredoc
-cat << EOF
-Line 1
-Line 2
-EOF
-```
-
-### Pipes
-```bash
-# Simple pipe
-ls -la | grep ".c"
-
-# Multiple pipes
-echo "hello world" | tr ' ' '\n' | sort
-```
-
-### Environment Variables
-```bash
-# Variable expansion
-echo $HOME
-echo "Current user: $USER"
-
-# In single quotes (no expansion)
-echo '$HOME'
-```
-
-### Quotes
-```bash
-# Single quotes (literal)
-echo 'Hello $USER'
-
-# Double quotes (with expansion)
-echo "Hello $USER"
-```
-
-## 🧪 Testing
-
-The project includes a comprehensive test suite:
-
-```bash
-# Run all tests
-./test_minishell.sh
-
-# Run specific test categories
-./test_minishell.sh builtin    # Test built-in commands
-./test_minishell.sh pipes      # Test pipe functionality
-./test_minishell.sh leaks      # Test memory leaks with valgrind
-```
-
-### Test Categories
-- **Compilation**: Build verification
-- **Simple Commands**: Basic command execution
-- **Built-in Commands**: All built-in functionality
-- **Environment Variables**: Variable expansion and management
-- **Redirections**: Input/output redirection
-- **Pipes**: Command chaining
-- **Quotes**: Quote handling and expansion
-- **Error Handling**: Error cases and edge conditions
-- **Memory Leaks**: Valgrind leak detection
-
-## 📁 Project Structure
+## Project structure
 
 ```
 minishell/
 ├── srcs/
-│   ├── main.c                 # Main entry point
-│   ├── signals.c              # Signal handling
-│   ├── built_ins/             # Built-in commands
-│   │   ├── built_ins.c
-│   │   └── exit.c
-│   ├── parser/                # Command parsing
-│   ├── prompt/                # Prompt management
-│   ├── utils/                 # Utility functions
-│   └── geral_commands/        # External command execution
-├── libft/                     # Custom C library
-├── minishell.h                # Main header file
-├── Makefile                   # Build configuration
-├── test_minishell.sh          # Test suite
-├── suppress_readline.supp     # Valgrind suppressions
-└── README.md                  # This file
+│   ├── main.c
+│   ├── signals.c
+│   ├── minishell.h
+│   ├── built_ins/       # echo, cd, pwd, export, unset, env, exit
+│   ├── parser/          # Tokenizer, quote handling, list utils
+│   ├── prompt/          # Prompt display, path resolution
+│   ├── geral_commands/  # Pipes, redirections, heredoc, execution
+│   └── utils/           # Error handling, memory, cleanup
+├── libft/
+├── Makefile
+├── test_minishell.sh    # Test suite
+└── suppress_readline.supp
 ```
 
-## 🏗️ Architecture
+## Make targets
 
-The project follows a modular architecture:
+| Target | Description |
+|--------|-------------|
+| `make` | Build the binary |
+| `make clean` | Remove object files |
+| `make fclean` | Remove object files and binary |
+| `make re` | Rebuild from scratch |
+| `make norm` | Run norminette |
+| `make val` | Run with valgrind |
+| `make test` | Run the test suite |
 
-- **Main Loop**: Handles input and command execution
-- **Parser**: Tokenizes and parses command input
-- **Built-ins**: Implements shell built-in commands
-- **External Commands**: Executes external programs
-- **Signal Handler**: Manages shell signals
-- **Memory Manager**: Handles dynamic memory allocation
-
-## 🔍 Code Quality
-
-- **42 Norminette**: Follows 42 coding standards
-- **Memory Management**: No memory leaks (verified with Valgrind)
-- **Error Handling**: Comprehensive error checking
-- **Documentation**: Well-documented code with clear function names
-
-## 🚨 Known Issues
-
-- Heredoc parsing needs improvement
-- Some edge cases in quote handling
-- File descriptor management could be optimized
-
-
-## 👨‍💻 Author
+## Authors
 
 **Laher Maciel**
 - GitHub: [@LaherMaciel](https://github.com/LaherMaciel)
-- 42 Profile: [@lawences](https://profile-v3.intra.42.fr/users/lawences)
+- 42 Login: lawences
 
 **Kayki Rocha**
 - GitHub: [@UnderOfAll](https://github.com/UnderOfAll)
-- 42 Profile: [@karocha-](https://profile-v3.intra.42.fr/users/karocha-)
-
-## 🙏 Acknowledgments
-
-- 42 School for the project requirements
-- The C programming community
-- Contributors and testers
-
----
-
-<div align="center">
-  <strong>Made at 42 Lisbon School</strong>
-</div>
+- 42 Login: karocha-
