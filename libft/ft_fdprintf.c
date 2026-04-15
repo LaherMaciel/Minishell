@@ -95,7 +95,7 @@ int	ft_fdprintf(int fd, const char *format, ...)
 	va_start(args, format);
 	while (format[++cont])
 	{
-		if (format[cont] == '%')
+		if (format[cont] == '%' && format[cont + 1])
 		{
 			if (format[cont + 1] != '%')
 				i += ft_fdprintaux(fd, format[cont + 1], args);

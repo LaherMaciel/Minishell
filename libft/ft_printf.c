@@ -102,7 +102,7 @@ int	ft_printf(const char *format, ...)
 	va_start(args, format);
 	while (format[++cont])
 	{
-		if (format[cont] == '%')
+		if (format[cont] == '%' && format[cont + 1])
 		{
 			if (format[cont + 1] != '%')
 				i += ft_printaux(format[cont + 1], args);
